@@ -9,7 +9,7 @@ Preliminary Kullback-Leibler divergence (PMC5812299) analysis of the Delfi (PMC6
 
 - Healthy individuals and cancer patients exhibit differences for
 particular fragment lengths.
-- Two or three peaks on the divergence histogram.
+- We observe two to three peaks (see KLD_CRC_FRL.pdf) on the divergence histogram.
 - CRC patients and other cancers exhibit differences for particular
 fragment lengths.
 - At least 8% of the fragments belong to diverging populations.
