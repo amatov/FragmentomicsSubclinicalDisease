@@ -12,7 +12,7 @@ Preliminary Kullback-Leibler divergence ([PMC5812299](https://www.ncbi.nlm.nih.g
 
 - Healthy individuals and cancer patients exhibit differences for
 particular fragment lengths.
-- We measure two to three peaks (see KLD_CRC_FRL.pdf) on the divergence histogram.
+- We measure two to three peaks (see [KLD_CRC_FRL.pdf](https://gitlab.com/amatov/dnafrl/-/blob/master/KLD_CRC_FRL.pdf)) on the divergence histogram.
 
 2. Cancer vs cancer:
 
