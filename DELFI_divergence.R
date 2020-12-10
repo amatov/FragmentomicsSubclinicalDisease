@@ -12,6 +12,7 @@ setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 #bf <- read.table("filtered_window_data_5MB_1_700_m5000.txt")
 bFr <- read.table("filtered_window_data_5MB_1_700_m5000.txt", header = TRUE)
 typeof(bFr) # list
+lookUp <- read.table("5MB_map_file.txt")
 
 # originial paper has 504 bins per patient sample, which covers 2.52G of genome
 s1 = unlist(bFr[1,3:702]) # 700 (fragments) length histogram values for one 5mps bin
@@ -398,7 +399,9 @@ kcmax_hmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLm
 k_hmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmax.csv')
 k_hmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmin.csv')
 
-k_cbin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCbins.csv')
+k_cbin2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_bins364.csv')
+
+k_cbin <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRCbins.csv')
 k_cmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmax.csv')
 k_cmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmin.csv')
 k_c12 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC2.csv')
@@ -413,7 +416,7 @@ k_c1 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1.csv')
 k_c2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2.csv')
 k_c3 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC3.csv')
 k_c4 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC4.csv')
-k_c364 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC364.csv')
+k_c364 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC364.csv')
 k_c205 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC205.csv')
 k_c198 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC198.csv')
 k_l <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceLCC.csv')
@@ -429,7 +432,8 @@ k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.
 k_o <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceOVC.csv')
 k_co <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_OVC.csv')
 k_cp <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_PCC.csv')
-
+kcbin2<-k_cbin2[2:701,2]
+plot(kcbin2)
 kcmaxmin<-k_cmaxmin[2:701,2]
 plot(kcmaxmin)
 kch2<-k_ch2[2:701,2]
