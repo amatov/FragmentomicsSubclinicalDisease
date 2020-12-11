@@ -1,4 +1,4 @@
-# Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data.
+# Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data 
 
 We consider the relative entropy between cohorts’ cfDNA fragment lengths and test two hypotheses.
 
