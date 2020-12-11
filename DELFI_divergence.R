@@ -430,10 +430,13 @@ k_cb <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_BCC.cs
 k_cg <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_GCC.csv')
 k_g <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceGCC.csv')
 k_p <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergencePCC.csv')
-k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.csv')
+k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.csv') # CRC  
+k_cR <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_Reverse.csv') # CRC  REVERSE
+
 k_o <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceOVC.csv')
 k_co <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_OVC.csv')
 k_cp <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_PCC.csv')
+
 kcbin2<-k_cbin2[2:701,2]
 plot(kcbin2)
 kcmaxmin<-k_cmaxmin[2:701,2]
@@ -502,6 +505,8 @@ kp<-k_p[2:701,2]
 plot(kp)
 kc<-k_c[2:701,2]
 plot(kc)
+kcr<-k_cR[2:701,2]
+plot(kcr)
 colorKLD <- rowSums(hnm)/rowSums(cnm)
 div <- data.frame(kc) 
 div$clr = colorKLD
