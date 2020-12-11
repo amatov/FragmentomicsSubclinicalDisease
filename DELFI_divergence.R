@@ -762,6 +762,13 @@ hm <- heatmap(df, scale = "none", col =  col) # 3 CTL mixed with CRC: #36, 55, 4
 # 67 28 56 49 62 50 53 33 58 47 45 66 29 30 26 64 46 59 57 42 60 65 27 31 34 32 40 41 38 43 37 35 39 (top end)
 # hm$colInd order of 12 bins: 4  6 10  8  7  9  3  2 12  5  1 11
 
+distr <- distfun(df)
+hcr <- hclustfun(distr)
+
+d2 <- dist(hcTop20,method = "euclidean", diag = FALSE, upper = TRUE)
+c2 <- hclust(d2, method = "ward.D2", members = NULL)
+
+
 #heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
 #        distfun = dist, hclustfun = hclust,
 #        reorderfun = function(d, w) reorder(d, w),
@@ -774,6 +781,19 @@ hm <- heatmap(df, scale = "none", col =  col) # 3 CTL mixed with CRC: #36, 55, 4
 #        keep.dendro = FALSE, verbose = getOption("verbose"), …)
 
 heatmap.2(df)
+
+y <- df
+## Row- and column-wise clustering
+hr <-hclust(as.dist(1-cor(t(y), method="pearson")), method="complete")
+hc <-hclust(as.dist(1-cor(y, method="spearman")), method="complete")
+## Tree cutting
+mycl <-cutree(hr, h=max(hr$height)/1.5); mycolhc <-rainbow(length(unique(mycl)), start=0.1, end=0.9); mycolhc <- mycolhc[as.vector(mycl)]
+## Plot heatmap
+mycol <-colorpanel(40, "darkblue", "yellow", "white") 
+heatmap.2(y, Rowv=as.dendrogram(hr), Colv=as.dendrogram(hc), col=mycol, scale="row", density.info="none")
+
+
+
 
 dNc= c("CRC1","CRC2","CRC3","CRC4","CRC5","CRC6","CRC7","CRC8","CRC9","CRC10")#,"CRC11","CRC12","CRC13","CRC14","CRC15","CRC16",
        #"CRC17","CRC18","CRC19",
