@@ -6,6 +6,7 @@ library("RColorBrewer")
 library(ROCR)
 library("ggplot2")
 library(gplots)
+library(spatstat)
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 
