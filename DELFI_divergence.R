@@ -5,6 +5,7 @@ library(FNN)
 library("RColorBrewer")
 library(ROCR)
 library("ggplot2")
+library(gplots)
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 
@@ -772,7 +773,7 @@ hm <- heatmap(df, scale = "none", col =  col) # 3 CTL mixed with CRC: #36, 55, 4
 #        xlab = NULL, ylab = NULL,
 #        keep.dendro = FALSE, verbose = getOption("verbose"), …)
 
-
+heatmap.2(df)
 
 dNc= c("CRC1","CRC2","CRC3","CRC4","CRC5","CRC6","CRC7","CRC8","CRC9","CRC10")#,"CRC11","CRC12","CRC13","CRC14","CRC15","CRC16",
        #"CRC17","CRC18","CRC19",
