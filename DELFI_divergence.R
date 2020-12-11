@@ -761,7 +761,16 @@ hm <- heatmap(df, scale = "none", col =  col) # 3 CTL mixed with CRC: #36, 55, 4
 # 67 28 56 49 62 50 53 33 58 47 45 66 29 30 26 64 46 59 57 42 60 65 27 31 34 32 40 41 38 43 37 35 39 (top end)
 # hm$colInd order of 12 bins: 4  6 10  8  7  9  3  2 12  5  1 11
 
-
+#heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
+#        distfun = dist, hclustfun = hclust,
+#        reorderfun = function(d, w) reorder(d, w),
+#        add.expr, symm = FALSE, revC = identical(Colv, "Rowv"),
+#        scale = c("row", "column", "none"), na.rm = TRUE,
+#        margins = c(5, 5), ColSideColors, RowSideColors,
+#        cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
+#        labRow = NULL, labCol = NULL, main = NULL,
+#        xlab = NULL, ylab = NULL,
+#        keep.dendro = FALSE, verbose = getOption("verbose"), …)
 
 
 
