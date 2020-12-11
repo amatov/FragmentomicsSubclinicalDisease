@@ -728,7 +728,7 @@ hT3<-hT[,198]
 cv364 <- matrix(cT1, ncol = 555, byrow = 26) #
 cv205 <- matrix(cT2, ncol = 555, byrow = 26) #  
 cv198 <- matrix(cT3, ncol = 555, byrow = 26) #  
-indx<-which(kc364>1.5)
+indx<-which(kc364>1.5) #  genomic bins: 49  64  90 130 132 209 216 267 308 324 508 519
 cv2 <-matrix(,nrow=26,ncol=length(indx))
 cv2<-cv364[,indx]
 #cv2[,1]<-cv364[,308]
@@ -755,8 +755,11 @@ dimnames(cv2)[[1]] <- unique(crc[,1])
 hcTop20 <- rbind(cv2 , hv2)
 df<-scale(hcTop20)
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
-heatmap(df, scale = "none", col =  col)
-
+hm <- heatmap(df, scale = "none", col =  col)
+# hm$rowInd CRC 1-26, Healthy 27-68 
+#(bottom) 25 24 10 22  4 23 44 61 20  6 15 21 11 12 55 13 14 68 36 52  7 19 16  5  8  3  2 17  9 18  1 54 48 51 63 
+# 67 28 56 49 62 50 53 33 58 47 45 66 29 30 26 64 46 59 57 42 60 65 27 31 34 32 40 41 38 43 37 35 39 (top end)
+# hm$colInd order of 12 bins: 4  6 10  8  7  9  3  2 12  5  1 11
 
 
 
