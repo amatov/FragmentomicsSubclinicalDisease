@@ -593,6 +593,12 @@ sum(cnm[which(kc>1),])/sum(cnm) # 0.1513125
 hist(cnm[364,], xlim = c(0,70), breaks = 20)
 hist(hnm[364,], xlim = c(0,70), breaks = 20)
 
+# most discriminate bin for 364 bp
+hgA <- hist(cM364[,308],xlim = c(0,70), breaks = 20 , plot = FALSE) # Save first histogram data
+hgB <- hist(hM364[,308], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,40), ylim = c(0,6)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,40), ylim = c(0,6)) # Add 2nd histogram using different color
+
 hgA <- hist(ctlMin[,364],xlim = c(0,70), breaks = 20 , plot = FALSE) # Save first histogram data
 hgB <- hist(hnm[364,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
 plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,70), ylim = c(0,2200)) # Plot 1st histogram using a transparent color
