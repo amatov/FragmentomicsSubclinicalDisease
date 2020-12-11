@@ -763,12 +763,13 @@ hm <- heatmap(df, scale = "none", col =  col) # 3 CTL mixed with CRC: #36, 55, 4
 # 67 28 56 49 62 50 53 33 58 47 45 66 29 30 26 64 46 59 57 42 60 65 27 31 34 32 40 41 38 43 37 35 39 (top end)
 # hm$colInd order of 12 bins: 4  6 10  8  7  9  3  2 12  5  1 11
 
-distr <- distfun(df)
-hcr <- hclustfun(distr)
+distr <- dist(df)
+hcr <- hclust(distr)
+hcr$order # 38 41 37 43 35 39 27 31 34 32 40 50 53 47 45 66 33 58 62 49 56 28 67 63 51 48 54 29 30 26 64 57 42 60 65 46 59  
+#8  5 16 19 17  2  3  1  9 18 14 13 55 11 12 10 24 25 23 4 22 15 21  6 20 44 61  7 52 36 68
 
 d2 <- dist(hcTop20,method = "euclidean", diag = FALSE, upper = TRUE)
 c2 <- hclust(d2, method = "ward.D2", members = NULL)
-
 
 #heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
 #        distfun = dist, hclustfun = hclust,
