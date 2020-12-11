@@ -1,5 +1,7 @@
 # dnafrl
 
+**Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data.**
+
 We consider the relative entropy between cohorts’ cfDNA fragment lengths and test two hypotheses.
 
 1. We can pinpoint particular lengths for which disease differs from healthy.
