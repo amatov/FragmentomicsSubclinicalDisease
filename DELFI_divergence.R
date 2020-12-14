@@ -7,6 +7,7 @@ library(ROCR)
 library("ggplot2")
 library(gplots)
 library(spatstat)
+library("transport")
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 
@@ -598,6 +599,18 @@ sum(cnm[which(kc>1),])/sum(cnm) # 0.1513125
 hist(cnm[364,], xlim = c(0,70), breaks = 20)
 hist(hnm[364,], xlim = c(0,70), breaks = 20)
 
+# 1st most discriminate bin for 205 bp
+hgA <- hist(cM205[,369],xlim = c(0,70), breaks = 20 , plot = FALSE) # Save first histogram data
+hgB <- hist(hM205[,369], xlim = c(0,70),breaks = 20, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,80), ylim = c(0,4)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,80), ylim = c(0,4)) # Add 2nd histogram using different color
+
+# 1st most discriminate bin for 198 bp
+hgA <- hist(cM198[,447], breaks = 10 , plot = FALSE) # Save first histogram data
+hgB <- hist(hM198[,447], breaks = 25, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,600), ylim = c(0,9)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,600), ylim = c(0,9)) # Add 2nd histogram using different color
+
 # 1st most discriminate bin for 364 bp
 hgA <- hist(cM364[,308],xlim = c(0,70), breaks = 20 , plot = FALSE) # Save first histogram data
 hgB <- hist(hM364[,308], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
@@ -892,3 +905,8 @@ cM364[,519]
 # 15 15  8  7  4 12  8  6  8  6  7 11 11  5 13  2  9 11  4  9  6  3 11  8  8 15
 hM364[,519]
 # 23 16 16 17 31 23 17 42 31 18 43 34 49 34 35 17 29 16 20 14 21 16 22 26 16 10 20 10 10 18  6 17 18 17 15 15 16 13 18 23 10 14
+
+cM198[,447]
+# 132 215 186 227 121 294 201 114 226 175 189 193 182 194 163  72 107 192 110 185 197 129 185 210 162 255
+hM198[,447]
+# 422 365 323 305 426 365 277 431 508 208 412 431 371 379 440 361 535 203 226 251 379 249 274 385 282 214 359 284 200 293 255 226 254 282 145 232 305 216 284 325 246 184
