@@ -12,10 +12,15 @@ pileupsD <- list.files("~/genomedk/DELFI_data/RawData", recursive = T, full.name
 # match the list from the pileup file and load the 70 BAM files
 
 # test, load a BAM file and extract FRL364bp, also 205 and 198bp.
-which <- GRanges(seqnames = c("seq1"),ranges = IRanges(c(364),c(364)))
+which <- GRanges(seqnames = c("chr17"),ranges = IRanges(c(65000000),c(70000000)))
 what <- c("rname", "strand", "pos", "qwidth","seq")
 param <- ScanBamParam(which = which, what = what)
+param <- ScanBamParam(which=which, what=scanBamWhat())
 bam <- scanBam(pileupsD[1], param=param)
+
+bam$`chr17:65000000-70000000`$isize # insert size, how is it related to fragment length?
+ 
+bam$`chr17:65000000-70000000`$mpos # starting positions; how to find the ending positions?
 
 # test load BAM
 #bf <- BamFile(pileupsD[1])
