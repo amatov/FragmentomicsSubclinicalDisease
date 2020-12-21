@@ -15,14 +15,36 @@ require("reticulate")
 py_install("pandas")
 py_install("https://github.com/Hogfeldt/ctDNAtool")
 source_python("~/genomedk/matovanalysis/DELFI_analysis/python/pickle_reader.py")
-pickle_data <- read_pickle_file("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp/DL000978HLQ0_100AM.pickle")
-#excel_sheets(path = "~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx")
-end2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 2)# warrning message
-crc_list <- which(end2$diagnostic_group=="Colon cancer") # 169 samples
-endoIDcrc <- end2$SampleID[crc_list]
-# find the CRC lists by stage
-# match the ENDO ID to DELFI ID to PATH
-del2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 1) 
+#pickle_data <- read_pickle_file("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp/DL000978HLQ0_100AM.pickle")
+##excel_sheets(path = "~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx")
+
+#del2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 1) 
+#end2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 2)# 1069 samples: 169 colon, 100 rectum, 800 control.
+del2 <- read_excel("~/genomedk/DELFI2/Workspaces/matov/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo2.xlsx", sheet = 1) 
+end2 <- read_excel("~/genomedk/DELFI2/Workspaces/matov/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo2.xlsx", sheet = 2)# 1069 samples: 169 colon, 100 rectum, 800 control.
+
+
+col_list <- which(end2$diagnostic_group=="Colon cancer") # 169 samples
+col1 <- which(end2$diagnostic_group=="Colon cancer" & end2$crc_stage=="I") # 19
+col2 <- which(end2$diagnostic_group=="Colon cancer" & end2$crc_stage=="II") # 65
+col3 <- which(end2$diagnostic_group=="Colon cancer" & end2$crc_stage=="III") # 42
+col4 <- which(end2$diagnostic_group=="Colon cancer" & end2$crc_stage=="IV") # 43
+col0 <- which(end2$diagnostic_group=="Adenoma colon" & end2$adenoma_risk=="HIGH") # 46 col Adenoma HIGH
+colA <- which(end2$diagnostic_group=="Adenoma colon" & end2$adenoma_risk=="LOW") # 53 col Adenoma LOW
+ctl1 <- which(end2$diagnostic_group=="No comorbidity-no finding") # 284
+ctl2 <- which(end2$diagnostic_group=="Comorbidity-no finding") # 191
+ctl3 <- which(end2$diagnostic_group=="Other finding") # 325
+rec_list <- which(end2$diagnostic_group=="Rectal cancer") # 100 samples
+rec1 <- which(end2$diagnostic_group=="Rectal cancer" & end2$crc_stage=="I") # 29
+rec2 <- which(end2$diagnostic_group=="Rectal cancer" & end2$crc_stage=="II") # 25
+rec3 <- which(end2$diagnostic_group=="Rectal cancer" & end2$crc_stage=="III") # 31
+rec4 <- which(end2$diagnostic_group=="Rectal cancer" & end2$crc_stage=="IV") # 15
+rec0 <- which(end2$diagnostic_group=="Adenoma rectum" & end2$adenoma_risk=="HIGH") # 21 rec Adenoma HIGH
+recA <- which(end2$diagnostic_group=="Adenoma rectum" & end2$adenoma_risk=="LOW") # 14 rec Adenoma LOW
+
+e2 <- data.frame(end2) # 1803   27 - stage and disease info comes from this file (sheet 2)
+d2 <- data.frame(del2) # 765  10  - DELFI names (sheet 1)
+m2 <- merge(e2,d2,by="SampleID") # 681  36 - only 681 are members of both groups
 
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
