@@ -12,12 +12,14 @@ library(readxl)
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 require("reticulate")
+py_install("pandas")
+#py_install(ctDNAtool)
 source_python("~/genomedk/matovanalysis/DELFI_analysis/python/pickle_reader.py")
 pickle_data <- read_pickle_file("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp/DL000978HLQ0_100AM.pickle")
 #excel_sheets(path = "~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx")
-del2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 2)# error but works
-crc_list <- which(del2$diagnostic_group=="Colon cancer")
-
+del2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 2)# warrning message
+crc_list <- which(del2$diagnostic_group=="Colon cancer") # 169 samples
+# match the ENDO ID to DELFI ID to PATH
 
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
