@@ -11,6 +11,15 @@ library("transport")
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 
+require("reticulate")
+source_python("~/genomedk/matovanalysis/DELFI_analysis/python/pickle_reader.py")
+pickle_data <- read_pickle_file("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp/DL000978HLQ0_100AM.pickle")
+
+
+
+
+
+
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
 #bf <- read.table("filtered_window_data_5MB_1_700_m5000.txt")
 bFr <- read.table("filtered_window_data_5MB_1_700_m5000.txt", header = TRUE)
