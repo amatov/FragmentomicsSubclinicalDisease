@@ -65,8 +65,6 @@ d2_test <- read.table(pileupsD2[204], header = TRUE)
 d2_t2 <- read.table(pileupsD2[304], header = TRUE)
 
 
-delfi_id <- c("delfia", "delfic") #What you look for
-pileup_list <- c("path/to/delfie", "path/to/delfib", "path/to/delfic", "path/to/delfig", "path/to/delfia", "path/to/delfig") #Where you look (paths)
 
 samplesCRC <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 )) 
 
