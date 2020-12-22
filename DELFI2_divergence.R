@@ -109,7 +109,19 @@ ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 284
 samplesCTL1 <- sapply(m2$DELFI.ID[ctl1_list] , function(x) grep(x, x = pileupsD2 )) 
 auxCTL1 <- unlist(samplesCTL1)
 
+listCTL1 <- unique(auxCTL1)
 
+length(unique(auxCTL1)) # 74
+
+ctl1D2 = array(0, dim=c(74,574,499))
+j=1
+for (i in 1:74  ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
+  ctl1D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
 
 
 
