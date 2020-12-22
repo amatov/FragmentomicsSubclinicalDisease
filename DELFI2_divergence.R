@@ -71,11 +71,14 @@ samplesCRC <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 
 
 
 # 79 CRC samples in the pileuplist of 765 files (681 plasma and 84 PBMCs)
+col <-matrix(length(samplesCRC),nrow=574,ncol=499)
 for (i in samplesCRC) {
-  auxFR <- read.table(pileupsD2[i], header = TRUE) # sample per sample, file per file. 
-  
+  auxFR <- read.table(pileupsD2[204], header = TRUE) # sample per sample, file per file. 
+  col[i,,] <- auxFR[,2:500]
 }
-  
+
+ 
+
   
 
 
