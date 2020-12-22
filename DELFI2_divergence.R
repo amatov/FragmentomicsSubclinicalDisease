@@ -70,12 +70,37 @@ samplesCRC <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 
 auxCRC <- unlist(samplesCRC)
 
 
+# auxCRC
+#DL001860CRP0   DL001940CRP0   DL002182CRP0   DL002181CRP0   DL002023CRP0 DL001364CRP0_1  DL001364CRP01  DL001364CRP02   DL001503CRP0 
+#377            419            511            510            452            188            188            189            250 
+#DL001288CRP0   DL001509CRP0   DL001422CRP0   DL001207CRP0   DL001800CRP0   DL001093CRP0   DL001785CRP0   DL001923CRP0   DL002241CRP0 
+#159            253            219            133            353             86            342            412            538 
+#DL001902CRP0   DL001845CRP0 DL002194CRP0_1   DL001578CRP0   DL001613CRP0   DL001614CRP0   DL001348CRP0 DL001096CRP0_1  DL001096CRP01 
+#398            370            519            277            292            293            184             87             87 
+#DL001096CRP02   DL001475CRP0   DL001857CRP0   DL001835CRP0   DL001561CRP0   DL001142CRP0 DL001582CRP0_1  DL001582CRP01  DL001582CRP02 
+#88            237            376            364            269            105            279            279            280 
+#DL001448CRP0   DL002259CRP0   DL001581CRP0   DL001888CRP0   DL002085CRP0   DL002000CRP0   DL002072CRP0   DL002267CRP0   DL001496CRP0 
+#226            542            278            391            471            442            467            544            248 
+#DL001390CRP0 DL001758CRP0_1   DL001563CRP0  DL002286CRP01  DL002286CRP02 DL002286CRP0_1   DL001849CRP0   DL002204CRP0   DL001550CRP0 
+#203            330            271            552            553            552            373            524            264 
+#DL001162CRP0   DL002227CRP0   DL001244CRP0   DL002280CRP0   DL001236CRP0   DL002104CRP0   DL002046CRP0   DL002223CRP0   DL002123CRP0 
+#110            531            143            549            139            480            460            529            490 
+#DL001914CRP0   DL001918CRP0   DL001855CRP0   DL002026CRP0   DL001270CRP0   DL001316CRP0   DL001562CRP0   DL001178CRP0   DL001572CRP0 
+#405            407            375            454            151            170            270            116            274 
+#DL001843CRP01  DL001843CRP02 DL001843CRP0_1  DL001964CRP01  DL001964CRP02 DL001964CRP0_1   DL001763CRP0   DL001650CRP0   DL001965CRP0 
+#368            369            368            429            430            429            333            305            431 
+#DL002190CRP0_1  DL002190CRP01  DL002190CRP02   DL001793CRP0   DL001480CRP0 
+#516            516            517            348            239 
+
+
+
+
 # 79 CRC samples in the pileuplist of 765 files (681 plasma and 84 PBMCs)
 #col <-matrix(length(samplesCRC),nrow=574,ncol=499)
 #col <-matrix(79,nrow=574,ncol=499)
 col = array(0, dim=c(79,574,499))
 
-j=1
+#j=1
 for (i in auxCRC ) {
   auxFR <- read.table(pileupsD2[i], header = TRUE) # sample per sample, file per file. 
   col[j,,] <- auxFR[,2:500]
