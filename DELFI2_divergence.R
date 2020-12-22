@@ -96,17 +96,15 @@ auxCRC <- unlist(samplesCRC)
 listCRC <- unique(auxCRC)
 #[1] 377 419 511 510 452 188 189 250 159 253 219 133 353  86 342 412 538 398 370 519 277 292 293 184  87  88 237 376 364 269 105 279 280 226 542 278 391 471 442 467 544 248 203 330
 #[45] 271 552 553 373 524 264 110 531 143 549 139 480 460 529 490 405 407 375 454 151 170 270 116 274 368 369 429 430 333 305 431 516 517 348 239
-length(unique(auxCRC)) # 79
 
-# 79 CRC samples in the pileuplist of 765 files (681 plasma and 84 PBMCs)
-#col <-matrix(length(samplesCRC),nrow=574,ncol=499)
-#col <-matrix(79,nrow=574,ncol=499)
+length(unique(auxCRC)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, i take only one of two copies)
+
 colD2 = array(0, dim=c(79,574,499))
 j=1
 for (i in 1:79  ) {
   print(i)
   #i=2
-  auxFR <- read.table(pileupsD2[auxCRC[i]], header = TRUE) # sample per sample, file per file. 
+  auxFR <- read.table(pileupsD2[listCRC[i]], header = TRUE) # sample per sample, file per file. 
   colD2[j,,] <- unlist(auxFR[,2:500])
   j=j+1
 }
