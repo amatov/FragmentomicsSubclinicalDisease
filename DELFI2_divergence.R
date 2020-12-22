@@ -97,7 +97,7 @@ listCRC <- unique(auxCRC)
 #[1] 377 419 511 510 452 188 189 250 159 253 219 133 353  86 342 412 538 398 370 519 277 292 293 184  87  88 237 376 364 269 105 279 280 226 542 278 391 471 442 467 544 248 203 330
 #[45] 271 552 553 373 524 264 110 531 143 549 139 480 460 529 490 405 407 375 454 151 170 270 116 274 368 369 429 430 333 305 431 516 517 348 239
 
-length(unique(auxCRC)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, i take only one of two copies)
+length(unique(auxCRC)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, even if its the same sample)
 
 colD2 = array(0, dim=c(79,574,499))
 j=1
@@ -109,10 +109,11 @@ for (i in 1:79  ) {
   j=j+1
 }
 
- 
 
-  
+ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 284
 
+samplesCTL1 <- sapply(m2$DELFI.ID[ctl1_list] , function(x) grep(x, x = pileupsD2 )) 
+auxCTL1 <- unlist(samplesCTL1)
 
 
 
