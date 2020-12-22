@@ -62,8 +62,24 @@ m2$DELFI.ID[col_list2] # 79
 pileupsD2 <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp", recursive = T, full.names = T, pattern = "tsv")
 
 d2_test <- read.table(pileupsD2[204], header = TRUE)
-
 d2_t2 <- read.table(pileupsD2[304], header = TRUE)
+
+
+delfi_id <- c("delfia", "delfic") #What you look for
+pileup_list <- c("path/to/delfie", "path/to/delfib", "path/to/delfic", "path/to/delfig", "path/to/delfia", "path/to/delfig") #Where you look (paths)
+
+samplesCRC <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 )) 
+
+
+
+# 79 CRC samples in the pileuplist of 765 files (681 plasma and 84 PBMCs)
+for (i in samplesCRC) {
+  auxFR <- read.table(pileupsD2[i], header = TRUE) # sample per sample, file per file. 
+  
+}
+  
+  
+
 
 
 
