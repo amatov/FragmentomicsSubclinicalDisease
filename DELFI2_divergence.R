@@ -23,7 +23,6 @@ source_python("~/genomedk/matovanalysis/DELFI_analysis/python/pickle_reader.py")
 del2 <- read_excel("~/genomedk/DELFI2/Workspaces/matov/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo2.xlsx", sheet = 1) 
 end2 <- read_excel("~/genomedk/DELFI2/Workspaces/matov/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo2.xlsx", sheet = 2)# 1069 samples: 169 colon, 100 rectum, 800 control.
 
-
 col_list <- which(end2$diagnostic_group=="Colon cancer") # 169 samples
 col1 <- which(end2$diagnostic_group=="Colon cancer" & end2$crc_stage=="I") # 19
 col2 <- which(end2$diagnostic_group=="Colon cancer" & end2$crc_stage=="II") # 65
@@ -64,11 +63,8 @@ pileupsD2 <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_lengt
 d2_test <- read.table(pileupsD2[204], header = TRUE)
 d2_t2 <- read.table(pileupsD2[304], header = TRUE)
 
-
-
 samplesCRC <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 )) 
 auxCRC <- unlist(samplesCRC)
-
 
 # auxCRC
 #DL001860CRP0   DL001940CRP0   DL002182CRP0   DL002181CRP0   DL002023CRP0 DL001364CRP0_1  DL001364CRP01  DL001364CRP02   DL001503CRP0 
@@ -92,7 +88,6 @@ auxCRC <- unlist(samplesCRC)
 #DL002190CRP0_1  DL002190CRP01  DL002190CRP02   DL001793CRP0   DL001480CRP0 
 #516            516            517            348            239 
 
-
 listCRC <- unique(auxCRC)
 #[1] 377 419 511 510 452 188 189 250 159 253 219 133 353  86 342 412 538 398 370 519 277 292 293 184  87  88 237 376 364 269 105 279 280 226 542 278 391 471 442 467 544 248 203 330
 #[45] 271 552 553 373 524 264 110 531 143 549 139 480 460 529 490 405 407 375 454 151 170 270 116 274 368 369 429 430 333 305 431 516 517 348 239
@@ -109,15 +104,10 @@ for (i in 1:79  ) {
   j=j+1
 }
 
-
 ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 284
 
 samplesCTL1 <- sapply(m2$DELFI.ID[ctl1_list] , function(x) grep(x, x = pileupsD2 )) 
 auxCTL1 <- unlist(samplesCTL1)
-
-
-
-
 
 
 
