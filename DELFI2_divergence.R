@@ -140,7 +140,9 @@ k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiverge
 kd2_col79 <- k_d2_col79[2:500,2]
 plot(kd2_col79)
 
-
+k2_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_revered.csv')
+k2d2_col79 <- k2_d2_col79[2:500,2]
+plot(k2d2_col79)
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
 #bf <- read.table("filtered_window_data_5MB_1_700_m5000.txt")
