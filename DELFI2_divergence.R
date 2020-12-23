@@ -104,7 +104,7 @@ for (i in 1:79  ) {
   j=j+1
 }
 
-ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 284
+ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 74
 
 samplesCTL1 <- sapply(m2$DELFI.ID[ctl1_list] , function(x) grep(x, x = pileupsD2 )) 
 auxCTL1 <- unlist(samplesCTL1)
@@ -143,6 +143,85 @@ plot(kd2_col79)
 k2_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_revered.csv')
 k2d2_col79 <- k2_d2_col79[2:500,2]
 plot(k2d2_col79)
+#########################################################################################
+ctl2_list <- which(m2$diagnostic_group=="Comorbidity-no finding") # 71
+
+samplesCTL2 <- sapply(m2$DELFI.ID[ctl2_list] , function(x) grep(x, x = pileupsD2 )) 
+auxCTL2 <- unlist(samplesCTL2)
+
+listCTL2 <- unique(auxCTL2)
+
+length(unique(auxCTL2)) # 71
+
+ctl2D2 = array(0, dim=c(71,574,499))
+j=1
+for (i in 1:71  ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCTL2[i]], header = TRUE) # sample per sample, file per file. 
+  ctl2D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+ctl2D22 = array(0, dim=c(71*574,499))
+
+for (i in 1:499) {
+  #i=1
+  auxCTL2 <- ctl2D2[,,i]
+  ctl2D22[,i] <- auxCTL2 
+}
+write.csv(ctl2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl2_71.csv')
+
+k_d2_col79_ctl2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl2_71.csv')
+kd2_col79_ctl2 <- k_d2_col79_ctl2[2:500,2]
+plot(kd2_col79_ctl2)
+##################################################################################
+ctl3_list <- which(m2$diagnostic_group=="Other finding") # 131
+
+samplesCTL3 <- sapply(m2$DELFI.ID[ctl3_list] , function(x) grep(x, x = pileupsD2 )) 
+auxCTL3 <- unlist(samplesCTL3)
+
+listCTL3 <- unique(auxCTL3)
+
+length(unique(auxCTL3)) # 131
+
+ctl3D2 = array(0, dim=c(131,574,499))
+j=1
+for (i in 1:131  ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCTL3[i]], header = TRUE) # sample per sample, file per file. 
+  ctl3D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+ctl3D22 = array(0, dim=c(131*574,499))
+
+for (i in 1:499) {
+  #i=1
+  auxCTL3 <- ctl3D2[,,i]
+  ctl3D22[,i] <- auxCTL3 
+}
+write.csv(ctl3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl3_71.csv')
+
+k_d2_col79_ctl3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl3_71.csv')
+kd2_col79_ctl3 <- k_d2_col79_ctl3[2:500,2]
+plot(kd2_col79_ctl3)
+##################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
 #bf <- read.table("filtered_window_data_5MB_1_700_m5000.txt")
