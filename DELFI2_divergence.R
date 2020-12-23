@@ -234,9 +234,10 @@ for (i in 1:499) {
 }
 write.csv(recD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_all50.csv')
 
-k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
-kd2_col79 <- k_d2_col79[2:500,2]
-plot(kd2_col79)
+k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl1.csv')
+kd2_rec50 <- k_d2_rec50[2:500,2]
+plot(kd2_rec50)
+#################################################################################################
 
 
 
