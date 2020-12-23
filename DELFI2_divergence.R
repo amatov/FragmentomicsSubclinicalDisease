@@ -193,7 +193,7 @@ for (i in 1:71  ) {
   ctl3D2[j,,] <- unlist(auxFR[,2:500])
   j=j+1
 }
-ctl3D22 = array(0, dim=c(131*574,499))
+ctl3D22 = array(0, dim=c(71*574,499)) # super computer runs out of memory for 131 samples. 
 
 for (i in 1:499) {
   #i=1
