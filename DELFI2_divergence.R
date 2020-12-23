@@ -184,9 +184,9 @@ listCTL3 <- unique(auxCTL3)
 
 length(unique(auxCTL3)) # 131
 
-ctl3D2 = array(0, dim=c(131,574,499))
+ctl3D2 = array(0, dim=c(71,574,499)) # super computer runs out of memory for 131 samples. 
 j=1
-for (i in 1:131  ) {
+for (i in 1:71  ) {
   print(i)
   #i=2
   auxFR <- read.table(pileupsD2[listCTL3[i]], header = TRUE) # sample per sample, file per file. 
@@ -200,7 +200,7 @@ for (i in 1:499) {
   auxCTL3 <- ctl3D2[,,i]
   ctl3D22[,i] <- auxCTL3 
 }
-write.csv(ctl3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl3_71.csv')
+write.csv(ctl3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl3_71.csv') # the first 71 of 131
 
 k_d2_col79_ctl3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl3_71.csv')
 kd2_col79_ctl3 <- k_d2_col79_ctl3[2:500,2]
