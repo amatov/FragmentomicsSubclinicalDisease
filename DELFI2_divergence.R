@@ -137,8 +137,8 @@ write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all7
 write.csv(ctl1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74.csv')
 
 k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
-#kcbin2<-k_cbin2[2:701,2]
-plot(k_d2_col79)
+kd2_col79 <- k_d2_col79[2:500,2]
+plot(kd2_col79)
 
 
 
