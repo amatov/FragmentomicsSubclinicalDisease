@@ -123,10 +123,22 @@ for (i in 1:74  ) {
   j=j+1
 }
 
+ctl1D22 = array(0, dim=c(74*574,499))
+colD22 = array(0, dim=c(79*574,499))
+for (i in 1:499) {
+  #i=1
+  auxCTL <- ctl1D2[,,i]
+  ctl1D22[,i] <- auxCTL 
+  auxCOL <- colD2[,,i]
+  colD22[,i] <- auxCOL 
+}
 
+write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
+write.csv(ctl1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74.csv')
 
-
-
+k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
+#kcbin2<-k_cbin2[2:701,2]
+plot(k_d2_col79)
 
 
 
@@ -502,7 +514,7 @@ crcBB<-unname(crcB)
 write.csv(crcBB,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcB.csv')
 write.csv(hM364,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl364.csv')
 write.csv(cM364,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc364.csv')
-write.csv(hM205,'tyG:\\matovanalysis/DELFI_analysis/python/delfi1_ctl205.csv')
+write.csv(hM205,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl205.csv')
 write.csv(cM205,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc205.csv')
 write.csv(hM198,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl198.csv')
 write.csv(cM198,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc198.csv')
