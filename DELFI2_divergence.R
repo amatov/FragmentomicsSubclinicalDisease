@@ -51,8 +51,8 @@ col22 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="II") #  30
 col32 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="III") #  18
 col42 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="IV") #  23
 
-# 345 already analyzed, 7 colon cancer replicates, 60 ctl3 later, 66 adenomas, tot. 478 for analysis (471 unique)
-# plus 210 (of 681 in the list) are "validation" cohort and the category is hidden, i.e. NA.
+# 345 already analyzed, 7 colon replicates, 60 ctl3 later, 66 adenomas, tot. 478 for analysis (471 unique)
+# plus 210 (of 681 in the list) are "validation" cohort and their category is hidden, i.e. NA.
 col02 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="HIGH") # 20 col Adenoma HIGH
 colA2 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="LOW") # 28 col Adenoma LOW
 rec02 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="HIGH") # 11 rec Adenoma HIGH
