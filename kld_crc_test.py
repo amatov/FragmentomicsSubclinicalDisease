@@ -24,13 +24,14 @@ sampP = pd.read_csv('delfi2_ctl1_74.csv')
 #sampQ = pd.read_csv('delfi1_ctl.csv') # to test the reverse divergence
 #sampQ = pd.read_csv('delfi2_rec_all50.csv')
 #sampQ = pd.read_csv('delfi2_col1_all8.csv')
-sampQ = pd.read_csv('delfi2_col2_all30.csv')
-
+#sampQ = pd.read_csv('delfi2_col2_all30.csv')
+sampQ = pd.read_csv('delfi2_col3_all18.csv')
 
 est = est_rel_entro_HJW(sampP, sampQ)
 print(est)
 estP = pd.DataFrame(est)
-estP.to_csv('KLdivergenceD2_COL2_30_ctl1.csv')
+estP.to_csv('KLdivergenceD2_COL3_18_ctl1.csv')
+#estP.to_csv('KLdivergenceD2_COL2_30_ctl1.csv')
 #estP.to_csv('KLdivergenceD2_COL1_8_ctl1.csv')
 #estP.to_csv('KLdivergenceD2_REC50_ctl1.csv')
 #estP.to_csv('KLdivergenceD2_REC50_ctl2.csv')
