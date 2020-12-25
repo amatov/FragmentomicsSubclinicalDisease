@@ -45,8 +45,11 @@ e2 <- data.frame(end2) # 1803   27 - stage and disease info comes from this file
 d2 <- data.frame(del2) # 765  10  - DELFI names (sheet 1)
 m2 <- merge(e2,d2,by="SampleID") # 681  36 - only 681 are members of both groups
 
-col_list2 <- which(m2$diagnostic_group=="Colon cancer") # 169 samples
-
+col_list2 <- which(m2$diagnostic_group=="Colon cancer") #  79
+col12 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="I") #  8
+col22 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="II") #  30
+col32 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="III") #  18
+col42 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="IV") #  23
 m2$DELFI.ID[col_list2] # 79
 #[1] "DL001860CRP0"   "DL001940CRP0"   "DL002182CRP0"   "DL002181CRP0"   "DL002023CRP0"   "DL001364CRP0_1" "DL001364CRP0"   "DL001503CRP0"   "DL001288CRP0"  
 #[10] "DL001509CRP0"   "DL001422CRP0"   "DL001207CRP0"   "DL001800CRP0"   "DL001093CRP0"   "DL001785CRP0"   "DL001923CRP0"   "DL002241CRP0"   "DL001902CRP0"  
@@ -63,7 +66,12 @@ pileupsD2 <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_lengt
 d2_test <- read.table(pileupsD2[204], header = TRUE)
 d2_t2 <- read.table(pileupsD2[304], header = TRUE)
 
-samplesCOL <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 )) 
+samplesCOL <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 ))
+listCOL1 <- sapply(m2$DELFI.ID[col12] , function(x) grep(x, x = pileupsD2 ))
+listCOL2 <- sapply(m2$DELFI.ID[col22] , function(x) grep(x, x = pileupsD2 ))
+listCOL3 <- unlist(sapply(m2$DELFI.ID[col32] , function(x) grep(x, x = pileupsD2 )))
+listCOL4 <- unlist(sapply(m2$DELFI.ID[col42] , function(x) grep(x, x = pileupsD2 )))
+
 auxCOL <- unlist(samplesCOL)
 
 # auxCRC
@@ -93,7 +101,7 @@ listCOL <- unique(auxCOL)
 #[45] 271 552 553 373 524 264 110 531 143 549 139 480 460 529 490 405 407 375 454 151 170 270 116 274 368 369 429 430 333 305 431 516 517 348 239
 
 length(unique(auxCOL)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, even if its the same sample)
-
+#################colon all stages#######################
 colD2 = array(0, dim=c(79,574,499))
 j=1
 for (i in 1:79  ) {
@@ -103,7 +111,47 @@ for (i in 1:79  ) {
   colD2[j,,] <- unlist(auxFR[,2:500])
   j=j+1
 }
-
+#######################################colon stage 1##########################
+col1D2 = array(0, dim=c(8,574,499))
+j=1
+for (i in 1:8 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOL1[i]], header = TRUE) # sample per sample, file per file. 
+  col1D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+#######################################colon stage 2##########################
+col2D2 = array(0, dim=c(30,574,499))
+j=1
+for (i in 1:30 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOL2[i]], header = TRUE) # sample per sample, file per file. 
+  col2D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+#######################################colon stage 3##########################
+col3D2 = array(0, dim=c(18,574,499))
+j=1
+for (i in 1:18 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOL3[i]], header = TRUE) # sample per sample, file per file. 
+  col3D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+#######################################colon stage 4##########################
+col4D2 = array(0, dim=c(23,574,499))
+j=1
+for (i in 1:23 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOL4[i]], header = TRUE) # sample per sample, file per file. 
+  col4D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+##########################CONTROL##########################################################
 ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 74
 
 samplesCTL1 <- sapply(m2$DELFI.ID[ctl1_list] , function(x) grep(x, x = pileupsD2 )) 
@@ -125,15 +173,32 @@ for (i in 1:74  ) {
 
 ctl1D22 = array(0, dim=c(74*574,499))
 colD22 = array(0, dim=c(79*574,499))
+col1D22 = array(0, dim=c(8*574,499))
+col2D22 = array(0, dim=c(30*574,499))
+col3D22 = array(0, dim=c(18*574,499))
+col4D22 = array(0, dim=c(23*574,499))
 for (i in 1:499) {
   #i=1
   auxCTL <- ctl1D2[,,i]
   ctl1D22[,i] <- auxCTL 
   auxCOL <- colD2[,,i]
-  colD22[,i] <- auxCOL 
+  colD22[,i] <- auxCOL
+  auxCOL1 <- col1D2[,,i]
+  col1D22[,i] <- auxCOL1 
+  auxCOL2<- col2D2[,,i]
+  col2D22[,i] <- auxCOL2 
+  auxCOL3 <- col3D2[,,i]
+  col3D22[,i] <- auxCOL3 
+  auxCOL4 <- col4D2[,,i]
+  col4D22[,i] <- auxCOL4 
 }
 
-write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
+write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')c
+write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
+write.csv(col2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_all30.csv')
+write.csv(col3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_all18.csv')
+write.csv(col4D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col4_all23.csv')
+
 write.csv(ctl1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74.csv')
 
 k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
