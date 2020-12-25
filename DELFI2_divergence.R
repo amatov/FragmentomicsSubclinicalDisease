@@ -50,6 +50,14 @@ col12 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="I") #  8
 col22 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="II") #  30
 col32 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="III") #  18
 col42 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="IV") #  23
+
+# 652 files, so there should be 240 (but there are 66) adenomas in 4 types (412 already analyzed)
+col02 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="HIGH") # 20 col Adenoma HIGH
+colA2 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="LOW") # 28 col Adenoma LOW
+rec02 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="HIGH") # 11 rec Adenoma HIGH
+recA2 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="LOW") # 7 rec Adenoma LOW
+
+
 m2$DELFI.ID[col_list2] # 79
 #[1] "DL001860CRP0"   "DL001940CRP0"   "DL002182CRP0"   "DL002181CRP0"   "DL002023CRP0"   "DL001364CRP0_1" "DL001364CRP0"   "DL001503CRP0"   "DL001288CRP0"  
 #[10] "DL001509CRP0"   "DL001422CRP0"   "DL001207CRP0"   "DL001800CRP0"   "DL001093CRP0"   "DL001785CRP0"   "DL001923CRP0"   "DL002241CRP0"   "DL001902CRP0"  
