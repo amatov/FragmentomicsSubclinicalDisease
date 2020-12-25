@@ -51,12 +51,14 @@ col22 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="II") #  30
 col32 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="III") #  18
 col42 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="IV") #  23
 
-# 652 files, so there should be 240 (but there are 66) adenomas in 4 types (412 already analyzed)
+# 345 already analyzed, 7 colon cancer replicates, 60 ctl3 later, 66 adenomas, tot. 478 for analysis (471 unique)
+# plus 210 (of 681 in the list) are "validation" cohort and the category is hidden, i.e. NA.
 col02 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="HIGH") # 20 col Adenoma HIGH
 colA2 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="LOW") # 28 col Adenoma LOW
 rec02 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="HIGH") # 11 rec Adenoma HIGH
 recA2 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="LOW") # 7 rec Adenoma LOW
 
+# these seem to be 681 Delfi IDs. 
 
 m2$DELFI.ID[col_list2] # 79
 #[1] "DL001860CRP0"   "DL001940CRP0"   "DL002182CRP0"   "DL002181CRP0"   "DL002023CRP0"   "DL001364CRP0_1" "DL001364CRP0"   "DL001503CRP0"   "DL001288CRP0"  
