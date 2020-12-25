@@ -204,22 +204,38 @@ write.csv(ctl1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74
 k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
 kd2_col79 <- k_d2_col79[2:500,2]
 plot(kd2_col79)
-##############COLON STAGE 1
+##############COLON STAGE 1 vs CTL1
 k_d2_col1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL1_8_ctl1.csv')
 kd2_col1 <- k_d2_col1[2:500,2]
 plot(kd2_col1)
-##############COLON STAGE 2
+##############COLON STAGE 2 vs CTL1
 k_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL2_30_ctl1.csv')
 kd2_col2 <- k_d2_col2[2:500,2]
 plot(kd2_col2)
-##############COLON STAGE 3
+##############COLON STAGE 3 vs CTL1
 k_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL3_18_ctl1.csv')
 kd2_col3 <- k_d2_col3[2:500,2]
 plot(kd2_col3)
-##############COLON STAGE 4
+##############COLON STAGE 4 vs CTL1
 k_d2_col4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL4_23_ctl1.csv')
 kd2_col4 <- k_d2_col4[2:500,2]
 plot(kd2_col4)
+##############COLON STAGE 1 vs CTL2
+k2_d2_col1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL1_8_ctl2.csv')
+k2d2_col1 <- k_d2_col1[2:500,2]
+plot(k2d2_col1)
+##############COLON STAGE 2 vs CTL2
+k2_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL2_30_ctl2.csv')
+k2d2_col2 <- k2_d2_col2[2:500,2]
+plot(kd2_col2)
+##############COLON STAGE 3 vs CTL2
+k3_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL3_18_ctl2.csv')
+k3d2_col3 <- k3_d2_col3[2:500,2]
+plot(k3d2_col3)
+##############COLON STAGE 4 vs CTL2
+k2_d2_col4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL4_23_ctl2.csv')
+k2d2_col4 <- k2_d2_col4[2:500,2]
+plot(k2d2_col4)
 
 
 ##########################COLON REVERSED KLD############################
