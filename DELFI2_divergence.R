@@ -238,8 +238,14 @@ k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiverge
 kd2_rec50 <- k_d2_rec50[2:500,2]
 plot(kd2_rec50)
 #################################################################################################
-
-
+k2_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl2.csv')
+k2d2_rec50 <- k2_d2_rec50[2:500,2]
+plot(k2d2_rec50)
+#################################################################################################
+k3_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl3.csv')
+k3d2_rec50 <- k3_d2_rec50[2:500,2]
+plot(k3d2_rec50)
+#################################################################################################
 
 
 
