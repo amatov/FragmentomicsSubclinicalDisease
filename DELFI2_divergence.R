@@ -227,7 +227,7 @@ plot(k2d2_col1)
 ##############COLON STAGE 2 vs CTL2
 k2_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL2_30_ctl2.csv')
 k2d2_col2 <- k2_d2_col2[2:500,2]
-plot(kd2_col2)
+plot(k2d2_col2)
 ##############COLON STAGE 3 vs CTL2
 k2_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL3_18_ctl2.csv')
 k2d2_col3 <- k2_d2_col3[2:500,2]
