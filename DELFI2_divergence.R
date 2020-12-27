@@ -52,7 +52,7 @@ col32 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="III") #  18
 col42 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="IV") #  23
 
 # 345 already analyzed, 7 colon replicates, 60 ctl3 later, 66 adenomas, tot. 478 for analysis (471 unique)
-# plus 210 (of 681 in the list) are "validation" cohort and their category is hidden, i.e. NA.
+# plus 210 (of 681 in the list), all unique?, are "validation", i.e. m2$diagnostic_group is NA.
 col02 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="HIGH") # 20 col Adenoma HIGH
 colA2 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="LOW") # 28 col Adenoma LOW
 rec02 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="HIGH") # 11 rec Adenoma HIGH
@@ -204,6 +204,64 @@ for (i in 1:499) {
 }
 
 write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
+
+dim(colD2)# 79 574 499
+dim(ctl1D2)# 74 574 499
+c195<-colD2[,,195]
+h195<-ctl1D2[,,195]
+dim(c195) # 79 574
+dim(h195)#  74 574
+write.csv(c195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr195.csv')
+write.csv(h195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr195.csv')
+
+k195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr195_ctl1.csv')
+k195d2_col <- k195_d2_col[2:574,2]
+plot(k195d2_col)
+
+indx<-which(k195d2_col>1.12)#  33  48  90 145 156 191 213 356 429 483 529 572
+cv21 <-matrix(,nrow=79,ncol=length(indx))
+cv21<-c195[,indx]
+hv21 <-matrix(,nrow=74,ncol=length(indx))
+hv21<-h195[,indx]
+
+hcTop20 <- rbind(cv21 , hv21)
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
+c365<-colD2[,,365]
+h365<-ctl1D2[,,365]
+write.csv(c365,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr365.csv')
+write.csv(h365,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr365.csv')
+
+k365_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr365_ctl1.csv')
+k365d2_col <- k365_d2_col[2:574,2]
+plot(k365d2_col)
+
+indx<-which(k365d2_col>.847)#  141 153 158 170 218 347 374 405 408 458 528 558
+cv22 <-matrix(,nrow=79,ncol=length(indx))
+cv22<-c365[,indx]
+hv22 <-matrix(,nrow=74,ncol=length(indx))
+hv22<-h365[,indx]
+
+hcTop20 <- rbind(cv22 , hv22)
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
+cv2<-t(rbind(t(cv21),t(cv22)))
+hv2<-t(rbind(t(hv21),t(hv22)))
+
+hcTop20 <- rbind(cv2 , hv2)
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
+hnm499<-hnm[1:499,]
+cnm499<-cnm[1:499,]
+
+
+
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
 write.csv(col2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_all30.csv')
 write.csv(col3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_all18.csv')
@@ -356,9 +414,16 @@ k3d2_rec50 <- k3_d2_rec50[2:500,2]
 plot(k3d2_rec50)
 #################################################################################################
 
+plot(fft(kd2_col79, inverse = FALSE))
+plot(fft(kc, inverse = FALSE))
+plot(fft(kd2_rec50, inverse = FALSE))
+plot(fft(k2d2_rec50, inverse = FALSE))
+plot(fft(k3d2_rec50, inverse = FALSE))
+plot(abs(fft(kc, inverse = FALSE)))
+plot(abs(fft(kd2_col79, inverse = FALSE)))
+plot(abs(fft(kd2_rec50, inverse = FALSE)))
 
-
-
+# fft(kc, inverse = FALSE) should be taken square because of negative values; zero entries should be removed
 
 
 
