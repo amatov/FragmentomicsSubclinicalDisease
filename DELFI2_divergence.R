@@ -262,8 +262,31 @@ cnm499<-cnm[1:499,]
 write.csv(t(cnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc27_frl499.csv')
 write.csv(t(hnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl499.csv')
 
+k1_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43.csv')
+k1d2_col79 <- k1_d2_col79[2:500,2]
+plot(k1d2_col79)
 
+hM189 <- matrix(hnm499[189,], ncol = 555, byrow = 42) #  
+write.csv(hM189,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl499_189.csv')
 
+cM189 <- matrix(colD22[,189], ncol = 574, byrow = 79) #  
+write.csv(cM189[,1:555],'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col79_bin555_189.csv')
+
+k1_d2_col79_189 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43_fr189.csv')
+k1d2_col79_189 <- k1_d2_col79_189[2:555,2]
+plot(k1d2_col79_189)
+
+indx<-which(k1d2_col79_189>1.24) #1.3
+cv22 <-matrix(,nrow=79,ncol=length(indx))
+cv22<-cM189[,indx]
+hv22 <-matrix(,nrow=42,ncol=length(indx))
+hv22<-hM189[,indx]
+
+hcTop20 <- rbind(cv22 , hv22)
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+########################################################################################
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
 write.csv(col2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_all30.csv')
 write.csv(col3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_all18.csv')
