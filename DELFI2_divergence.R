@@ -259,6 +259,8 @@ hm <- heatmap(df, scale = "none", col =  col)
 
 hnm499<-hnm[1:499,]
 cnm499<-cnm[1:499,]
+write.csv(t(cnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc27_frl499.csv')
+write.csv(t(hnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl499.csv')
 
 
 
