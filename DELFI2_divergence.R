@@ -84,6 +84,8 @@ write.csv(h189x210,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_health
 k189_val_d1ctl43 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2val210_D1ctl43_fr189.csv')
 k189_vald1ctl43  <- k189_val_d1ctl43[2:211,2]
 plot(k189_vald1ctl43 )
+aux<-sort(k189_vald1ctl43,decreasing = T )
+plot(aux)
 # plot vector of 210 divergence numbers in bits (its always for 189 bp only)
 # are there peaks and dips?
 
