@@ -58,7 +58,37 @@ colA2 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="LOW") # 
 rec02 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="HIGH") # 11 rec Adenoma HIGH
 recA2 <- which(m2$diagnostic_group=="Adenoma rectum" & m2$adenoma_risk=="LOW") # 7 rec Adenoma LOW
 
+sum(m2$Replicate) # 29
+length(m2$Replicate)# 681
 # these seem to be 681 Delfi IDs. 
+val210 <- m2$diagnostic_group=="NA"
+val210[is.na(val210)] <- 1 # list of 210 validation samples
+val <- which(val210==1)
+auxVAL <- unlist(sapply(m2$DELFI.ID[val] , function(x) grep(x, x = pileupsD2 )))
+listVAL <- unique(auxVAL)
+
+# 210 individual KLD to the 43 CTL Delfi1. pick top 189 bp . maybe go to 12 bins.
+val189D2 <- valD2[,,189] #210 (samples) 574 (bins)
+
+write.csv(t(val189D2[,1:555]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_val210_555bins_fr189.csv')
+# 555 x 210 
+
+dim(hnm)#  700 23310
+hnm189 <- hnm[189,]#extract from 700 only 189 bp
+h189x210 = array(0, dim=c(23310,210))
+for (i in 1:210  ) {
+h189x210[,i]<-hnm189 #duplicate the same vector 210 times to prepare the divergence.
+}
+write.csv(h189x210,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_healthy43_555bins_fr189.csv')
+# 23310(42*555) x 210 
+k189_val_d1ctl43 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2val210_D1ctl43_fr189.csv')
+k189_vald1ctl43  <- k189_val_d1ctl43[2:211,2]
+plot(k189_vald1ctl43 )
+# plot vector of 210 divergence numbers in bits (its always for 189 bp only)
+# are there peaks and dips?
+
+# maybe look during a second step in the top bins etc
+
 
 m2$DELFI.ID[col_list2] # 79
 #[1] "DL001860CRP0"   "DL001940CRP0"   "DL002182CRP0"   "DL002181CRP0"   "DL002023CRP0"   "DL001364CRP0_1" "DL001364CRP0"   "DL001503CRP0"   "DL001288CRP0"  
@@ -109,6 +139,18 @@ auxCOL <- unlist(samplesCOL)
 listCOL <- unique(auxCOL)
 #[1] 377 419 511 510 452 188 189 250 159 253 219 133 353  86 342 412 538 398 370 519 277 292 293 184  87  88 237 376 364 269 105 279 280 226 542 278 391 471 442 467 544 248 203 330
 #[45] 271 552 553 373 524 264 110 531 143 549 139 480 460 529 490 405 407 375 454 151 170 270 116 274 368 369 429 430 333 305 431 516 517 348 239
+
+length(unique(auxVAL)) # 210 (4 were replicated, even if its the same sample)
+#################validation#######################
+valD2 = array(0, dim=c(210,574,499))
+j=1
+for (i in 1:210  ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listVAL[i]], header = TRUE) # sample per sample, file per file. 
+  valD2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
 
 length(unique(auxCOL)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, even if its the same sample)
 #################colon all stages#######################
