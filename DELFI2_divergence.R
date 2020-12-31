@@ -9,6 +9,7 @@ library(gplots)
 library(spatstat)
 library("transport")
 library(readxl)
+library(caret)
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 require("reticulate")
@@ -92,6 +93,28 @@ pileupsD2[listVAL[k189_val210_sorted$ix[1:21]]] # the colon cancer portion of th
 # are there peaks and dips?
 
 # maybe look during a second step in the top bins etc
+
+plot(kc[1:499], ylim=range(c(0,2.7)), col="green", type="l")
+par(new = TRUE)
+plot(kd2_col79, ylim=range(c(0,2.7)), col="red", type="l")
+legend(400,2.6,legend=c("DELFI1", "DELFI2"), col=c("green","red"),lty=1:1, cex=1.0)
+
+plot(k_d2_col1, ylim=range(c(0,1.9)), col="green", type="l")
+par(new = TRUE)
+plot(k_d2_col2, ylim=range(c(0,1.9)), col="blue", type="l")
+par(new = TRUE)
+plot(k_d2_col3, ylim=range(c(0,1.9)), col="orange", type="l")
+par(new = TRUE)
+plot(k_d2_col4, ylim=range(c(0,1.9)), col="red", type="l")
+legend(400,1.5,legend=c("CC SI", "CC SII", "CC SIII", "CC SIV"),col=c("green","blue","orange","red"),lty=1:1, cex=1.0)
+
+plot(kd2_col79, ylim=range(c(0,.8)), col="green", type="l")
+par(new = TRUE)
+plot(kd2_col79_ctl2, ylim=range(c(0,.8)), col="blue", type="l")
+par(new = TRUE)
+plot(kd2_col79_ctl3, ylim=range(c(0,.8)), col="red", type="l")
+legend(220,.8,legend=c("CC CTL1", "CC CTL2", "CC CTL3"),col=c("green","blue","red"),lty=1:1, cex=1.0)
+
 
 
 m2$DELFI.ID[col_list2] # 79
@@ -281,10 +304,10 @@ write.csv(c365,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr365.
 write.csv(h365,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr365.csv')
 
 k365_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr365_ctl1.csv')
-k365d2_col <- k365_d2_col[2:574,2]
+k365d2_col <- k365_d2_col[2:575,2]
 plot(k365d2_col)
 
-indx<-which(k365d2_col>.847)#  141 153 158 170 218 347 374 405 408 458 528 558
+indx<-which(k365d2_col>-5)#.847)#  141 153 158 170 218 347 374 405 408 458 528 558
 cv22 <-matrix(,nrow=79,ncol=length(indx))
 cv22<-c365[,indx]
 hv22 <-matrix(,nrow=74,ncol=length(indx))
@@ -292,6 +315,7 @@ hv22<-h365[,indx]
 
 hcTop20 <- rbind(cv22 , hv22)
 df<-scale(hcTop20)
+df[is.nan(df)] <- 0
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
 
@@ -319,10 +343,10 @@ cM189 <- matrix(colD22[,189], ncol = 574, byrow = 79) #
 write.csv(cM189[,1:555],'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col79_bin555_189.csv')
 
 k1_d2_col79_189 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43_fr189.csv')
-k1d2_col79_189 <- k1_d2_col79_189[2:555,2]
+k1d2_col79_189 <- k1_d2_col79_189[2:556,2]
 plot(k1d2_col79_189)
 
-indx<-which(k1d2_col79_189>1.24) #1.3
+indx<-which(k1d2_col79_189>-5)#1.24) #1.3
 cv22 <-matrix(,nrow=79,ncol=length(indx))
 cv22<-cM189[,indx]
 hv22 <-matrix(,nrow=42,ncol=length(indx))
@@ -332,6 +356,22 @@ hcTop20 <- rbind(cv22 , hv22)
 df<-scale(hcTop20)
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
+
+hgA <- hist(colD22[,195], breaks = 50 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1D22[,195],breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,470), ylim = c(0,3500)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,470), ylim = c(0,3500)) # Add 2nd histogram using different color
+
+hgA <- hist(colD22[,365], breaks = 30 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1D22[,365],breaks = 30, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,70), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,70), ylim = c(0,5000)) # Add 2nd histogram using different color
+
+
+
+
+
+
 ########################################################################################
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
 write.csv(col2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_all30.csv')
