@@ -10,6 +10,7 @@ library(spatstat)
 library("transport")
 library(readxl)
 library(caret)
+library("ggpubr")
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 require("reticulate")
@@ -94,6 +95,30 @@ pileupsD2[listVAL[k189_val210_sorted$ix[1:21]]] # the colon cancer portion of th
 
 # maybe look during a second step in the top bins etc
 
+
+classifier( method = c("randomForest", "svm", "nnet" ),  featureMat, positiveSamples, negativeSamples,  tunecontrol = tune.control(sampling = "cross", cross = 5), ...)
+
+
+##for random forest, and using five-fold cross validation for obtaining optimal parameters
+cl <- classifier( method = "randomForest", 
+                      featureMat = hcTop20, 
+                      positiveSamples = cv21, # col79x12 for frl195bp
+                      negativeSamples = hv21,# ctl1_74x12 for frl195bp
+                      tunecontrol = tune.control(sampling = "cross", cross = 5),
+                      ntree = 100 ) #build 100 trees for the forest
+
+glm(hcTop20)
+simple_logistic_model = glm(data = data.frame(as.factor(df)),
+                            family = binomial())
+
+summary(simple_logistic_model)
+
+#hcTop20 <- rbind(cv21 , hv21)
+condition <- rbind(array(1, dim=c(79,12)), array(0, dim=c(74,12)))
+pred <- prediction(hcTop20, condition, label.ordering = c(0, 1))  
+
+
+
 plot(kc[1:499], ylim=range(c(0,2.7)), col="green", type="l")
 par(new = TRUE)
 plot(kd2_col79, ylim=range(c(0,2.7)), col="red", type="l")
@@ -114,6 +139,13 @@ plot(kd2_col79_ctl2, ylim=range(c(0,.8)), col="blue", type="l")
 par(new = TRUE)
 plot(kd2_col79_ctl3, ylim=range(c(0,.8)), col="red", type="l")
 legend(220,.8,legend=c("CC CTL1", "CC CTL2", "CC CTL3"),col=c("green","blue","red"),lty=1:1, cex=1.0)
+
+
+
+
+
+
+
 
 
 
