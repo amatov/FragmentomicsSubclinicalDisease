@@ -93,9 +93,7 @@ pileupsD2[listVAL[k189_val210_sorted$ix[1:21]]] # the colon cancer portion of th
 # plot vector of 210 divergence numbers in bits (its always for 189 bp only)
 # are there peaks and dips?
 
-# maybe look during a second step in the top bins etc
-
-
+# library no longer exists
 classifier( method = c("randomForest", "svm", "nnet" ),  featureMat, positiveSamples, negativeSamples,  tunecontrol = tune.control(sampling = "cross", cross = 5), ...)
 
 
@@ -107,17 +105,18 @@ cl <- classifier( method = "randomForest",
                       tunecontrol = tune.control(sampling = "cross", cross = 5),
                       ntree = 100 ) #build 100 trees for the forest
 
-glm(hcTop20)
+# Error in family$linkfun(mustart) : Argument mu must be a nonempty numeric vector
 simple_logistic_model = glm(data = data.frame(as.factor(df)),
                             family = binomial())
-
 summary(simple_logistic_model)
 
-#hcTop20 <- rbind(cv21 , hv21)
+#ROC; find where overall success rate numbers are
 condition <- rbind(array(1, dim=c(79,12)), array(0, dim=c(74,12)))
 pred <- prediction(hcTop20, condition, label.ordering = c(0, 1))  
 
-
+#pearson 0.7627064 
+cor(kc[1:499], kd2_col79, method = c("pearson", "kendall", "spearman"))
+cor.test(kc[1:499], kd2_col79, method=c("pearson", "kendall", "spearman"))
 
 plot(kc[1:499], ylim=range(c(0,2.7)), col="green", type="l")
 par(new = TRUE)
@@ -558,6 +557,9 @@ plot(k3d2_rec50)
 #################################################################################################
 
 plot(fft(kd2_col79, inverse = FALSE))
+kccF <- fft(kd2_col79, inverse = FALSE)
+eigen(kccF)# expects a matrix as an input; 
+# add as many kld vectors as the number of samples.
 plot(fft(kc, inverse = FALSE))
 plot(fft(kd2_rec50, inverse = FALSE))
 plot(fft(k2d2_rec50, inverse = FALSE))
