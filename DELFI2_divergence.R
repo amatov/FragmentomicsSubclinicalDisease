@@ -216,15 +216,18 @@ length(unique(auxCOL)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 5
 colD2 = array(0, dim=c(79,574,499))
 j=1
 for (i in 1:79  ) {
-  print(i)
+  #print(i)
   #i=2
   auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
   colD2[j,,] <- unlist(auxFR[,2:500])
   
   # save 79 individual profiles as xls files
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_individual', i,'.csv')
-  print(length(unlist(auxFR[,2:500])))
-  write.csv(unlist(auxFR[,2:500]),sa_name)
+  #print(length(unlist(auxFR[,2:500])))
+  auxSAVE <-matrix(unlist(auxFR[,2:500]),nrow=574,ncol=499)
+
+  
+  write.csv(unlist(auxSAVE),sa_name)
   j=j+1
 }
 #######################################colon stage 1##########################
@@ -283,6 +286,7 @@ for (i in 1:74  ) {
   print(i)
   #i=2
   auxFR <- read.table(pileupsD2[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
+  
   ctl1D2[j,,] <- unlist(auxFR[,2:500])
   j=j+1
 }
@@ -423,6 +427,67 @@ d2_maxSens_spec95 <- c(.50,.42,.43,.96)
 cor(max_kd2_colStage, d2_maxSens_spec95, method=c("pearson", "kendall", "spearman"))
 cor(max_kd2_colStage, d2_maxSens_spec90, method=c("pearson", "kendall", "spearman"))
 max_kd2_colStage <- c(max(kd2_col1),max(kd2_col2),max(kd2_col3),max(kd2_col4))
+
+kd2_col_i<-matrix(,nrow=79,ncol=499)
+i1<-1*(m2$crc_stage[col_list2]=="I")
+i2<-1*(m2$crc_stage[col_list2]=="II")
+i3<-1*(m2$crc_stage[col_list2]=="III")
+i4<-1*(m2$crc_stage[col_list2]=="IV")
+
+k_d2_col_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual1.csv')
+kd2_col_i[1,] <- k_d2_col_i1[2:500,2]
+plot(kd2_col_i[1,])
+k_d2_col_i2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual2.csv')
+kd2_col_i[2,] <- k_d2_col_i2[2:500,2]
+plot(kd2_col_i[2,])
+
+k_d2_col_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual3.csv')
+kd2_col_i[3,]<- k_d2_col_i3[2:500,2]
+plot(kd2_col_i[3,])
+k_d2_col_i4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual4.csv')
+kd2_col_i[4,] <- k_d2_col_i4[2:500,2]
+plot(kd2_col_i[4,])
+
+for(i in 5:79) {
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual', i,'.csv')
+  aux <- read.csv(sa_name)
+  kd2_col_i[i,] <- aux[2:500,2]
+  #plot(kd2_col_i[i,], ylim=range(c(0,2.4)), col="red", type="l"))  
+  #par(new = TRUE)
+}
+for(i in 1:37) {
+plot(kd2_col_i[i,], ylim=range(c(0,5))) # looks good
+  par(new = TRUE)
+}
+colS1<-kd2_col_i[i1,]
+colS2<-kd2_col_i[i2,]
+colS3<-kd2_col_i[i3,]
+colS4<-kd2_col_i[i4,]
+for(i in 1:8) {
+  plot(colS1[i,], ylim=range(c(0,5)), col="green", type="l") 
+  par(new = TRUE)
+}
+for(i in 1:30) {
+  plot(colS2[i,], ylim=range(c(0,5)), col="blue", type="l")
+  par(new = TRUE)
+}
+for(i in 1:18) {
+  plot(colS3[i,], ylim=range(c(0,5)), col="purple", type="l")
+  par(new = TRUE)
+}
+for(i in 1:23) {
+  plot(colS4[i,], ylim=range(c(0,5)), col="red", type="l") 
+  par(new = TRUE)
+}
+
+
+
+
+
+
+
+
+
 
 ########################################################################################
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
