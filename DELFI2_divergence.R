@@ -10,6 +10,7 @@ library(spatstat)
 library("transport")
 library(readxl)
 library(caret)
+library(seewave)
 library("ggpubr")
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
@@ -219,6 +220,11 @@ for (i in 1:79  ) {
   #i=2
   auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
   colD2[j,,] <- unlist(auxFR[,2:500])
+  
+  # save 79 individual profiles as xls files
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_individual', i,'.csv')
+  print(length(unlist(auxFR[,2:500])))
+  write.csv(unlist(auxFR[,2:500]),sa_name)
   j=j+1
 }
 #######################################colon stage 1##########################
@@ -282,11 +288,12 @@ for (i in 1:74  ) {
 }
 
 ctl1D22 = array(0, dim=c(74*574,499))
-colD22 = array(0, dim=c(79*574,499))
 col1D22 = array(0, dim=c(8*574,499))
 col2D22 = array(0, dim=c(30*574,499))
 col3D22 = array(0, dim=c(18*574,499))
 col4D22 = array(0, dim=c(23*574,499))
+
+colD22 = array(0, dim=c(79*574,499))
 for (i in 1:499) {
   #i=1
   auxCTL <- ctl1D2[,,i]
@@ -398,10 +405,24 @@ hgB <- hist(ctl1D22[,365],breaks = 30, plot = FALSE) # Save 2nd histogram data
 plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,70), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
 plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,70), ylim = c(0,5000)) # Add 2nd histogram using different color
 
+plot(kc4[1:499], ylim=range(c(0,2.4)), col="red", type="l")
+par(new = TRUE)
+plot(kd2_col4, ylim=range(c(0,2.4)), col="green", type="l")
+par(new = TRUE)
+plot(k2d2_col4, ylim=range(c(0,2.4)), col="blue", type="l")
+legend(240,2.48,legend=c("D1 8 CRC Stage IV 43 CTL", "D2 23 CC Stage IV 74 CTL No comorbidity", "D2 23 CC Stage IV 71 CTL Comorbidity"),col=c("red","green","blue"),lty=1:1, cex=1.0)
 
-
-
-
+#pearson  
+cor(kc4[1:499], kd2_col4, method = c("pearson", "kendall", "spearman"))
+cor(kc4[1:499], k2d2_col4, method=c("pearson", "kendall", "spearman"))
+cor(kd2_col4, k2d2_col4, method=c("pearson", "kendall", "spearman"))
+max_k2d2_colStage <- c(max(k2d2_col1),max(k2d2_col2),max(k2d2_col3),max(k2d2_col4))
+d2_maxSens_spec90 <- c(.62,.52,.52,.97)
+cor(max_k2d2_colStage, d2_maxSens_spec90, method=c("pearson", "kendall", "spearman"))
+d2_maxSens_spec95 <- c(.50,.42,.43,.96)
+cor(max_kd2_colStage, d2_maxSens_spec95, method=c("pearson", "kendall", "spearman"))
+cor(max_kd2_colStage, d2_maxSens_spec90, method=c("pearson", "kendall", "spearman"))
+max_kd2_colStage <- c(max(kd2_col1),max(kd2_col2),max(kd2_col3),max(kd2_col4))
 
 ########################################################################################
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
@@ -558,8 +579,8 @@ plot(k3d2_rec50)
 
 plot(fft(kd2_col79, inverse = FALSE))
 kccF <- fft(kd2_col79, inverse = FALSE)
-eigen(kccF)# expects a matrix as an input; 
-# add as many kld vectors as the number of samples.
+eigen(kccF)# expects a matrix as an input; add as many kld vectors as the number of samples.
+# compute kld spectrum followed by sample classification based on the spectrum
 plot(fft(kc, inverse = FALSE))
 plot(fft(kd2_rec50, inverse = FALSE))
 plot(fft(k2d2_rec50, inverse = FALSE))
@@ -568,7 +589,7 @@ plot(abs(fft(kc, inverse = FALSE)))
 plot(abs(fft(kd2_col79, inverse = FALSE)))
 plot(abs(fft(kd2_rec50, inverse = FALSE)))
 
-# fft(kc, inverse = FALSE) should be taken square because of negative values; zero entries should be removed
+# fft(kc, inverse = FALSE) should be taken square because of negative values; zero component should be removed
 
 
 
@@ -980,7 +1001,7 @@ k_cH <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCh.csv')
 k_c1 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1.csv')
 k_c2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2.csv')
 k_c3 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC3.csv')
-k_c4 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC4.csv')
+k_c4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC4.csv')
 k_c364 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC364.csv')
 k_c205 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC205.csv')
 k_c198 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC198.csv')
