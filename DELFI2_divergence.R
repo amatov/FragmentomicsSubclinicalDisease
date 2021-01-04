@@ -228,7 +228,10 @@ for (i in 1:499) {
   recAD22[,i] <- auxRECA 
 }
 
-write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
+write.csv(col0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeL20.csv')
+write.csv(colAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH28.csv')
+write.csv(rec0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_adeL11.csv')
+write.csv(recAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH7.csv')
 
 
 
