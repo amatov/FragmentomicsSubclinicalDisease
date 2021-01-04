@@ -171,6 +171,70 @@ listCOL2 <- sapply(m2$DELFI.ID[col22] , function(x) grep(x, x = pileupsD2 ))
 listCOL3 <- unlist(sapply(m2$DELFI.ID[col32] , function(x) grep(x, x = pileupsD2 )))
 listCOL4 <- unlist(sapply(m2$DELFI.ID[col42] , function(x) grep(x, x = pileupsD2 )))
 
+listCOL0 <- unlist(sapply(m2$DELFI.ID[col02] , function(x) grep(x, x = pileupsD2 )))
+listCOLA <- unlist(sapply(m2$DELFI.ID[colA2] , function(x) grep(x, x = pileupsD2 )))
+listREC0 <- unlist(sapply(m2$DELFI.ID[rec02] , function(x) grep(x, x = pileupsD2 )))
+listRECA <- unlist(sapply(m2$DELFI.ID[recA2] , function(x) grep(x, x = pileupsD2 )))
+#######################################colon adenoma low##########################
+col0D2 = array(0, dim=c(20,574,499))
+j=1
+for (i in 1:20 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOL0[i]], header = TRUE) # sample per sample, file per file. 
+  col0D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+colAD2 = array(0, dim=c(28,574,499))
+j=1
+for (i in 1:28 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOLA[i]], header = TRUE) # sample per sample, file per file. 
+  colAD2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+rec0D2 = array(0, dim=c(11,574,499))
+j=1
+for (i in 1:11 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listREC0[i]], header = TRUE) # sample per sample, file per file. 
+  rec0D2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+recAD2 = array(0, dim=c(7,574,499))
+j=1
+for (i in 1:7 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listRECA[i]], header = TRUE) # sample per sample, file per file. 
+  recAD2[j,,] <- unlist(auxFR[,2:500])
+  j=j+1
+}
+col0D22 = array(0, dim=c(20*574,499))
+colAD22 = array(0, dim=c(28*574,499))
+rec0D22 = array(0, dim=c(11*574,499))
+recAD22 = array(0, dim=c(7*574,499))
+for (i in 1:499) {
+  #i=1
+  auxCOL0 <- col0D2[,,i]
+  col0D22[,i] <- auxCOL0 
+  auxCOLA<- colAD2[,,i]
+  colAD22[,i] <- auxCOLA 
+  auxREC0 <- rec0D2[,,i]
+  rec0D22[,i] <- auxREC0 
+  auxRECA <- recAD2[,,i]
+  recAD22[,i] <- auxRECA 
+}
+
+write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
+
+
+
+
+
+
 auxCOL <- unlist(samplesCOL)
 
 # auxCRC
