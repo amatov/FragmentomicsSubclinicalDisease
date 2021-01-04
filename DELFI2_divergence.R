@@ -288,6 +288,13 @@ for (i in 1:74  ) {
   auxFR <- read.table(pileupsD2[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
   
   ctl1D2[j,,] <- unlist(auxFR[,2:500])
+  
+  # save 74 individual profiles as xls files
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_individual', i,'.csv')
+  auxSAVE <-matrix(unlist(auxFR[,2:500]),nrow=574,ncol=499)
+  
+  
+  write.csv(unlist(auxSAVE),sa_name)
   j=j+1
 }
 
@@ -429,10 +436,6 @@ cor(max_kd2_colStage, d2_maxSens_spec90, method=c("pearson", "kendall", "spearma
 max_kd2_colStage <- c(max(kd2_col1),max(kd2_col2),max(kd2_col3),max(kd2_col4))
 
 kd2_col_i<-matrix(,nrow=79,ncol=499)
-i1<-1*(m2$crc_stage[col_list2]=="I")
-i2<-1*(m2$crc_stage[col_list2]=="II")
-i3<-1*(m2$crc_stage[col_list2]=="III")
-i4<-1*(m2$crc_stage[col_list2]=="IV")
 
 k_d2_col_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual1.csv')
 kd2_col_i[1,] <- k_d2_col_i1[2:500,2]
@@ -448,42 +451,103 @@ k_d2_col_i4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiverg
 kd2_col_i[4,] <- k_d2_col_i4[2:500,2]
 plot(kd2_col_i[4,])
 
-for(i in 5:79) {
+for(i in 1:79) {
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual', i,'.csv')
   aux <- read.csv(sa_name)
   kd2_col_i[i,] <- aux[2:500,2]
+  print(which.max(aux[2:500,2]))
   #plot(kd2_col_i[i,], ylim=range(c(0,2.4)), col="red", type="l"))  
   #par(new = TRUE)
 }
-for(i in 1:37) {
-plot(kd2_col_i[i,], ylim=range(c(0,5))) # looks good
+for(i in 1:79) {
+  #i=4
+#plot(kd2_col_i[i,], ylim=range(c(0,5)),col= rgb(1,0,0,i/10)) # looks good
+  plot(kd2_col_i[i,], ylim=range(c(0,5)),col= col2rgb(i, alpha = FALSE)) # looks good
+  
   par(new = TRUE)
 }
-colS1<-kd2_col_i[i1,]
-colS2<-kd2_col_i[i2,]
-colS3<-kd2_col_i[i3,]
-colS4<-kd2_col_i[i4,]
+colS1<-kd2_col_i[m2$crc_stage[col_list2]=="I",]
+colS2<-kd2_col_i[m2$crc_stage[col_list2]=="II",]
+colS3<-kd2_col_i[m2$crc_stage[col_list2]=="III",]
+colS4<-kd2_col_i[m2$crc_stage[col_list2]=="IV",]
+mS1=NULL
+mS2=NULL
+mS3=NULL
+mS4=NULL
+maS1=NULL
+maS2=NULL
+maS3=NULL
+maS4=NULL
 for(i in 1:8) {
-  plot(colS1[i,], ylim=range(c(0,5)), col="green", type="l") 
+  plot(colS1[i,], ylim=range(c(0,5.2)), col= col2rgb(i+50, alpha = FALSE), type="l")    
+  mS1[i]<-which.max(colS1[i,])
+  maS1[i]<-max(colS1[i,])
   par(new = TRUE)
 }
+#plot(mS1, maS1, pch = 24, cex=2, col="blue", bg="red", lwd=2)# plot the dot of the max
+#par(new = TRUE)
+
 for(i in 1:30) {
-  plot(colS2[i,], ylim=range(c(0,5)), col="blue", type="l")
+  plot(colS2[i,], ylim=range(c(0,5.2)), col= col2rgb(2*i+50), type="l") 
+  mS2[i]<-which.max(colS2[i,])
+  maS2[i]<-max(colS2[i,])
   par(new = TRUE)
 }
 for(i in 1:18) {
-  plot(colS3[i,], ylim=range(c(0,5)), col="purple", type="l")
+  plot(colS3[i,], ylim=range(c(0,5.2)), col= col2rgb(2*i+50), type="l")
+  mS3[i]<-which.max(colS3[i,])
+  maS3[i]<-max(colS3[i,])
   par(new = TRUE)
 }
 for(i in 1:23) {
-  plot(colS4[i,], ylim=range(c(0,5)), col="red", type="l") 
+  plot(colS4[i,], ylim=range(c(0,5.2)), col= col2rgb(2*i+50), type="l") 
+  mS4[i]<-which.max(colS4[i,])
+  maS4[i]<-max(colS4[i,])
   par(new = TRUE)
 }
+hgA <- hist(mS1, breaks = 50 , plot = FALSE) # Save first histogram data
+hgB <- hist(mS2,breaks = 50, plot = FALSE) # Save 2nd histogram data
+hgC <- hist(mS3, breaks = 50 , plot = FALSE) # Save first histogram data
+hgD <- hist(mS4,breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(100,400), ylim = c(0,8)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(100,400), ylim = c(0,8)) # Add 2nd histogram using different color
+plot(hgC, col = rgb(1,0,1,1/10),add = TRUE,xlim = c(100,400), ylim = c(0,8)) # Plot 1st histogram using a transparent color
+plot(hgD, col = rgb(0,1,1,1/10), add = TRUE,xlim = c(100,400), ylim = c(0,8)) # Add 2nd histogram using different color
+
+plot(mS1, ylim=range(c(100,400)),col="green")
+par(new = TRUE)
+plot(mS2, ylim=range(c(100,400)), col="blue")
+par(new = TRUE)
+plot(mS3, ylim=range(c(100,400)), col="orange")
+par(new = TRUE)
+plot(mS4, ylim=range(c(100,400)), col="red")
+legend(240,2.48,legend=c("D1 8 CRC Stage IV 43 CTL", "D2 23 CC Stage IV 74 CTL No comorbidity", "D2 23 CC Stage IV 71 CTL Comorbidity"),col=c("red","green","blue"),lty=1:1, cex=1.0)
 
 
 
+k_d2_ctl1_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual1.csv')
+kd2_ctl1_i[1,] <- k_d2_ctl1_i1[2:500,2]
+plot(kd2_ctl1_i[1,])
+k_d2_ctl1_i2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual2.csv')
+kd2_ctl1_i[2,] <- k_d2_ctl1_i2[2:500,2]
+plot(kd2_ctl1_i[2,])
 
-
+kd2_ctl1_i<-matrix(,nrow=74,ncol=499)
+mC1=NULL
+maC1=NULL
+for(i in 1:74) {
+  #i=1
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual', i,'.csv')
+  aux <- read.csv(sa_name)
+  kd2_ctl1_i[i,] <- aux[2:500,2]
+  plot(kd2_ctl1_i[i,],  ylim=range(c(0,5.2)), col= col2rgb(2*i+50), type="l") # there is something wrong with the colors
+  print(col2rgb(2*i+50))
+  mC1[i]<-which.max(kd2_ctl1_i[i,] )
+  maC1[i]<-max(kd2_ctl1_i[i,] )
+  par(new = TRUE)
+}
+print(median(maC1))
+print(median(mC1))
 
 
 
