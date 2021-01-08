@@ -228,13 +228,33 @@ for (i in 1:499) {
   recAD22[,i] <- auxRECA 
 }
 
-write.csv(col0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeL20.csv')
-write.csv(colAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH28.csv')
-write.csv(rec0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_adeL11.csv')
-write.csv(recAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH7.csv')
+write.csv(col0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH20.csv')
+write.csv(colAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeL28.csv')
+write.csv(rec0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_adeH11.csv')
+write.csv(recAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_adeL7.csv')
 
+kd2_col0 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_adeH20_ctl1.csv')
+k_d2_col0 <- kd2_col0[2:500,2]
+plot(k_d2_col0)
+kd2_colA <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_adeL28_ctl1.csv')
+k_d2_colA <- kd2_colA[2:500,2]
+plot(k_d2_colA)
+kd2_rec0 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2rec_adeH11_ctl1.csv')
+k_d2_rec0 <- kd2_rec0[2:500,2]
+plot(k_d2_rec0)
+kd2_recA <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2rec_adeL7_ctl1.csv')
+k_d2_recA <- kd2_recA[2:500,2]
+plot(k_d2_recA)
+# combined figure for the four adenomas
+plot(k_d2_col0, ylim=range(c(0,.36)) ,col="red", type="l")
+par(new = TRUE)
+plot(k_d2_colA, ylim=range(c(0,.36)), col="green", type="l")
+legend(300,.3,legend=c("CC AH", "CC AL"),col=c("red","green"),lty=1:1, cex=1.0)
 
-
+plot(k_d2_rec0, ylim=range(c(0,.7)), col="orange", type="l")
+par(new = TRUE)
+plot(k_d2_recA, ylim=range(c(0,.7)), col="blue", type="l")
+legend(300,.6,legend=c( "RC AH", "RC AL"),col=c("orange","blue"),lty=1:1, cex=1.0)
 
 
 
@@ -400,7 +420,7 @@ write.csv(c195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr195.
 write.csv(h195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr195.csv')
 
 k195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr195_ctl1.csv')
-k195d2_col <- k195_d2_col[2:574,2]
+k195d2_col <- k195_d2_col[2:575,2]
 plot(k195d2_col)
 
 indx<-which(k195d2_col>1.12)#  33  48  90 145 156 191 213 356 429 483 529 572
@@ -502,8 +522,6 @@ cor(max_kd2_colStage, d2_maxSens_spec95, method=c("pearson", "kendall", "spearma
 cor(max_kd2_colStage, d2_maxSens_spec90, method=c("pearson", "kendall", "spearman"))
 max_kd2_colStage <- c(max(kd2_col1),max(kd2_col2),max(kd2_col3),max(kd2_col4))
 
-kd2_col_i<-matrix(,nrow=79,ncol=499)
-
 k_d2_col_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual1.csv')
 kd2_col_i[1,] <- k_d2_col_i1[2:500,2]
 plot(kd2_col_i[1,])
@@ -518,6 +536,7 @@ k_d2_col_i4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiverg
 kd2_col_i[4,] <- k_d2_col_i4[2:500,2]
 plot(kd2_col_i[4,])
 
+kd2_col_i<-matrix(,nrow=79,ncol=499)
 for(i in 1:79) {
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual', i,'.csv')
   aux <- read.csv(sa_name)
@@ -533,6 +552,8 @@ for(i in 1:79) {
   
   par(new = TRUE)
 }
+
+col_list2 <- which(m2$diagnostic_group=="Colon cancer") #  79
 colS1<-kd2_col_i[m2$crc_stage[col_list2]=="I",]
 colS2<-kd2_col_i[m2$crc_stage[col_list2]=="II",]
 colS3<-kd2_col_i[m2$crc_stage[col_list2]=="III",]
@@ -599,6 +620,7 @@ k_d2_ctl1_i2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiver
 kd2_ctl1_i[2,] <- k_d2_ctl1_i2[2:500,2]
 plot(kd2_ctl1_i[2,])
 
+# brew a palette with 74 values and pass it to "col" with an index i.
 kd2_ctl1_i<-matrix(,nrow=74,ncol=499)
 mC1=NULL
 maC1=NULL
@@ -607,8 +629,10 @@ for(i in 1:74) {
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual', i,'.csv')
   aux <- read.csv(sa_name)
   kd2_ctl1_i[i,] <- aux[2:500,2]
-  plot(kd2_ctl1_i[i,],  ylim=range(c(0,5.2)), col= col2rgb(2*i+50), type="l") # there is something wrong with the colors
-  print(col2rgb(2*i+50))
+  t1<-floor(i/9)
+  k <- (i-t1*9)
+  plot(kd2_ctl1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
+  print(palette()[k])#print(col2rgb(2*i+50))
   mC1[i]<-which.max(kd2_ctl1_i[i,] )
   maC1[i]<-max(kd2_ctl1_i[i,] )
   par(new = TRUE)
@@ -616,10 +640,63 @@ for(i in 1:74) {
 print(median(maC1))
 print(median(mC1))
 
+# Stage I 205 bp, Stage II 137 bp, Stage III 364 bp, Stage IV 364 bp   
+c1_205<-col1D2[,,205]
+h1_205<-ctl1D2[,,205]
+write.csv(c1_205,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_fr205.csv')
+write.csv(h1_205,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr205.csv')
 
+c2_137<-col2D2[,,137]
+h1_137<-ctl1D2[,,137]
+write.csv(c2_137,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_fr137.csv')
+write.csv(h1_137,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr137.csv')
+k137_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col2_fr137_ctl1.csv')
+k137d2_col2 <- k137_d2_col2[2:575,2]
+plot(k137d2_col2)
+indx<-which(k137d2_col2>0.33)#12
+cv <-matrix(,nrow=30,ncol=length(indx))
+cv<-c2_137[,indx]
+hv <-matrix(,nrow=74,ncol=length(indx))
+hv<-h1_137[,indx]
+hcTop20 <- rbind(cv , hv)
+df<-scale(hcTop20)
+df[is.nan(df)] <- 0
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
 
+c3_364<-col3D2[,,364]
+h1_364<-ctl1D2[,,364]
+write.csv(c3_364,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_fr364.csv')
+write.csv(h1_364,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr364.csv')
+k364_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col3_fr364_ctl1.csv')
+k364d2_col3 <- k364_d2_col3[2:575,2]
+plot(k364d2_col3)
+indx<-which(k364d2_col3>0.08)#12
+cv <-matrix(,nrow=18,ncol=length(indx))
+cv<-c3_364[,indx]
+hv <-matrix(,nrow=74,ncol=length(indx))
+hv<-h1_364[,indx]
+hcTop20 <- rbind(cv , hv)
+df<-scale(hcTop20)
+df[is.nan(df)] <- 0
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
 
-
+c4_364<-col3D2[,,364]
+write.csv(c4_364,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col4_fr364.csv')
+k364_d2_col4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col4_fr364_ctl1.csv')
+k364d2_col4 <- k364_d2_col4[2:575,2]
+plot(k364d2_col4)
+indx<-which(k364d2_col4>0.08)#12
+cv <-matrix(,nrow=23,ncol=length(indx))
+cv<-c4_364[,indx]
+hv <-matrix(,nrow=74,ncol=length(indx))
+hv<-h1_364[,indx]
+hcTop20 <- rbind(cv , hv)
+df<-scale(hcTop20)
+df[is.nan(df)] <- 0
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
 ########################################################################################
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
 write.csv(col2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_all30.csv')
@@ -792,9 +869,9 @@ plot(abs(fft(kd2_rec50, inverse = FALSE)))
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
 #bf <- read.table("filtered_window_data_5MB_1_700_m5000.txt")
-bFr <- read.table("filtered_window_data_5MB_1_700_m5000.txt", header = TRUE)
+bFr <- read.table("~/genomedk/DELFI_data/Derived/fragment_length_in_bins/filtered_window_data_5MB_1_700_m5000.txt", header = TRUE)
 typeof(bFr) # list
-lookUp <- read.table("5MB_map_file.txt")
+#lookUp <- read.table("5MB_map_file.txt")
 
 # originial paper has 504 bins per patient sample, which covers 2.52G of genome
 s1 = unlist(bFr[1,3:702]) # 700 (fragments) length histogram values for one 5mps bin
@@ -804,7 +881,8 @@ hist(s1[s1>100])
 hist(s2[s2>100])
 
 #sL <- read.csv("U:\\Documents/R/delfi_scripts-master/sample_reference.csv")
-sL <- read.csv("~/genomedk/matovanalysis/DELFI_analysis/R/sample_reference.csv")
+#sL <- read.csv("~/genomedk/matovanalysis/DELFI_analysis/R/sample_reference.csv")
+sL <- read.csv("~/genomedk/DELFI_data/sample_reference.csv")
 
 iL <- sL[sL[,6]=="Lung Cancer",3] # list  
 iD <- sL[sL[,6]=="Cholangiocarcinoma",3] # list  
