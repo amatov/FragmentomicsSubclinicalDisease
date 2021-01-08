@@ -478,6 +478,20 @@ write.csv(hM189,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl
 cM189 <- matrix(colD22[,189], ncol = 574, byrow = 79) #  
 write.csv(cM189[,1:555],'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col79_bin555_189.csv')
 
+
+col_bins <- matrix(t(colD22), ncol = 574, byrow = 79) #  
+ctl1_bins <- matrix(t(ctl1D22), ncol = 574, byrow = 74) # 
+write.csv(ctl1_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1Bins.csv')
+write.csv(col_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_colBins.csv')
+k_d2_colBins <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_Bins.csv')
+kd2_colBins<-k_d2_colBins[2:701,2]
+plot(kd2_colBins)
+
+
+
+
+
+
 k1_d2_col79_189 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43_fr189.csv')
 k1d2_col79_189 <- k1_d2_col79_189[2:556,2]
 plot(k1d2_col79_189)
@@ -1251,6 +1265,14 @@ write.csv(t(cnm4),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc4.csv')
 
 write.csv(t(v364[sample(1:14430,100)]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_v364_100.csv')
 
+write.csv(he1_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl1Bins.csv')
+write.csv(crc_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crcBins.csv')
+k_cBins <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_Bins.csv')
+kcBins<-k_cBins[2:701,2]
+plot(kcBins)
+
+
+
 k_ch2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCh2.csv')
 k_cmaxmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmaxmin.csv')
 
@@ -1526,6 +1548,11 @@ cM205 <- matrix(cnm[205,], ncol = 555, byrow = 26) #
 hM205 <- matrix(hnm[205,], ncol = 555, byrow = 42) # 
 cM198 <- matrix(cnm[198,], ncol = 555, byrow = 26) #  
 hM198 <- matrix(hnm[198,], ncol = 555, byrow = 42) # 
+
+# compute divergence over all bins
+crc_bins <- matrix(cnm, ncol = 555, byrow = 26) #  
+he1_bins <- matrix(hnm, ncol = 555, byrow = 42) # 
+
 # check variance across bins/genomic positions to find highest variability/difference CRC to CTL
 vC364<-apply(cM364,2,var)
 vH364<-apply(hM364,2,var)
