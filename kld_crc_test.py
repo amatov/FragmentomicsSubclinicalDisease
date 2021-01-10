@@ -67,9 +67,9 @@ sampP = pd.read_csv('delfi1_ctl.csv')
 #kld_name = 'KLdivergenceD2col_Bins.csv'
 #file_name = 'delfi2_ctl1_individual%d.csv'%(i)
 #kld_name = 'KLdivergenceD2ctl1_individual%d.csv'%(i)
-i=3
+i=5
 #for i in range(12, 43, 1):
-file_name = 'delfi1_ctl1_individual%d.csv'%(i)
+file_name = 'delfi1_crc1_individual%d.csv'%(i)
 kld_name = 'KLdivergenceD1crc1_individual%d.csv'%(i)
 #for i in range(1,79):
 sampQ = pd.read_csv(file_name)
