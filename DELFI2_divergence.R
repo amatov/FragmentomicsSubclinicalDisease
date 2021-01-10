@@ -478,9 +478,18 @@ write.csv(hM189,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl
 cM189 <- matrix(colD22[,189], ncol = 574, byrow = 79) #  
 write.csv(cM189[,1:555],'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col79_bin555_189.csv')
 
+col_bins = array(0, dim=c(79*499,574))
+ctl1_bins = array(0, dim=c(74*499,574))
+#col_bins <- matrix(, ncol = 574, byrow = 79) #  
+dim(colD2) # 79 574 499
+for (i in 1:574){
+  auxCOL <- colD2[,i,]
+  col_bins[,i] <- auxCOL
+  auxCTL1 <- ctl1D2[,i,]
+  ctl1_bins[,i] <- auxCTL1
+}
+#ctl1_bins <- matrix(ctl1D22, ncol = 574, byrow = 74) # 
 
-col_bins <- matrix(t(colD22), ncol = 574, byrow = 79) #  
-ctl1_bins <- matrix(t(ctl1D22), ncol = 574, byrow = 74) # 
 write.csv(ctl1_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1Bins.csv')
 write.csv(col_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_colBins.csv')
 k_d2_colBins <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_Bins.csv')
@@ -1042,7 +1051,12 @@ cs1 <-matrix(,nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbC1) {
   #i= 1
-  cs11 <- bFr[bFr[,1]==iC1[i],]
+  #cs11 <- bFr[bFr[,1]==iC1[i],]
+  cs11 <- bFr[as.character(bFr[,1])==as.character(iC1[i]),]
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc1_individual', i,'.csv')
+  write.csv(ctl1[,3:702],sa_name)
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual', i,'.csv')
+  
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs1 <- cs11 
@@ -1103,6 +1117,11 @@ cF <- c(191, 192 ,194 ,195, 196, 197, 198, 200, 201, 203 ,204, 205 ,206 ,357, 35
 c20<- c[,cL]
 dimnames(c20)[[2]]<-cF
 
+k_ctl1_i<-matrix(,nrow=43,ncol=700)
+k_ctl1_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1ctl1_individual3.csv')
+k_ctl1_i[3,] <- k_ctl1_i3[2:701,2]
+plot(k_ctl1_i[3,])
+
 nbCTL <- length(iH) / 5 # devide by 5 until laptop comes
 ctl <-matrix(,nrow=555,ncol=702)
 ctlB <-matrix(,nrow=700,ncol=555)
@@ -1110,12 +1129,27 @@ h <-matrix(,nrow=nbCTL ,ncol=700)
 nFh  <- vector()
 #nFh <- c(nFh, 1:nbCTL)
 # for all patients
+mC1=NULL
+maC1=NULL
 for(i in 1:nbCTL) {
   #i= 1
   ctl1 <- bFr[as.character(bFr[,1])==as.character(iH[i]),]
-  
   print(dim(ctl1))
   
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl1_individual', i,'.csv')
+  #write.csv(ctl1[,3:702],sa_name)
+  if (i != 9){
+    sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1ctl1_individual', i,'.csv')
+    aux<- read.csv(sa_name)
+    k_ctl1_i[i,] <- aux[2:701,2]
+    t1<-floor(i/9)
+    k <- (i-t1*9)
+    plot(k_ctl1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
+    print(palette()[k])#print(col2rgb(2*i+50))
+    mC1[i]<-which.max(k_ctl1_i[i,] )
+    maC1[i]<-max(k_ctl1_i[i,] )
+   par(new = TRUE)
+  }
   if (i == 10){
     ctlMax <- ctl1[,3:702]
   }
@@ -1143,6 +1177,7 @@ for(i in 1:nbCTL) {
     }
   }
 }
+
 for(i in (nbCTL+1):(nbCTL+nbCTL+1)) {
   #i= 1
   ctl1 <- bFr[bFr[,1]==iH[i],]
