@@ -11,6 +11,7 @@ library("transport")
 library(readxl)
 library(caret)
 library(seewave)
+library("glmnet")
 library("ggpubr")
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
@@ -362,7 +363,22 @@ ctl1_list <- which(m2$diagnostic_group=="No comorbidity-no finding") # 74
 
 samplesCTL1 <- sapply(m2$DELFI.ID[ctl1_list] , function(x) grep(x, x = pileupsD2 )) 
 auxCTL1 <- unlist(samplesCTL1)
-
+#DL001791HLP0 DL001790HLP0 DL001437HLP0 DL001636HLP0 DL001481HLP0 DL001168HLP0 DL001171HLP0 DL001181HLP0 DL001215HLP0 DL001223HLP0 
+#347          346          220          298          240          113          114          118          135          137 
+#DL002195HLP0 DL002016HLP0 DL001609HLP0 DL001287HLP0 DL001440HLP0 DL001530HLP0 DL001092HLP0 DL001394HLP0 DL001839HLP0 DL002172HLP0 
+#520          451          290          158          221          257           85          206          367          507 
+#DL001775HLP0 DL001908HLP0 DL002199HLP0 DL002180HLP0 DL001605HLP0 DL001391HLP0 DL001884HLP0 DL001870HLP0 DL001872HLP0 DL001780HLP0 
+#338          403          521          509          289          204          389          381          383          339 
+#DL001956HLP0 DL001644HLP0 DL002088HLP0 DL001646HLP0 DL001798HLP0 DL001795HLP0 DL002031HLP0 DL001783HLP0 DL002074HLP0 DL001331HLP0 
+#426          303          472          304          352          349          455          340          468          174 
+#DL001451HLP0 DL001345HLP0 DL001382HLP0 DL001979HLP0 DL001553HLP0 DL001826HLP0 DL001868HLP0 DL001707HLP0 DL002129HLP0 DL002153HLP0 
+#228          182          199          437          265          363          380          318          493          501 
+#DL001148HLP0 DL002215HLP0 DL002053HLP0 DL001312HLP0 DL002050HLP0 DL001243HLP0 DL002206HLP0 DL001310HLP0 DL001272HLP0 DL002290HLP0 
+#106          527          463          169          461          142          525          168          153          555 
+#DL002008HLP0 DL002099HLP0 DL001408HLP0 DL001767HLP0 DL001279HLP0 DL002097HLP0 DL002092HLP0 DL001269HLP0 DL001457HLP0 DL001542HLP0 
+#446          478          212          336          155          476          474          150          233          262 
+#DL001961HLP0 DL001118HLP0 DL001117HLP0 DL001253HLP0 
+#428           98           97          144 
 listCTL1 <- unique(auxCTL1)
 
 length(unique(auxCTL1)) # 74
@@ -394,18 +410,18 @@ col4D22 = array(0, dim=c(23*574,499))
 colD22 = array(0, dim=c(79*574,499))
 for (i in 1:499) {
   #i=1
-  auxCTL <- ctl1D2[,,i]
-  ctl1D22[,i] <- auxCTL 
+  #auxCTL <- ctl1D2[,,i]
+  #ctl1D22[,i] <- auxCTL 
   auxCOL <- colD2[,,i]
   colD22[,i] <- auxCOL
-  auxCOL1 <- col1D2[,,i]
-  col1D22[,i] <- auxCOL1 
-  auxCOL2<- col2D2[,,i]
-  col2D22[,i] <- auxCOL2 
-  auxCOL3 <- col3D2[,,i]
-  col3D22[,i] <- auxCOL3 
-  auxCOL4 <- col4D2[,,i]
-  col4D22[,i] <- auxCOL4 
+  #auxCOL1 <- col1D2[,,i]
+  #col1D22[,i] <- auxCOL1 
+  #auxCOL2<- col2D2[,,i]
+  #col2D22[,i] <- auxCOL2 
+  #auxCOL3 <- col3D2[,,i]
+  #col3D22[,i] <- auxCOL3 
+  #auxCOL4 <- col4D2[,,i]
+  #col4D22[,i] <- auxCOL4 
 }
 
 write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
@@ -414,11 +430,27 @@ dim(colD2)# 79 574 499
 dim(ctl1D2)# 74 574 499
 c195<-colD2[,,195]
 h195<-ctl1D2[,,195]
+hh195<-ctl11D2[,,195]
 dim(c195) # 79 574
 dim(h195)#  74 574
+dim(hh195)#  73 574
 write.csv(c195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr195.csv')
 write.csv(h195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr195.csv')
+write.csv(hh195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl73_fr195.csv')
 
+kk195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr195_ctl73.csv')
+kk195d2_col <- kk195_d2_col[2:575,2]
+plot(kk195d2_col)
+indx<-which(kk195d2_col>-5)#.847)#  141 153 158 170 218 347 374 405 408 458 528 558
+cv22 <-matrix(,nrow=79,ncol=length(indx))
+cv22<-c195[,indx]
+hv22 <-matrix(,nrow=73,ncol=length(indx))
+hv22<-hh195[,indx]
+hcTop20 <- rbind(cv22 , hv22)
+df<-scale(hcTop20)
+df[is.nan(df)] <- 0
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
 k195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr195_ctl1.csv')
 k195d2_col <- k195_d2_col[2:575,2]
 plot(k195d2_col)
@@ -471,6 +503,14 @@ write.csv(t(hnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43
 k1_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43.csv')
 k1d2_col79 <- k1_d2_col79[2:500,2]
 plot(k1d2_col79)
+
+k1_d2_col79hg38 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43HG38.csv')
+k1d2_col79hg38 <- k1_d2_col79hg38[2:500,2]
+plot(k1d2_col79hg38)
+
+k2_d2_col79hg38 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl86HG38.csv')
+k2d2_col79hg38 <- k2_d2_col79hg38[2:500,2]
+plot(k2d2_col79hg38)
 
 hM189 <- matrix(hnm499[189,], ncol = 555, byrow = 42) #  
 write.csv(hM189,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl499_189.csv')
@@ -647,14 +687,14 @@ plot(kd2_ctl1_i[2,])
 kd2_ctl1_i<-matrix(,nrow=74,ncol=499)
 mC1=NULL
 maC1=NULL
-for(i in 1:74) {
+for(i in 1:74) {# break down the plot of 74 into 4 plots of 18
   #i=1
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual', i,'.csv')
   aux <- read.csv(sa_name)
   kd2_ctl1_i[i,] <- aux[2:500,2]
   t1<-floor(i/9)
   k <- (i-t1*9)
-  plot(kd2_ctl1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
+  plot(kd2_ctl1_i[i,],  ylim=range(c(0,3.8)), col= palette()[k], type="l") # there is something wrong with the colors
   print(palette()[k])#print(col2rgb(2*i+50))
   mC1[i]<-which.max(kd2_ctl1_i[i,] )
   maC1[i]<-max(kd2_ctl1_i[i,] )
@@ -662,6 +702,34 @@ for(i in 1:74) {
 }
 print(median(maC1))
 print(median(mC1))
+
+dim(k_ctl1_i) # 43 700 # 9 is NA
+totKLD_D1_CTL1 <- rowSums(k_ctl1_i[,1:499], dims = 1)# take only 1:499
+dim(kd2_ctl1_i) #74 499
+totKLD_D2_CTL1 <- rowSums(kd2_ctl1_i, dims = 1)# is it much higher? 
+hgA <- hist(totKLD_D1_CTL1, breaks = 10, plot = FALSE) # Save first histogram data
+hgB <- hist(totKLD_D2_CTL1,  breaks = 30, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,1000), ylim = c(0,24)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,1000), ylim = c(0,24)) # Add 2nd histogram using different color
+
+ctl1D2[35,,]
+totFRs_D2_CTL1 <- rowSums(ctl1D2)
+totFRs_D2_CTL1[35] # 38186686 outlier
+mean(totFRs_D2_CTL1)+3*sd(totFRs_D2_CTL1) # 33584769
+plot(totFRs_D1_CTL1)
+plot(totFRs_D2_CTL1)
+shapiro.test(totFRs_D1_CTL1)
+shapiro.test(totFRs_D2_CTL1)
+totFRs_D2_CTL11<-vector()
+totFRs_D2_CTL11[1:34]<-totFRs_D2_CTL1[1:34]
+totFRs_D2_CTL11[35:73]<-totFRs_D2_CTL1[36:74]
+shapiro.test(totFRs_D2_CTL11)
+totKLD_D1_CTL11 <- rowSums(k_ctl1_i, dims = 1)# take only 1:499
+plot(totFRs_D1_CTL11)
+shapiro.test(totFRs_D1_CTL11)
+
+
+
 
 # Stage I 205 bp, Stage II 137 bp, Stage III 364 bp, Stage IV 364 bp   
 c1_205<-col1D2[,,205]
@@ -727,6 +795,22 @@ write.csv(col3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_al
 write.csv(col4D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col4_all23.csv')
 
 write.csv(ctl1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74.csv')
+ctl11D22= array(0, dim=c(73*574,499))
+ctl11D2= array(0, dim=c(73,574,499))
+ctl11D2[1:34,,]<-ctl1D2[1:34,,]
+ctl11D2[35:73,,]<-ctl1D2[36:74,,]
+for (i in 1:499) {
+  #i=1
+  auxCTL11 <- ctl11D2[,,i]
+  ctl11D22[,i] <- auxCTL11 
+}
+write.csv(ctl11D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_73.csv')
+k2_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl73.csv')
+k2d2_col79 <- k2_d2_col79[2:500,2]
+plot(k2d2_col79)
+cor(kd2_col79, k2d2_col79, method=c("pearson", "kendall", "spearman"))
+cor(kc[1:499], k2d2_col79, method=c("pearson", "kendall", "spearman"))
+#cor(kc[1:499], kd2_col79, method=c("pearson", "kendall", "spearman"))
 
 k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
 kd2_col79 <- k_d2_col79[2:500,2]
@@ -859,10 +943,17 @@ for (i in 1:499) {
   recD22[,i] <- auxREC 
 }
 write.csv(recD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_all50.csv')
-
 k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl1.csv')
 kd2_rec50 <- k_d2_rec50[2:500,2]
 plot(kd2_rec50)
+
+write.csv(rbind(recD22,colD22),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_crc_all129.csv')
+k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl1.csv')
+kd2_rec50 <- k_d2_rec50[2:500,2]
+plot(kd2_rec50)
+
+# x 364 for CRC, y 364 for CTL
+glmnet(x, y, family = "binomial", alpha = 1, lambda = NULL)
 #################################################################################################
 k2_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl2.csv')
 k2d2_rec50 <- k2_d2_rec50[2:500,2]
@@ -1009,54 +1100,80 @@ for(i in 1:nbOVC) {
   }
 }
 
+
+
+pileupsD1 <- list.files("~/genomedk/DELFI1/Workspaces/maretty/frag_lens/5mb", recursive = T, full.names = T, pattern = "tsv")
+
+listD1CRC27 <- sapply(iC, function(x) grep(x, x = pileupsD1 ))
+pileupsD1[listD1CRC27] 
+listD1CTL215 <- sapply(iH, function(x) grep(x, x = pileupsD1 ))
+
 nbCRC <- length(iC)
-crc <-matrix(,nrow=555,ncol=702)
-c <-matrix(,nrow=nbCRC ,ncol=700)
+crc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
+c <-matrix(,nrow=nbCRC ,ncol=499)#700)
 nFc  <- vector()
 # for all patients
 for(i in 1:nbCRC) {
   #i= 1
+  print(i)
+    # replace with ~/DELFI1/Workspaces/maretty/frag_lens/ text filest
+  #auxFR <- read.table(pileupsD1[listD1CRC27[i]], header = TRUE) # sample per sample, file per file. 
+  #crc1 <- auxFR[,2:500]
     crc1 <- bFr[as.character(bFr[,1])==as.character(iC[i]),]
-    print(dim(crc1))
+    print(dim(crc1)) # 555 x 702
     
     if (i != 3){
-    nFc[i] <- sum(crc1[,3:702])
+    #nFc[i] <- sum(crc1[,3:702])
     }
     
     if (i == 10){
-      crcMax <- crc1[,3:702]
+     # crcMax <- crc1[,3:702]
     }
     
     if (i == 16){
-      crcMin <- crc1[,3:702]
+     # crcMin <- crc1[,3:702]
     }
     
-    c1 <- colSums(crc1[,3:702])
-    c [i,] <- c1
+    #c1 <- colSums(crc1[,3:702])
+    #c [i,] <- c1
     # distribution for a bin crc1[1,3:702]
     if (i==1){
       crc <- crc1 
-      crcB <- t(crc1[,3:702])
+     # crcB <- t(crc1[,3:702])
     } else {
+      names(crc) <- names(crc1) 
       crc <- rbind(crc , crc1)# agggregate merged results over all CRC samples
       if (i != 3){
-        crcB <- rbind(crcB , t(crc1[,3:702]))# agggregate merged results over all CRC samples
+     #   crcB <- rbind(crcB , t(crc1[,3:702]))# agggregate merged results over all CRC samples
         #ctl2 <- cbind(ctl , ctl1)# agggregate merged results over all CRC samples
       }
     }
 }
 
+k_crc1_i<-matrix(,nrow=7,ncol=700)
+k_crc1_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual3.csv')
+k_crc1_i[3,] <- k_crc1_i3[2:701,2]
+plot(k_crc1_i[3,])
 nbC1 <- length(iC1)
 cs1 <-matrix(,nrow=555,ncol=702)
-# for all patients
+mC1=NULL
+maC1=NULL
 for(i in 1:nbC1) {
   #i= 1
   #cs11 <- bFr[bFr[,1]==iC1[i],]
   cs11 <- bFr[as.character(bFr[,1])==as.character(iC1[i]),]
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc1_individual', i,'.csv')
-  write.csv(ctl1[,3:702],sa_name)
-  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual', i,'.csv')
-  
+  #write.csv(cs11[,3:702],sa_name)
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual', i,'.csv')
+  aux<- read.csv(sa_name)
+  k_crc1_i[i,] <- aux[2:701,2]
+  t1<-floor(i/9)
+  k <- (i-t1*9)
+  plot(k_crc1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
+  print(palette()[k])#print(col2rgb(2*i+50))
+  mC1[i]<-which.max(k_crc1_i[i,] )
+  maC1[i]<-max(k_crc1_i[i,] )
+  par(new = TRUE)
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs1 <- cs11 
@@ -1064,13 +1181,31 @@ for(i in 1:nbC1) {
     cs1 <- rbind(cs1 , cs11)# agggregate merged results over all CRC samples
   }
 }
-
+k_crc2_i<-matrix(,nrow=7,ncol=700)
+k_crc2_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc2_individual1.csv')
+k_crc2_i[1,] <- k_crc2_i1[2:701,2]
+plot(k_crc2_i[1,])
 nbC2 <- length(iC2)
 cs2 <-matrix(,nrow=555,ncol=702)
+mC1=NULL
+maC1=NULL
 # for all patients
 for(i in 1:nbC2) {
   #i= 1
-  cs21 <- bFr[bFr[,1]==iC2[i],]
+  #cs21 <- bFr[bFr[,1]==iC2[i],]
+  cs21 <- bFr[as.character(bFr[,1])==as.character(iC2[i]),]
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc2_individual', i,'.csv')
+  #write.csv(cs21[,3:702],sa_name)
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc2_individual', i,'.csv')
+  aux<- read.csv(sa_name)
+  k_crc2_i[i,] <- aux[2:701,2]
+  t1<-floor(i/9)
+  k <- (i-t1*9)
+  plot(k_crc2_i[i,],  ylim=range(c(0,5.5)), col= palette()[k], type="l") # there is something wrong with the colors
+  print(palette()[k])#print(col2rgb(2*i+50))
+  mC1[i]<-which.max(k_crc2_i[i,] )
+  maC1[i]<-max(k_crc2_i[i,] )
+  par(new = TRUE)
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs2 <- cs21 
@@ -1079,12 +1214,32 @@ for(i in 1:nbC2) {
   }
 }
 
+
+k_crc3_i<-matrix(,nrow=5,ncol=700)
+k_crc3_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc3_individual1.csv')
+k_crc3_i[1,] <- k_crc3_i1[2:701,2]
+plot(k_crc3_i[1,])
+mC1=NULL
+maC1=NULL
 nbC3 <- length(iC3)
 cs3 <-matrix(,nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbC3) {
   #i= 1
-  cs31 <- bFr[bFr[,1]==iC3[i],]
+  #cs31 <- bFr[bFr[,1]==iC3[i],]
+  cs31 <- bFr[as.character(bFr[,1])==as.character(iC3[i]),]
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc3_individual', i,'.csv')
+  #write.csv(cs31[,3:702],sa_name)
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc3_individual', i,'.csv')
+  aux<- read.csv(sa_name)
+  k_crc3_i[i,] <- aux[2:701,2]
+  t1<-floor(i/9)
+  k <- (i-t1*9)
+  plot(k_crc3_i[i,],  ylim=range(c(0,6.2)), col= palette()[k], type="l") # there is something wrong with the colors
+  print(palette()[k])#print(col2rgb(2*i+50))
+  mC1[i]<-which.max(k_crc3_i[i,] )
+  maC1[i]<-max(k_crc3_i[i,] )
+  par(new = TRUE)
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs3 <- cs31 
@@ -1092,13 +1247,33 @@ for(i in 1:nbC3) {
     cs3 <- rbind(cs3 , cs31)# agggregate merged results over all CRC samples
   }
 }
-
+k_crc4_i<-matrix(,nrow=8,ncol=700)
+k_crc4_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc4_individual1.csv')
+k_crc4_i[1,] <- k_crc4_i1[2:701,2]
+plot(k_crc4_i[1,])
+mC1=NULL
+maC1=NULL
 nbC4 <- length(iC4)
 cs4 <-matrix(,nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbC4) {
   #i= 1
-  cs41 <- bFr[bFr[,1]==iC4[i],]
+  #cs41 <- bFr[bFr[,1]==iC4[i],]
+  cs41 <- bFr[as.character(bFr[,1])==as.character(iC4[i]),]
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc4_individual', i,'.csv')
+  #write.csv(cs41[,3:702],sa_name)
+  if (i != 3){
+    sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc4_individual', i,'.csv')
+    aux<- read.csv(sa_name)
+    k_crc4_i[i,] <- aux[2:701,2]
+    t1<-floor(i/9)
+    k <- (i-t1*9)
+    plot(k_crc4_i[i,],  ylim=range(c(0,7.2)), col= palette()[k], type="l") # there is something wrong with the colors
+    print(palette()[k])#print(col2rgb(2*i+50))
+    mC1[i]<-which.max(k_crc4_i[i,] )
+    maC1[i]<-max(k_crc4_i[i,] )
+    par(new = TRUE)
+  }
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs4 <- cs41 
@@ -1122,8 +1297,8 @@ k_ctl1_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergen
 k_ctl1_i[3,] <- k_ctl1_i3[2:701,2]
 plot(k_ctl1_i[3,])
 
-nbCTL <- length(iH) / 5 # devide by 5 until laptop comes
-ctl <-matrix(,nrow=555,ncol=702)
+nbCTL <- length(iH)/5#*0.4#/ 5 # devide by 5 until laptop comes
+#ctl <-matrix(,nrow=555,ncol=702)
 ctlB <-matrix(,nrow=700,ncol=555)
 h <-matrix(,nrow=nbCTL ,ncol=700)
 nFh  <- vector()
@@ -1131,52 +1306,74 @@ nFh  <- vector()
 # for all patients
 mC1=NULL
 maC1=NULL
-for(i in 1:nbCTL) {
-  #i= 1
-  ctl1 <- bFr[as.character(bFr[,1])==as.character(iH[i]),]
+totFRs_D1_CTL1<- vector()
+totFRs_D1_CTL11<- vector()
+
+
+ctl <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
+c <-matrix(,nrow=nbCTL ,ncol=499)#700)
+
+for(i in 1:nbCTL) {#nbCTL
+ # i= 25
+  print(i)
+  auxFR <- read.table(pileupsD1[unlist(listD1CTL215)[i]], header = TRUE) # sample per sample, file per file. 
+  ctl1 <- auxFR[,2:500]
+ #ctl1 <- bFr[as.character(bFr[,1])==as.character(iH[i]),]
   print(dim(ctl1))
-  
   #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl1_individual', i,'.csv')
   #write.csv(ctl1[,3:702],sa_name)
   if (i != 9){
-    sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1ctl1_individual', i,'.csv')
-    aux<- read.csv(sa_name)
-    k_ctl1_i[i,] <- aux[2:701,2]
-    t1<-floor(i/9)
-    k <- (i-t1*9)
-    plot(k_ctl1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
-    print(palette()[k])#print(col2rgb(2*i+50))
-    mC1[i]<-which.max(k_ctl1_i[i,] )
-    maC1[i]<-max(k_ctl1_i[i,] )
-   par(new = TRUE)
+    #totFRs_D1_CTL1[i] <- sum(ctl1[1:499,3:702])
+    #print(totFRs_D1_CTL1[i])
+    #totFRs_D1_CTL11[i] <- sum(ctl1[,3:702])
+    
+    #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1ctl1_individual', i,'.csv')
+    #aux<- read.csv(sa_name)
+    #k_ctl1_i[i,] <- aux[2:701,2]
+    #t1<-floor(i/9)
+    #k <- (i-t1*9)
+    #plot(k_ctl1_i[i,],  ylim=range(c(0,2.8)), col= palette()[k], type="l") # there is something wrong with the colors
+    #print(palette()[k])#print(col2rgb(2*i+50))
+    #mC1[i]<-which.max(k_ctl1_i[i,] )
+    #maC1[i]<-max(k_ctl1_i[i,] )
+   #par(new = TRUE)
   }
   if (i == 10){
-    ctlMax <- ctl1[,3:702]
+    #ctlMax <- ctl1[,3:702]
   }
   
   if (i == 11){
-    ctlMin <- ctl1[,3:702]
+    #ctlMin <- ctl1[,3:702]
   }
   
   
   if (i != 9){
-    nFh[i] <- sum(ctl1[,3:702])
+   # nFh[i] <- sum(ctl1[,3:702])
   }
   
-  h1 <- colSums(ctl1[,3:702])
-  h[i,] <- h1
+  #h1 <- colSums(ctl1[,3:702])
+  #h[i,] <- h1
   # distribution for a bin ctl1[1,3:702]
   if (i==1){
     ctl <- ctl1 
-    ctlB <- t(ctl1[,3:702])
+   # ctlB <- t(ctl1[,3:702])
   } else {
+    names(ctl)<-names(ctl1)
     ctl <- rbind(ctl , ctl1)# agggregate merged results over all CRC samples
     if (i != 9){
-    ctlB <- rbind(ctlB , t(ctl1[,3:702]))# agggregate merged results over all CRC samples
+    #ctlB <- rbind(ctlB , t(ctl1[,3:702]))# agggregate merged results over all CRC samples
     #ctl2 <- cbind(ctl , ctl1)# agggregate merged results over all CRC samples
     }
   }
 }
+write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl86HG38.csv')
+write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl129HG38.csv')
+write.csv(crc,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc27HG38.csv')
+write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43HG38.csv')
+k_cHG38 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_HG38.csv')
+kcHG38<-k_cHG38[2:500,2]
+plot(kcHG38)
+which.max(kcHG38)
 
 for(i in (nbCTL+1):(nbCTL+nbCTL+1)) {
   #i= 1
@@ -1345,7 +1542,9 @@ k_cb <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_BCC.cs
 k_cg <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_GCC.csv')
 k_g <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceGCC.csv')
 k_p <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergencePCC.csv')
-k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.csv') # CRC  
+k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.csv') # CRC
+kc<-k_c[2:701,2]
+plot(kc)
 k_cR <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_Reverse.csv') # CRC  REVERSE
 
 k_o <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceOVC.csv')
