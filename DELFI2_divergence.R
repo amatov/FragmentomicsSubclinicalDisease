@@ -111,7 +111,8 @@ cl <- classifier( method = "randomForest",
 simple_logistic_model = glm(data = data.frame(as.factor(df)),
                             family = binomial())
 summary(simple_logistic_model)
-
+# x 195 for COL, y 195 for CTL
+glmnet(t(cv21), t(hv21), family = "binomial", alpha = 1, lambda = NULL)
 #ROC; find where overall success rate numbers are
 condition <- rbind(array(1, dim=c(79,12)), array(0, dim=c(74,12)))
 pred <- prediction(hcTop20, condition, label.ordering = c(0, 1))  
@@ -952,8 +953,7 @@ k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiverge
 kd2_rec50 <- k_d2_rec50[2:500,2]
 plot(kd2_rec50)
 
-# x 364 for CRC, y 364 for CTL
-glmnet(x, y, family = "binomial", alpha = 1, lambda = NULL)
+
 #################################################################################################
 k2_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl2.csv')
 k2d2_rec50 <- k2_d2_rec50[2:500,2]
