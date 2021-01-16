@@ -108,7 +108,7 @@ cl <- classifier( method = "randomForest",
                       ntree = 100 ) #build 100 trees for the forest
 
 # Error in family$linkfun(mustart) : Argument mu must be a nonempty numeric vector
-simple_logistic_model = glm(data = data.frame(as.factor(df)),
+simple_logistic_model = glm(data = data.frame(as.factor(df)), #dim(df) 153  12
                             family = binomial())
 summary(simple_logistic_model)
 # x 195 for COL, y 195 for CTL
@@ -411,8 +411,8 @@ col4D22 = array(0, dim=c(23*574,499))
 colD22 = array(0, dim=c(79*574,499))
 for (i in 1:499) {
   #i=1
-  #auxCTL <- ctl1D2[,,i]
-  #ctl1D22[,i] <- auxCTL 
+  auxCTL <- ctl1D2[,,i]
+  ctl1D22[,i] <- auxCTL 
   auxCOL <- colD2[,,i]
   colD22[,i] <- auxCOL
   #auxCOL1 <- col1D2[,,i]
@@ -421,8 +421,8 @@ for (i in 1:499) {
   #col2D22[,i] <- auxCOL2 
   #auxCOL3 <- col3D2[,,i]
   #col3D22[,i] <- auxCOL3 
-  #auxCOL4 <- col4D2[,,i]
-  #col4D22[,i] <- auxCOL4 
+  auxCOL4 <- col4D2[,,i]
+  col4D22[,i] <- auxCOL4 
 }
 
 write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
@@ -566,6 +566,28 @@ hgA <- hist(colD22[,365], breaks = 30 , plot = FALSE) # Save first histogram dat
 hgB <- hist(ctl1D22[,365],breaks = 30, plot = FALSE) # Save 2nd histogram data
 plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,70), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
 plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,70), ylim = c(0,5000)) # Add 2nd histogram using different color
+
+hgA <- hist(colD22[,137], breaks = 150 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1D22[,137],breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,520), ylim = c(0,4200)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,520), ylim = c(0,4200)) # Add 2nd histogram using different color
+
+hgA <- hist(col4D22[,137], breaks = 150 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1D22[,137],breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,520), ylim = c(0,4200)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,520), ylim = c(0,4200)) # Add 2nd histogram using different color
+
+hgA <- hist(colD22[,277], breaks = 100 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1D22[,277],breaks = 30, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,40), ylim = c(0,6000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,40), ylim = c(0,6000)) # Add 2nd histogram using different color
+
+hgA <- hist(col4D22[,277], breaks = 100 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1D22[,277],breaks = 30, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,40), ylim = c(0,6000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,40), ylim = c(0,6000)) # Add 2nd histogram using different color
+
+
 
 plot(kc4[1:499], ylim=range(c(0,2.4)), col="red", type="l")
 par(new = TRUE)
@@ -1099,6 +1121,30 @@ for(i in 1:nbOVC) {
     ovc <- rbind(ovc , ovc1)# agggregate merged results over all CRC samples
   }
 }
+# UMISEQ
+auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
+testS <- as.integer(unlist(auxFR[,2:500]))
+testS2 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
+pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/30PON5Mb/", recursive = T, full.names = T, pattern = "tsv")
+
+nbUMI <- length(pileupsU)
+umi1 <-matrix(,nrow=574,ncol=499)#nrow=555,ncol=702)
+for(i in 1:nbUMI) {
+  #i= 1
+  print(i)
+  auxFR <- read.table( pileupsU[i], header = TRUE) # sample per sample, file per file. 
+  testS <- as.integer(unlist(auxFR[,2:500]))
+  umi1 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
+  print(dim(umi1)) # 555 x 702
+  if (i==1){
+    umi <- umi1
+  } else {
+    names(umi) <- names(umi1) 
+    umi <- rbind(umi , umi1)
+  }
+}
+
+
 
 
 
@@ -1106,6 +1152,8 @@ pileupsD1 <- list.files("~/genomedk/DELFI1/Workspaces/maretty/frag_lens/5mb", re
 
 listD1CRC27 <- sapply(iC, function(x) grep(x, x = pileupsD1 ))
 pileupsD1[listD1CRC27] 
+listD1CRC4_8 <- sapply(iC4, function(x) grep(x, x = pileupsD1 ))
+pileupsD1[listD1CRC4_8] 
 listD1CTL215 <- sapply(iH, function(x) grep(x, x = pileupsD1 ))
 
 nbCRC <- length(iC)
@@ -1117,9 +1165,9 @@ for(i in 1:nbCRC) {
   #i= 1
   print(i)
     # replace with ~/DELFI1/Workspaces/maretty/frag_lens/ text filest
-  #auxFR <- read.table(pileupsD1[listD1CRC27[i]], header = TRUE) # sample per sample, file per file. 
-  #crc1 <- auxFR[,2:500]
-    crc1 <- bFr[as.character(bFr[,1])==as.character(iC[i]),]
+  auxFR <- read.table(pileupsD1[listD1CRC27[i]], header = TRUE) # sample per sample, file per file. 
+  crc1 <- auxFR[,2:500]
+    #crc1 <- bFr[as.character(bFr[,1])==as.character(iC[i]),]
     print(dim(crc1)) # 555 x 702
     
     if (i != 3){
@@ -1162,18 +1210,18 @@ for(i in 1:nbC1) {
   #i= 1
   #cs11 <- bFr[bFr[,1]==iC1[i],]
   cs11 <- bFr[as.character(bFr[,1])==as.character(iC1[i]),]
-  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc1_individual', i,'.csv')
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc1_individual', i,'.csv')
   #write.csv(cs11[,3:702],sa_name)
-  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual', i,'.csv')
-  aux<- read.csv(sa_name)
-  k_crc1_i[i,] <- aux[2:701,2]
-  t1<-floor(i/9)
-  k <- (i-t1*9)
-  plot(k_crc1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
-  print(palette()[k])#print(col2rgb(2*i+50))
-  mC1[i]<-which.max(k_crc1_i[i,] )
-  maC1[i]<-max(k_crc1_i[i,] )
-  par(new = TRUE)
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual', i,'.csv')
+  #aux<- read.csv(sa_name)
+  #k_crc1_i[i,] <- aux[2:701,2]
+  #t1<-floor(i/9)
+  #k <- (i-t1*9)
+  #plot(k_crc1_i[i,],  ylim=range(c(0,5.2)), col= palette()[k], type="l") # there is something wrong with the colors
+  #print(palette()[k])#print(col2rgb(2*i+50))
+  #mC1[i]<-which.max(k_crc1_i[i,] )
+  #maC1[i]<-max(k_crc1_i[i,] )
+  #par(new = TRUE)
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs1 <- cs11 
@@ -1255,29 +1303,33 @@ mC1=NULL
 maC1=NULL
 nbC4 <- length(iC4)
 cs4 <-matrix(,nrow=555,ncol=702)
+cs4 <-matrix(,nrow=574,ncol=499)
 # for all patients
 for(i in 1:nbC4) {
   #i= 1
   #cs41 <- bFr[bFr[,1]==iC4[i],]
-  cs41 <- bFr[as.character(bFr[,1])==as.character(iC4[i]),]
+  #cs41 <- bFr[as.character(bFr[,1])==as.character(iC4[i]),]
+  auxFR <- read.table(pileupsD1[listD1CRC4_8[i]], header = TRUE) # sample per sample, file per file. 
+  cs41 <- auxFR[,2:500]
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc4_individual', i,'.csv')
   #write.csv(cs41[,3:702],sa_name)
   if (i != 3){
-    sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc4_individual', i,'.csv')
-    aux<- read.csv(sa_name)
-    k_crc4_i[i,] <- aux[2:701,2]
-    t1<-floor(i/9)
-    k <- (i-t1*9)
-    plot(k_crc4_i[i,],  ylim=range(c(0,7.2)), col= palette()[k], type="l") # there is something wrong with the colors
-    print(palette()[k])#print(col2rgb(2*i+50))
-    mC1[i]<-which.max(k_crc4_i[i,] )
-    maC1[i]<-max(k_crc4_i[i,] )
-    par(new = TRUE)
+    #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc4_individual', i,'.csv')
+    #aux<- read.csv(sa_name)
+    #k_crc4_i[i,] <- aux[2:701,2]
+    #t1<-floor(i/9)
+    #k <- (i-t1*9)
+    #plot(k_crc4_i[i,],  ylim=range(c(0,7.2)), col= palette()[k], type="l") # there is something wrong with the colors
+    #print(palette()[k])#print(col2rgb(2*i+50))
+    #mC1[i]<-which.max(k_crc4_i[i,] )
+    #maC1[i]<-max(k_crc4_i[i,] )
+    #par(new = TRUE)
   }
   # distribution for a bin crc1[1,3:702]
   if (i==1){
     cs4 <- cs41 
   } else {
+    names(cs4)<-names(cs41)
     cs4 <- rbind(cs4 , cs41)# agggregate merged results over all CRC samples
   }
 }
@@ -1433,7 +1485,7 @@ pnm <- matrix(pn, ncol = dim(pcc)[1], byrow = (dim(pcc)[2]-2)) # convert back to
 on <- as.integer(unlist(ovc[,3:702]))# convert to numbers
 onm <- matrix(on, ncol = dim(ovc)[1], byrow = (dim(ovc)[2]-2)) # convert back to matrix form
 
-cn <- as.integer(unlist(crc[,3:702]))# convert to numbers
+cn <- as.integer(unlist(crc))#[,3:702]))# convert to numbers
 cnm <- matrix(cn, ncol = dim(crc)[1], byrow = (dim(crc)[2]-2)) # convert back to matrix form
 cnmD<-cnm*2 # mimic double coverage
 cnmH<-cnm/2 # mimic half coverage
@@ -1750,6 +1802,47 @@ hgA <- hist(cnm[364,],xlim = c(0,70), breaks = 50, plot = FALSE) # Save first hi
 hgB <- hist(hnm[364,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
 plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,70), ylim = c(0,2200)) # Plot 1st histogram using a transparent color
 plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,70), ylim = c(0,2200)) # Add 2nd histogram using different color
+
+hgA <- hist(cnm[137,],xlim = c(0,70), breaks = 100, plot = FALSE) # Save first histogram data
+hgB <- hist(hnm[137,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,1200), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,1200), ylim = c(0,5000)) # Add 2nd histogram using different color
+
+hgA <- hist(crc[,137],xlim = c(0,70), breaks = 150, plot = FALSE) # Save first histogram data
+hgB <- hist(ctl[,137], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,1200), ylim = c(0,2500)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,1200), ylim = c(0,2500)) # Add 2nd histogram using different color
+
+hgA <- hist(cs4[,137],xlim = c(0,70), breaks = 150, plot = FALSE) # Save first histogram data
+hgB <- hist(ctl[,137], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,1200), ylim = c(0,2500)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,1200), ylim = c(0,2500)) # Add 2nd histogram using different color
+
+hgA <- hist(cnm4[137,],xlim = c(0,70), breaks = 100, plot = FALSE) # Save first histogram data
+hgB <- hist(hnm[137,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,1200), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,1200), ylim = c(0,5000)) # Add 2nd histogram using different color
+
+hgA <- hist(cnm[277,],xlim = c(0,70), breaks = 100, plot = FALSE) # Save first histogram data
+hgB <- hist(hnm[277,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,70), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,70), ylim = c(0,5000)) # Add 2nd histogram using different color
+
+hgA <- hist(crc[,277],xlim = c(0,70), breaks = 150, plot = FALSE) # Save first histogram data
+hgB <- hist(ctl[,277], xlim = c(0,70),breaks = 40, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,75), ylim = c(0,2500)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,75), ylim = c(0,2500)) # Add 2nd histogram using different color
+
+hgA <- hist(cs4[,277],xlim = c(0,70), breaks = 150, plot = FALSE) # Save first histogram data
+hgB <- hist(ctl[,277], xlim = c(0,70),breaks = 40, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,75), ylim = c(0,2500)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,75), ylim = c(0,2500)) # Add 2nd histogram using different color
+
+hgA <- hist(cnm4[277,],xlim = c(0,70), breaks = 100, plot = FALSE) # Save first histogram data
+hgB <- hist(hnm[277,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,80), ylim = c(0,5000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,80), ylim = c(0,5000)) # Add 2nd histogram using different color
+
 
 hgA <- hist(cnm3[210,],xlim = c(0,70), breaks = 50, plot = FALSE) # Save first histogram data
 hgB <- hist(hnm[210,], xlim = c(0,70),breaks = 50, plot = FALSE) # Save 2nd histogram data
