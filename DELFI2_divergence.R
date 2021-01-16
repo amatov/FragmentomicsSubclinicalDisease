@@ -1143,6 +1143,7 @@ for(i in 1:nbUMI) {
     umi <- rbind(umi , umi1)
   }
 }
+hist(testS2[364,], breaks = 150, ylim = c(0, 10))
 
 
 
