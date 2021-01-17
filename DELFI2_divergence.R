@@ -1121,11 +1121,35 @@ for(i in 1:nbOVC) {
     ovc <- rbind(ovc , ovc1)# agggregate merged results over all CRC samples
   }
 }
-# UMISEQ
+# UMIIMPROVE
+pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/30PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
+
+nbUMII <- length(pileupsUI)
+umii1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
+for(i in 1:nbUMII) {
+  #i= 1
+  print(i)
+  auxFR <- read.table( pileupsUI[i], header = TRUE) # sample per sample, file per file. 
+  testU <- as.integer(unlist(auxFR[,2:500]))
+  umii1 <- t(matrix(testU, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) )# convert back to matrix form
+  print(dim(umii1)) # 555 x 702
+  if (i==1){
+    umii <- umii1
+  } else {
+    names(umii) <- names(umii1) 
+    umii <- rbind(umii , umii1)
+  }
+}
+dim(umii) # 17850   499
+hist(testU2[364,], breaks = 150, ylim = c(0, 10))
+hist(umii[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
+hist(umii[,198], breaks = 150, ylim = c(0, 200))# dense up to 500 on x axis
+
+#UMISEQ
 auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
 testS <- as.integer(unlist(auxFR[,2:500]))
 testS2 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
-pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/30PON5Mb/", recursive = T, full.names = T, pattern = "tsv")
+pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/30PON5Mb", recursive = T, full.names = T, pattern = "tsv")
 
 nbUMI <- length(pileupsU)
 umi1 <-matrix(,nrow=574,ncol=499)#nrow=555,ncol=702)
@@ -1134,7 +1158,7 @@ for(i in 1:nbUMI) {
   print(i)
   auxFR <- read.table( pileupsU[i], header = TRUE) # sample per sample, file per file. 
   testS <- as.integer(unlist(auxFR[,2:500]))
-  umi1 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
+  umi1 <- t(matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) )# convert back to matrix form
   print(dim(umi1)) # 555 x 702
   if (i==1){
     umi <- umi1
@@ -1143,7 +1167,95 @@ for(i in 1:nbUMI) {
     umi <- rbind(umi , umi1)
   }
 }
+dim(umi) # 17850   499
 hist(testS2[364,], breaks = 150, ylim = c(0, 10))
+hist(umi[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
+hist(umi[,198], breaks = 150, ylim = c(0, 200),xlim = c(0,800))# dense up to 500 on x axis
+
+hgA <- hist(umii[,198],breaks = 150 , plot = FALSE) # Save first histogram data
+hgB <- hist(umi[,198] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,800), ylim = c(0,150)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,800), ylim = c(0,150)) # Add 2nd histogram using different color
+
+
+hgA <- hist(umii[,364],breaks = 150 , plot = FALSE) # Save first histogram data
+hgB <- hist(umi[,364] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,300), ylim = c(0,200)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,300), ylim = c(0,200)) # Add 2nd histogram using different color
+
+
+
+hgA <- hist(umii[,130],breaks = 150 , plot = FALSE) # Save first histogram data
+hgB <- hist(umi[,130] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,800), ylim = c(0,300)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,800), ylim = c(0,300)) # Add 2nd histogram using different color
+
+write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon30.csv')
+write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre30.csv')
+
+k_umi_iPre30 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre30Pon30.csv')
+k_umiiPre30  <- k_umi_iPre30[2:500,2]
+plot(k_umiiPre30)
+
+umi130 <- umi[,130]
+hv130 <- matrix(umi130, ncol = 595, byrow = 30) #
+
+umii130 <- umii[,130]
+cv130 <- matrix(umii130, ncol = 595, byrow = 30) #
+
+write.csv(hv130,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon30_frl130.csv')
+write.csv(cv130,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre30_frl130.csv')
+
+k_umi_iPre30_f130 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre30Pon30_frl130.csv')
+k_umiiPre30_f130  <- k_umi_iPre30_f130[2:596,2]
+plot(k_umiiPre30_f130)
+indU <- which(k_umiiPre30_f130>0.366)
+# with most values
+
+hgA <- hist(cv130[,196],breaks = 50 , plot = FALSE) # Save first histogram data
+hgB <- hist(hv130[,196] ,breaks = 20, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,4000), ylim = c(0,4)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,4000), ylim = c(0,4)) # Add 2nd histogram using different color
+
+hgA <- hist(cv130[,363],breaks = 50 , plot = FALSE) # Save first histogram data
+hgB <- hist(hv130[,363] ,breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,55), ylim = c(0,4)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,55), ylim = c(0,4)) # Add 2nd histogram using different color
+
+hcTop20 <- rbind(cv130[,indU], hv130[,indU])
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
+
+dim(k_crc1_i)# 7 700
+dim(k_crc2_i)#7 700
+dim(k_crc3_i)#   5 700
+dim(k_crc4_i)#   8 700
+dim(k_ctl1_i)# 43 700
+k_crc_i <- rbind(k_crc1_i,k_crc2_i)
+k_crc_i <- rbind(k_crc_i,k_crc3_i)
+k_crc_i <- rbind(k_crc_i,k_crc4_i)
+
+c198<-k_crc_i[,70] 
+c364<-k_crc_i[,253] 
+h198<-k_ctl1_i[,70] 
+h364<-k_ctl1_i[,253] 
+plot(c198,c364,xlim=c(0,1.3),ylim=c(0,2),col="red")
+par(new = TRUE)
+plot(h198, h364,xlim=c(0,1.3),ylim=c(0,2),col="green")
+
+# boundary for capacity regions for Stage I, II, III, IV.
+plot(k_crc1_i[,70],k_crc1_i[,253],xlim=c(0,3),ylim=c(0,3),col="blue",pch=1)
+par(new = TRUE)
+plot(k_crc2_i[,70],k_crc2_i[,253],xlim=c(0,3),ylim=c(0,3),col="orange",pch=2)
+par(new = TRUE)
+plot(k_crc3_i[,70],k_crc3_i[,253],xlim=c(0,3),ylim=c(0,3),col="red",pch=3)
+par(new = TRUE)
+#plot(k_crc4_i[,70],k_crc4_i[,253],xlim=c(0,7),ylim=c(0,7),col="brown",pch=4)
+#par(new = TRUE)
+plot(k_ctl1_i[,70],k_ctl1_i[,253],xlim=c(0,3),ylim=c(0,3),col="green",pch=5)
+
 
 
 
