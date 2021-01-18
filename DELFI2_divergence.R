@@ -1122,7 +1122,7 @@ for(i in 1:nbOVC) {
   }
 }
 # UMIIMPROVE
-pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/30PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
+pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
 
 nbUMII <- length(pileupsUI)
 umii1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
@@ -1140,7 +1140,7 @@ for(i in 1:nbUMII) {
     umii <- rbind(umii , umii1)
   }
 }
-dim(umii) # 17850   499
+dim(umii) # 17850x499 for 30PreOps, 33320x499 for 56 PreOps
 hist(testU2[364,], breaks = 150, ylim = c(0, 10))
 hist(umii[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
 hist(umii[,198], breaks = 150, ylim = c(0, 200))# dense up to 500 on x axis
@@ -1149,7 +1149,7 @@ hist(umii[,198], breaks = 150, ylim = c(0, 200))# dense up to 500 on x axis
 auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
 testS <- as.integer(unlist(auxFR[,2:500]))
 testS2 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
-pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/30PON5Mb", recursive = T, full.names = T, pattern = "tsv")
+pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/45PON5Mb", recursive = T, full.names = T, pattern = "tsv")
 
 nbUMI <- length(pileupsU)
 umi1 <-matrix(,nrow=574,ncol=499)#nrow=555,ncol=702)
@@ -1167,7 +1167,7 @@ for(i in 1:nbUMI) {
     umi <- rbind(umi , umi1)
   }
 }
-dim(umi) # 17850   499
+dim(umi) # 17850   499 for 30PONs, 26775   499 for 45 PONs
 hist(testS2[364,], breaks = 150, ylim = c(0, 10))
 hist(umi[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
 hist(umi[,198], breaks = 150, ylim = c(0, 200),xlim = c(0,800))# dense up to 500 on x axis
@@ -1178,24 +1178,32 @@ plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,800), ylim = c(0,150)) # Plot 1st his
 plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,800), ylim = c(0,150)) # Add 2nd histogram using different color
 
 
-hgA <- hist(umii[,364],breaks = 150 , plot = FALSE) # Save first histogram data
-hgB <- hist(umi[,364] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
-plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,300), ylim = c(0,200)) # Plot 1st histogram using a transparent color
-plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,300), ylim = c(0,200)) # Add 2nd histogram using different color
+hgA <- hist(umii[,356],breaks = 250 , plot = FALSE) # Save first histogram data
+hgB <- hist(umi[,356] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,300), ylim = c(0,400)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,300), ylim = c(0,400)) # Add 2nd histogram using different color
+
+hgA <- hist(cv130[,363],breaks = 50 , plot = FALSE) # Save first histogram data
+hgB <- hist(hv130[,363] ,breaks = 50, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,55), ylim = c(0,4)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,55), ylim = c(0,4)) # Add 2nd histogram using different color
 
 
+hgA <- hist(cv356[,505],breaks = 40 , plot = FALSE) # Save first histogram data
+hgB <- hist(hv356[,505] ,breaks = 20, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,200), ylim = c(0,8)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,200), ylim = c(0,8)) # Add 2nd histogram using different color
 
-hgA <- hist(umii[,130],breaks = 150 , plot = FALSE) # Save first histogram data
-hgB <- hist(umi[,130] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
-plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,800), ylim = c(0,300)) # Plot 1st histogram using a transparent color
-plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,800), ylim = c(0,300)) # Add 2nd histogram using different color
-
-write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon30.csv')
-write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre30.csv')
+write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45.csv')
+write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56.csv')
 
 k_umi_iPre30 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre30Pon30.csv')
 k_umiiPre30  <- k_umi_iPre30[2:500,2]
 plot(k_umiiPre30)
+
+k_umi_iPre56 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45.csv')
+k_umiiPre56  <- k_umi_iPre56[2:500,2]
+plot(k_umiiPre56)
 
 umi130 <- umi[,130]
 hv130 <- matrix(umi130, ncol = 595, byrow = 30) #
@@ -1211,6 +1219,24 @@ k_umiiPre30_f130  <- k_umi_iPre30_f130[2:596,2]
 plot(k_umiiPre30_f130)
 indU <- which(k_umiiPre30_f130>0.366)
 # with most values
+umi356 <- umi[,356]
+hv356 <- matrix(umi356, ncol = 595, byrow = 45) #
+umii356 <- umii[,356]
+cv356 <- matrix(umii356, ncol = 595, byrow = 56) #
+
+write.csv(hv356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl356.csv')
+write.csv(cv356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_frl356.csv')
+
+k_umi_iPre56_f356 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45_frl356.csv')
+k_umiiPre56_f356  <- k_umi_iPre56_f356[2:596,2]
+plot(k_umiiPre56_f356)
+indU2 <- which(k_umiiPre56_f356>0.5)
+
+hcTop20 <- rbind(cv356[,indU2], hv356[,indU2])
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
 
 hgA <- hist(cv130[,196],breaks = 50 , plot = FALSE) # Save first histogram data
 hgB <- hist(hv130[,196] ,breaks = 20, plot = FALSE) # Save 2nd histogram data
@@ -1255,11 +1281,38 @@ par(new = TRUE)
 #plot(k_crc4_i[,70],k_crc4_i[,253],xlim=c(0,7),ylim=c(0,7),col="brown",pch=4)
 #par(new = TRUE)
 plot(k_ctl1_i[,70],k_ctl1_i[,253],xlim=c(0,3),ylim=c(0,3),col="green",pch=5)
+legend(2,3,legend=c("KLD for CRC SI samples", "KLD for CRC SII samples", "KLD for CRC SIII samples", "KLD for Healthy samples" ),col=c("blue","orange","red","green"),lty=1:1, cex=1.0)
+
+plot(abs(colSums(k_crc_i,na.rm = T)-colSums(k_ctl1_i,na.rm = T)))
+which(abs(colSums(k_crc_i,na.rm = T)-colSums(k_ctl1_i,na.rm = T))>22)
 
 
+# save all 57 PreOp I, convert 25 to bins (2 are very small)
+# save all 68 PreOp C, convert 68 to bins
+# save all 45 PON , convert 15 to bins
+#samplesCTL3 <- sapply(m2$DELFI.ID[ctl3_list] , function(x) grep(x, x = pileupsC[9:90] )) 
+listCRUK <- unlist(sapply(CRUKlist, function(x) grep(x, x = pileupsC [9:90])))
+bams <-pileupsC[listCRUK ]
+#bams <- list.files(pileupsC)
+pileupsC_Bam <- list.files("~/genomedk/PolyA/faststorage/BACKUP/CRUK/plasma/N289", recursive = T, full.names = T, pattern = "_consensus.sort.bam$")
+listCRUK_umi <- unlist(sapply(names(listCRUK), function(x) grep(x, x = pileupsC_Bam)))
+bams <-pileupsC_Bam[listCRUK_umi ]
+sapply(bams, function(x)file.copy(from=x, to = "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/CRUK5Mb/"))
+
+pileupsI_Bam <- list.files("~/genomedk/PolyA/faststorage/BACKUP/IMPROVE/sporacrc/pon/data/pon", recursive = T, full.names = T, pattern = "_consensus.sort.bam$")
+sapply(pileupsI_Bam[1:46], function(x)file.copy(from=x, to = "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/45PON5Mb/"))
+
+It <- read.table("~/genomedk/matovanalysis/umiseq_analysis/IMPROVEptList",header = TRUE)
+pileupsIM_Bam <- list.files("~/genomedk/PolyA/faststorage/BACKUP/IMPROVE/sporacrc/N227", recursive = T, full.names = T, pattern = "_consensus.sort.bam$")
+It$index <- sapply(as.character(It$library_id), function(x) grep(x, pileupsIM_Bam)) 
+preop_index <- unlist(It[ It$op_time_cat == -1, "index"]) # 56
+pileupsIM_Bam[preop_index]
+sapply(pileupsIM_Bam[preop_index], function(x)file.copy(from=x, to = "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb/"))
 
 
-
+       
+       
+       
 
 pileupsD1 <- list.files("~/genomedk/DELFI1/Workspaces/maretty/frag_lens/5mb", recursive = T, full.names = T, pattern = "tsv")
 
