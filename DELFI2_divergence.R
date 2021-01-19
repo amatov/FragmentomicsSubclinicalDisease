@@ -1144,7 +1144,26 @@ dim(umii) # 17850x499 for 30PreOps, 33320x499 for 56 PreOps
 hist(testU2[364,], breaks = 150, ylim = c(0, 10))
 hist(umii[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
 hist(umii[,198], breaks = 150, ylim = c(0, 200))# dense up to 500 on x axis
-
+# UMICRUK
+pileupsUC <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/CRUK5Mb", recursive = T, full.names = T, pattern = "tsv")
+umic<-vector()
+nbUMIC <- length(pileupsUC)
+umic1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
+for(i in 1:nbUMIC) {
+  #i= 1
+  print(i)
+  auxFR <- read.table( pileupsUC[i], header = TRUE) # sample per sample, file per file. 
+  testU <- as.integer(unlist(auxFR[,2:500]))
+  umic1 <- t(matrix(testU, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) )# convert back to matrix form
+  print(dim(umic1)) # 555 x 702
+  if (i==1){
+    umic <- umic1
+  } else {
+    names(umic) <- names(umic1) 
+    umic <- rbind(umic , umic1)
+  }
+}
+dim(umic) # 39865 x 499 for  67 CRUK PreOps
 #UMISEQ
 auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
 testS <- as.integer(unlist(auxFR[,2:500]))
@@ -1196,6 +1215,30 @@ plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,200), ylim = c(0,8)) # Ad
 
 write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45.csv')
 write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56.csv')
+write.csv(umic,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67.csv')
+
+k_umi_cPre67 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45.csv')
+k_umicPre67  <- k_umi_cPre67[2:500,2]
+plot(k_umicPre67)
+
+umi199 <- umi[,199]
+hv199 <- matrix(umi199, ncol = 595, byrow = 45) #
+
+umic199 <- umic[,199]
+cv199 <- matrix(umic199, ncol = 595, byrow = 67) #
+
+write.csv(hv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl199.csv')
+write.csv(cv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67_frl199.csv')
+
+k_umi_cPre67_frl199 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45_frl199.csv')
+k_umicPre67_frl199  <- k_umi_cPre67_frl199[2:500,2]
+plot(k_umicPre67_frl199)
+
+indC <- which(k_umicPre67_frl199>0.2)
+hcTop20 <- rbind(cv199[,indC], hv199[,indC])
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
 
 k_umi_iPre30 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre30Pon30.csv')
 k_umiiPre30  <- k_umi_iPre30[2:500,2]
@@ -1285,6 +1328,48 @@ legend(2,3,legend=c("KLD for CRC SI samples", "KLD for CRC SII samples", "KLD fo
 
 plot(abs(colSums(k_crc_i,na.rm = T)-colSums(k_ctl1_i,na.rm = T)))
 which(abs(colSums(k_crc_i,na.rm = T)-colSums(k_ctl1_i,na.rm = T))>22)
+
+dim(k_ctl1_i)#43 700
+hv<-rbind(ctl1[1:8,], ctl1[10:43,])
+dim(k_crc_i)#  27 700
+cv<-rbind(crc[1:21,], crc[23:27,])
+names(hv) <- names(cv) 
+hcTop20 <- rbind(cv, hv)
+df<-scale(hcTop20)
+df[is.nan(df)] <- 0
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
+dim(umi) # 26775   499
+dim(umic)# 39865   499
+dim(umii) #33320   499
+umiB10<- array(0, dim = c(45*595*10,50))
+umiiB10<- array(0, dim = c(56*595*10,50))
+umicB10<-array(0,dim=c(67*595*10,50))
+for (i in 0:49){
+  #i=2
+  k=10*i+1
+  if (i != 49) {
+  umiB10[,i] <- umi[,k:(k+9)]
+  umicB10[,i] <- umic[,k:(k+9)]
+  umiiB10[,i] <- umii[,k:(k+9)]
+  } else {
+    umiB10[,i] <- umi[,(k-1):(k+8)]# repeat one FRl from the previous segment
+    umicB10[,i] <- umic[,(k-1):(k+8)]# repeat one FRl from the previous segment
+    umiiB10[,i] <- umii[,(k-1):(k+8)]# repeat one FRl from the previous segment
+}
+}
+write.csv(umiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_binned10frl.csv')
+write.csv(umicB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67_binned10frl.csv')
+write.csv(umiiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_binned10frl.csv')
+
+k_umi_cPre67_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45_binned10frl.csv')
+k_umicPre67_b10  <- k_umi_cPre67_b10[2:51,2]
+plot(k_umicPre67_b10)
+
+k_umi_iPre56_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45_binned10frl.csv')
+k_umiiPre56_b10  <- k_umi_iPre56_b10[2:51,2]
+plot(k_umiiPre56_b10)
 
 
 # save all 57 PreOp I, convert 25 to bins (2 are very small)
