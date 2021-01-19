@@ -538,7 +538,24 @@ kd2_colBins<-k_d2_colBins[2:701,2]
 plot(kd2_colBins)
 
 
-
+dim(colD22) # 45346 499
+dim(ctl1D22) # 42476   499
+colD2B10<- array(0, dim = c(79*574*10,50))
+ctl1D2B10<- array(0, dim = c(74*574*10,50))
+umicB10<-array(0,dim=c(67*595*10,50))
+for (i in 0:49){
+  #i=2
+  k=10*i+1
+  if (i != 49) {
+    colD2B10[,i] <- colD22[,k:(k+9)]
+    ctl1D2B10[,i] <- ctl1D22[,k:(k+9)]
+  } else {
+    colD2B10[,i] <- colD22[,(k-1):(k+8)]# repeat one FRl from the previous segment
+    ctl1D2B10[,i] <- ctl1D22[,(k-1):(k+8)]# repeat one FRl from the previous segment
+  }
+}
+write.csv(colD2B10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_79_binned10frl.csv')
+write.csv(ctl1D2B10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74_binned10frl.csv')
 
 
 
