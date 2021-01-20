@@ -1237,6 +1237,14 @@ write.csv(umic,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67.cs
 k_umi_cPre67 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45.csv')
 k_umicPre67  <- k_umi_cPre67[2:500,2]
 plot(k_umicPre67)
+# fit k_umicPre67
+x <- seq(1, 499, by=1)
+#fit4 <- lm(k_umicPre67~poly(x))
+fit4 <- lm(k_umicPre67~poly(x,4,raw=TRUE))
+xx <- seq(1,499, length=499)
+plot(x,k_umicPre67,pch=19)
+lines(xx, predict(fit4, data.frame(x=xx)), col="red")
+
 
 umi199 <- umi[,199]
 hv199 <- matrix(umi199, ncol = 595, byrow = 45) #
