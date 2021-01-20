@@ -1180,7 +1180,7 @@ for(i in 1:nbUMIC) {
     umic <- rbind(umic , umic1)
   }
 }
-dim(umic) # 39865 x 499 for  67 CRUK PreOps
+dim(umic) # 40460 x 499 for  68 CRUK PreOps
 #UMISEQ
 auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
 testS <- as.integer(unlist(auxFR[,2:500]))
@@ -1232,11 +1232,11 @@ plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,200), ylim = c(0,8)) # Ad
 
 write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45.csv')
 write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56.csv')
-write.csv(umic,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67.csv')
+write.csv(umic,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68.csv')
 
-k_umi_cPre67 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45.csv')
-k_umicPre67  <- k_umi_cPre67[2:500,2]
-plot(k_umicPre67)
+k_umi_cPre68 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45.csv')
+k_umicPre68  <- k_umi_cPre68[2:500,2]
+plot(k_umicPre68)
 # fit k_umicPre67
 x <- seq(1, 499, by=1)
 #fit4 <- lm(k_umicPre67~poly(x))
@@ -1245,21 +1245,37 @@ xx <- seq(1,499, length=499)
 plot(x,k_umicPre67,pch=19)
 lines(xx, predict(fit4, data.frame(x=xx)), col="red")
 
+fitTest <- rbind(k_umi_cPre67, x)
+plot(k_umicPre67, cex = 0.5)
+hpts <- chull(fitTest, y=NULL)
+hpts <- c(hpts, hpts[1])
+lines(k_umicPre67[hpts ])
+
+X <- array(0, dim=c(2,499))
+chull(X)
+## Not run: 
+# Example usage from graphics package
+plot(X, cex = 0.5)
+hpts <- chull(X)
+hpts <- c(hpts, hpts[1])
+lines(X[hpts, ])
+
 
 umi199 <- umi[,199]
 hv199 <- matrix(umi199, ncol = 595, byrow = 45) #
 
 umic199 <- umic[,199]
-cv199 <- matrix(umic199, ncol = 595, byrow = 67) #
+cv199 <- matrix(umic199, ncol = 595, byrow = 68) #
 
 write.csv(hv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl199.csv')
-write.csv(cv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67_frl199.csv')
+write.csv(cv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68_frl199.csv')
 
-k_umi_cPre67_frl199 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45_frl199.csv')
-k_umicPre67_frl199  <- k_umi_cPre67_frl199[2:500,2]
-plot(k_umicPre67_frl199)
+k_umi_cPre68_frl199 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45_frl199.csv')
+k_umicPre68_frl199  <- k_umi_cPre68_frl199[2:500,2]
+plot(k_umicPre68_frl199)
 
-indC <- which(k_umicPre67_frl199>0.2)
+indC <- which(k_umicPre68_frl199>0.2)
+
 hcTop20 <- rbind(cv199[,indC], hv199[,indC])
 df<-scale(hcTop20)
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
@@ -1370,7 +1386,7 @@ dim(umic)# 39865   499
 dim(umii) #33320   499
 umiB10<- array(0, dim = c(45*595*10,50))
 umiiB10<- array(0, dim = c(56*595*10,50))
-umicB10<-array(0,dim=c(67*595*10,50))
+umicB10<-array(0,dim=c(68*595*10,50))
 for (i in 0:49){
   #i=2
   k=10*i+1
@@ -1385,12 +1401,12 @@ for (i in 0:49){
 }
 }
 write.csv(umiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_binned10frl.csv')
-write.csv(umicB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre67_binned10frl.csv')
+write.csv(umicB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68_binned10frl.csv')
 write.csv(umiiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_binned10frl.csv')
 
-k_umi_cPre67_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre67Pon45_binned10frl.csv')
-k_umicPre67_b10  <- k_umi_cPre67_b10[2:51,2]
-plot(k_umicPre67_b10)
+k_umi_cPre68_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45_binned10frl.csv')
+k_umicPre68_b10  <- k_umi_cPre68_b10[2:51,2]
+plot(k_umicPre68_b10)
 
 k_umi_iPre56_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45_binned10frl.csv')
 k_umiiPre56_b10  <- k_umi_iPre56_b10[2:51,2]
