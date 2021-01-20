@@ -1436,7 +1436,7 @@ for(i in 1:nbCRC) {
   auxFR <- read.table(pileupsD1[listD1CRC27[i]], header = TRUE) # sample per sample, file per file. 
   crc1 <- auxFR[,2:500]
     #crc1 <- bFr[as.character(bFr[,1])==as.character(iC[i]),]
-    print(dim(crc1)) # 555 x 702
+    print(sum(crc1)) # 555 x 702
     
     if (i != 3){
     #nFc[i] <- sum(crc1[,3:702])
@@ -1639,7 +1639,7 @@ for(i in 1:nbCTL) {#nbCTL
   auxFR <- read.table(pileupsD1[unlist(listD1CTL215)[i]], header = TRUE) # sample per sample, file per file. 
   ctl1 <- auxFR[,2:500]
  #ctl1 <- bFr[as.character(bFr[,1])==as.character(iH[i]),]
-  print(dim(ctl1))
+  print(sum(ctl1))
   #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl1_individual', i,'.csv')
   #write.csv(ctl1[,3:702],sa_name)
   if (i != 9){
