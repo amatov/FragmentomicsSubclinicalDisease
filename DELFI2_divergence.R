@@ -5,6 +5,7 @@ library(FNN)
 library("RColorBrewer")
 library(ROCR)
 library("ggplot2")
+library("mixtools")
 library(gplots)
 library(spatstat)
 library("transport")
@@ -320,6 +321,7 @@ for (i in 1:79  ) {
   j=j+1
 }
 #######################################colon stage 1##########################
+k_col1_i<-matrix(,nrow=8,ncol=700)
 col1D2 = array(0, dim=c(8,574,499))
 j=1
 for (i in 1:8 ) {
@@ -327,6 +329,10 @@ for (i in 1:8 ) {
   #i=2
   auxFR <- read.table(pileupsD2[listCOL1[i]], header = TRUE) # sample per sample, file per file. 
   col1D2[j,,] <- unlist(auxFR[,2:500])
+  
+  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col1_individual', i,'.csv')
+  aux<- read.csv(sa_name)
+  #k_col1_i[i,] <- aux[2:500,2]
   j=j+1
 }
 #######################################colon stage 2##########################
@@ -696,6 +702,46 @@ for(i in 1:23) {
   maS4[i]<-max(colS4[i,])
   par(new = TRUE)
 }
+
+dim(colS1)# 8 499
+dim(colS2)#30 499
+dim(colS3)#   18 499
+dim(k_crc4_i)#   23 499
+#dim(k_ctl1_i)# 43 700
+colS <- rbind(colS1,colS2)
+colS <- rbind(colS,colS3)
+colS <- rbind(colS,colS4)
+
+c198<-colS[,70] 
+c364<-colS[,253] 
+h198<-k_ctl1_i[,70] 
+h364<-k_ctl1_i[,253] 
+plot(c198,c364,xlim=c(0,1.3),ylim=c(0,2),col="red")
+par(new = TRUE)
+plot(h198, h364,xlim=c(0,1.3),ylim=c(0,2),col="green")
+frl1=207; frl2=366; k=5.4
+# boundary for capacity regions for Stage I, II, III, IV.
+plot(colS1[,frl1],colS1[,frl2],xlim=c(0,k),ylim=c(0,k),col="blue",pch=1)
+par(new = TRUE)
+plot(colS2[,frl1],colS2[,frl2],xlim=c(0,k),ylim=c(0,k),col="orange",pch=2)
+par(new = TRUE)
+plot(colS3[,frl1],colS3[,frl2],xlim=c(0,k),ylim=c(0,k),col="red",pch=3)
+par(new = TRUE)
+plot(colS4[,frl1],colS4[,frl2],xlim=c(0,k),ylim=c(0,k),col="brown",pch=4)
+par(new = TRUE)
+plot(kd2_ctl1_i[,frl1],kd2_ctl1_i[,frl2],xlim=c(0,k),ylim=c(0,k),col="green",pch=5)
+legend(3.5,2,legend=c("KLD for Col SI samples", "KLD for Col SII samples", "KLD for Col SIII samples","KLD for Col SIV samples","KLD for Ctl1 74 samples"),col=c("blue","orange","red","brown","green"),lty=1:1, cex=1.0)
+
+plot(abs(colSums(colS)-colSums(kd2_ctl1_i)))
+which.max(abs(colSums(colS,na.rm = T)-colSums(kd2_ctl1_i,na.rm = T)))
+which(abs(colSums(colS)-colSums(kd2_ctl1_i))>50)
+
+
+
+
+
+
+
 hgA <- hist(mS1, breaks = 50 , plot = FALSE) # Save first histogram data
 hgB <- hist(mS2,breaks = 50, plot = FALSE) # Save 2nd histogram data
 hgC <- hist(mS3, breaks = 50 , plot = FALSE) # Save first histogram data
@@ -1144,7 +1190,7 @@ pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/spec
 nbUMII <- length(pileupsUI)
 umii1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
 for(i in 1:nbUMII) {
-  #i= 1
+  i= 2
   print(i)
   auxFR <- read.table( pileupsUI[i], header = TRUE) # sample per sample, file per file. 
   testU <- as.integer(unlist(auxFR[,2:500]))
@@ -1157,6 +1203,23 @@ for(i in 1:nbUMII) {
     umii <- rbind(umii , umii1)
   }
 }
+plot(rowSums(umii1))
+plot(colSums(umii1))
+
+# compare WASSERSTEIN for umiseq CRUK, IMPROVE and Delfi1 CRC and Delfi2 COL
+wa_umii<-vector()
+wa_umic<-vector()
+for (i in 1:499){
+  wa_umii[i] <- wasserstein1d(umii[,i],umi[,i])
+  wa_umic[i] <- wasserstein1d(umic[,i],umi[,i])
+}
+
+
+
+
+
+
+
 dim(umii) # 17850x499 for 30PreOps, 33320x499 for 56 PreOps
 hist(testU2[364,], breaks = 150, ylim = c(0, 10))
 hist(umii[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
@@ -1190,7 +1253,7 @@ pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs
 nbUMI <- length(pileupsU)
 umi1 <-matrix(,nrow=574,ncol=499)#nrow=555,ncol=702)
 for(i in 1:nbUMI) {
-  #i= 1
+  #i= 2
   print(i)
   auxFR <- read.table( pileupsU[i], header = TRUE) # sample per sample, file per file. 
   testS <- as.integer(unlist(auxFR[,2:500]))
@@ -1203,6 +1266,7 @@ for(i in 1:nbUMI) {
     umi <- rbind(umi , umi1)
   }
 }
+
 dim(umi) # 17850   499 for 30PONs, 26775   499 for 45 PONs
 hist(testS2[364,], breaks = 150, ylim = c(0, 10))
 hist(umi[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
@@ -1288,6 +1352,44 @@ plot(k_umiiPre30)
 k_umi_iPre56 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45.csv')
 k_umiiPre56  <- k_umi_iPre56[2:500,2]
 plot(k_umiiPre56)
+
+paramEsts= gmdistribution.fit(k_umiiPre56,499)  
+
+mixmdl = normalmixEM(k_umiiPre56)
+plot(mixmdl,which=2)
+lines(density(k_umiiPre56), lty=2, lwd=2)
+
+tab <- data.frame(x=k_umiiPre56, r=499)
+#Apply function nls
+res <- nls( r ~ k*exp(-1/2*(x-mu)^2/sigma^2), start=c(mu=15,sigma=5,k=1) , data = tab)
+
+
+
+
+x <- seq(1, 499, by=1)
+fit4 <- lm(k_umiiPre56~poly(x,4,raw=TRUE))
+xx <- seq(1,499, length=499)
+plot(x,k_umiiPre56,pch=19)
+lines(xx, predict(fit4, data.frame(x=xx)), col="red")
+
+
+x <- seq(1, 499, by=1)
+fitTest <- t(rbind(x,k_umicPre68))
+plot(fitTest)
+hpts <- chull(fitTest)
+hpts <- c(hpts, hpts[1])
+lines(fitTest[hpts, ])
+# CONVEX HULL
+x <- seq(1, 499, by=1)
+fitTest <- t(rbind(x,k_umiiPre56))
+plot(fitTest)
+hpts <- chull(fitTest)
+hpts <- c(hpts, hpts[1])
+lines(fitTest[hpts, ])
+
+plot(k_umiiPre56)
+
+
 
 umi130 <- umi[,130]
 hv130 <- matrix(umi130, ncol = 595, byrow = 30) #
@@ -1387,6 +1489,8 @@ dim(umii) #33320   499
 umiB10<- array(0, dim = c(45*595*10,50))
 umiiB10<- array(0, dim = c(56*595*10,50))
 umicB10<-array(0,dim=c(68*595*10,50))
+colB10<- array(0, dim = c(79*574*10,50))
+ctl1B10<-array(0,dim=c(74*574*10,50))
 for (i in 0:49){
   #i=2
   k=10*i+1
@@ -1394,15 +1498,56 @@ for (i in 0:49){
   umiB10[,i] <- umi[,k:(k+9)]
   umicB10[,i] <- umic[,k:(k+9)]
   umiiB10[,i] <- umii[,k:(k+9)]
+  colB10[,i] <- colD22[,k:(k+9)]
+  ctl1B10[,i] <- ctl1D22[,k:(k+9)]
   } else {
     umiB10[,i] <- umi[,(k-1):(k+8)]# repeat one FRl from the previous segment
     umicB10[,i] <- umic[,(k-1):(k+8)]# repeat one FRl from the previous segment
     umiiB10[,i] <- umii[,(k-1):(k+8)]# repeat one FRl from the previous segment
+    colB10[,i] <- colD22[,(k-1):(k+8)]
+    ctl1B10[,i] <- ctl1D22[,(k-1):(k+8)]
 }
 }
+
+
+
+
+
+hgA <- hist(colB10[,19],breaks = 150 , plot = FALSE) # Save first histogram data
+hgB <- hist(ctl1B10[,19] ,breaks = 150, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,500), ylim = c(0,14000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,500), ylim = c(0,14000)) # Add 2nd histogram using different color
+
+
+
+
+
+write.csv(colB10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col49_binned10frl.csv')
+write.csv(ctl1B10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74_binned10frl.csv')
 write.csv(umiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_binned10frl.csv')
 write.csv(umicB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68_binned10frl.csv')
 write.csv(umiiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_binned10frl.csv')
+
+umii356 <- umii[,356]
+umii356 <-umii356[umii356>9]
+ 
+umi356 <- umi[,356]
+umi356 <-umi356[umi356>9]
+
+write.csv(umi356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl356no0.csv')
+write.csv(umii356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_frl356no0.csv')
+
+hgA <- hist(umii356, breaks = 250 , plot = FALSE) # Save first histogram data
+hgB <- hist(umi356,breaks = 150, plot = FALSE) # Save 2nd histogram data
+plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,180), ylim = c(0,1000)) # Plot 1st histogram using a transparent color
+plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,180), ylim = c(0,1000)) # Add 2nd histogram using different color
+
+
+
+k_d2_col79_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_CTL1_binned10frl.csv')
+kd2_col79_b10  <- k_d2_col79_b10[2:51,2]
+plot(kd2_col79_b10)
+
 
 k_umi_cPre68_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45_binned10frl.csv')
 k_umicPre68_b10  <- k_umi_cPre68_b10[2:51,2]
