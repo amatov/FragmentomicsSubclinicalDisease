@@ -1,0 +1,113 @@
+
+\documentclass[]{revtex4}
+%\documentclass[a4paper,titlepage,fleqn,12pt]{report}
+
+%\documentclass[twoside]{article}
+
+% math
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+
+% more math
+\newcommand*{\defeq}{\mathrel{\vcenter{\baselineskip0.5ex \lineskiplimit0pt
+                     \hbox{\scriptsize.}\hbox{\scriptsize.}}}%
+                     =}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\BigO}[1]{\ensuremath{\operatorname{O}\left(#1\right)}}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
+
+\begin{document}
+
+\title{Boundary of the capacity region of genome-wide cell-free DNA fragment length distributions in disease}
+\author{Alexandre Matov}
+\email{matov@clin.au.dk}
+\affiliation{Department of Clinical Medicine, DK-8200 Aarhus N}
+\date{\today}
+\maketitle
+
+\section{ Utilization of cell-free DNA fragment length patterns for disease detection based on low-coverage whole genome sequencing data }
+In disease, the variety of cell death DNA fragmentation patterns reflect differential nucleosome packaging and chromatin remodeling. 
+We consider the relative entropy between cohorts’ cfDNA fragment lengths and test two hypotheses: 
+\vspace {2ex}
+\begin{itemize}
+    \item We can pinpoint particular lengths for which disease differs from healthy controls. 
+\vspace {2ex}
+    \item We can identify distinct differences for colorectal (CRC) and six other types of tumors (ovarian, pancreatic, gastric, breast, lung cancer, and cholangiocarcinoma) as well as four types of adenomas (colon and rectal). 
+\end{itemize}
+    \subsection{Cancer vs. healthy}
+    \begin{itemize}
+
+    \item Healthy individuals and cancer patients exhibit differences for particular fragment lengths (disease vs. healthy classification). 
+\vspace {2ex}
+    \item We measure two to four peaks with different amplitudes on the divergence histograms (identify disease stage).
+\end{itemize}
+
+    \subsection{ Cancer vs. cancer}
+\begin{itemize}
+
+    \item CRC and other cancers exhibit between-cancers differences for particular fragment lengths (identify the tissue of origin).  
+
+    \item 8\% or more of the fragments belong to diverging populations (degree of overlap between the regulation of different tumors). 
+    
+\end{itemize}
+
+
+\section{Kullback-Leibler divergence in disease of gENOME-WIDE DISTRIBUTIONs of CELL-FREE DNA FRAGMENTs with LENGTHs up to 499 base pairs }
+
+    To evaluate changes in epigenetic regulation in disease, for each cfDNA fragmentation length (1-499 bp) we consider all genomic bins (#1-574) and compute KLD $D\left(CTL \middle\| CC\right) \rlap{\quad\itshape } $
+per fragment length based on two cohorts: disease and control. For instance, for Delfi2 I compute KLDs based on a CRC matrix with dimensions 499 by 45346 (574 genomic bins by 79 CC samples) and a CTL matrix with dimensions 499 by 42476 (574 genomic bins by 74 CTL1 samples), i.e., each KLD value is computed based on the comparison of the histograms of two vectors with about 45000 values each.  
+    \vspace {2ex}
+
+
+The KL divergence from different Delfi I cancer cohorts (seven cohorts) of healthy samples exhibit distributions, which are bimodal, having local extrema around 200 bp and 350 bp, with an additional couple of secondary modes present.  Our analysis showed that the CRC samples are divergent for lengths about 137, 198, 277, and 364 bp. On average, the CRC samples have two-fold fewer fragments per bin than the healthy controls for DNA fragment size 198 bp and 364 bp. Stages I, II, and III exhibit common fragmentation patterns that may stem from similarities in nucleosome packaging and chromatin remodeling​. The peak divergence of healthy samples increases with CRC stage (I-III).​ Stage IV exhibits distinct fragmentation patterns, which may be linked to metastatic disease. We hypothesize that changes in the fragmentation patterns, for instance leading to an increase in divergence for fragment lengths 198 and 364 bp in CRC, are the result of differential epigenetic regulation in disease and can be used as \textbf{diagnostic biomarkers for early detection}.  
+    \vspace {2ex}
+
+The KL divergence from different Delfi I cancer cohorts (six other cohorts) of CRC samples exhibit distributions, which are multi-modal, with different modes being present for different cancer type pairs, defining potentially unique signatures. We hypothesize that divergence between-cancers signatures and the distinct per-disease peaks in the divergence of healthy samples are the result of differential epigenetic regulation of the different cancer types and can be used as \textbf{diagnostic biomarkers for the identification of the tissue of origin}. 
+\section{Channel capacity of genome-wide cell-free DNA fragment length distributions in disease}
+\subsection{Capacity region of a degraded broadcast channel}
+We will first consider sending independent information over a degraded broadcast channel at rates $R_1$ to $CTL1$ and $R_2$ to $CTL2$. 
+    \vspace {2ex}
+
+We have time sharing, where one user receives a fraction $\alpha\in[0, 1]$ of the transmission time and the other $1-\alpha$. We can now define the {\it Rate Region}:
+\begin{eqnarray}
+R_1&\le&\frac{\alpha}{2}\log\left(1+\frac{P}{N_1}\right)\quad \mbox{bits/dim}\\
+R_2&\le&\frac{(1-\alpha)}{2}\log\left(1+\frac{P}{N_2}\right)\quad \mbox{bits/dim}
+\end{eqnarray}
+
+\subsection{Achievable rate regions for Gaussian broadcast channels}
+
+
+
+Let us find the boarder points $C_2$ and $C_1$. If we consider the boarder cases: when $R_1=0$, $R_2=\max_{p(cc)}I(CC; CTL2)$ and also respectively when $R_2=0$, $R_1=\max_{p(cc)}I(CC; CTL1)$, which are these two points. Since we already have assumed that we can consider the statistically degraded for as a physical one, we know that $CC, CTL1, CTL2$ form a Markov chain $(CC\rightarrow CTL2\rightarrow CTL1)$. So, we can prove the statement that $I(CC; CTL1)\le I(CC; CTL2)$. The equality holds if and only if $I(CC;CTL2|CTL1)=0$ (i.e. when $X\rightarrow Z\rightarrow Y$ forms a Markov chain).
+
+\begin{equation}
+C(x)=\frac{1}{2}\log(1+x)
+\end{equation}
+
+denote the capacity in bits per transmission of a memory-less Gaussian channel with signal-to-noise ratio $x$.
+    \vspace {2ex}
+
+\begin{thm} 
+The capacity region of the family of parallel broadcast Gaussian channels is given by
+\begin{eqnarray}
+\mathcal{C}(\bar{P})=\bigcup_{\{{\bf P}:\sum_{k=1}^K P^(k)=\bar{P}\}}\sum_{k=1}^K\mathcal{C}_b\left({\bf \bs}^{(k)}, P^{(k)}\right)
+\end{eqnarray}
+\end{thm}
+
+ \begin{thm} The capacity region for the Gaussian broadcast channel, with signal power constraint $P$, is given by 
+
+\begin{eqnarray}
+R_1&\le&C\left(\frac{\alpha P}{N_1}\right)\\
+R_2&\le&C\left(\frac{(1-\alpha )P}{\alpha P+N_2}\right),\qquad\mbox{for}\qquad 0\le\alpha\le 1.
+\end{eqnarray}
+\end{thm}
+
+\end{document}
