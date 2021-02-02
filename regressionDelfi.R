@@ -31,7 +31,7 @@ cvm = cv.glmnet(samplesTr, selectionTr, family = "binomial", alpha=1, nfolds=10)
 
 # identifying best lamda
 best_lam <- cvm$lambda.min
-best_lam # 0.02529132
+best_lam 
 # Rebuilding the model with best lamda value identified
 lasso_best <- glmnet(samplesTr, selectionTr, alpha = 1, lambda = best_lam)
 pred <- predict(lasso_best, s = best_lam, newx = samplesTe)
@@ -60,7 +60,7 @@ cvm = cv.glmnet(samplesTr, selectionTr, family = "binomial", alpha=1, nfolds=10)
 
 # identifying best lamda
 best_lam <- cvm$lambda.min
-best_lam # 0.02529132
+best_lam 
 # Rebuilding the model with best lamda value identified
 lasso_best <- glmnet(samplesTr, selectionTr, alpha = 1, lambda = best_lam)
 pred <- predict(lasso_best, s = best_lam, newx = samplesTe)
@@ -95,7 +95,7 @@ cvm = cv.glmnet(samplesTr, selectionTr, family = "binomial", alpha=1, nfolds=10)
 
 # identifying best lamda
 best_lam <- cvm$lambda.min
-best_lam # 0.02529132
+best_lam 
 # Rebuilding the model with best lamda value identified
 lasso_best <- glmnet(samplesTr, selectionTr, alpha = 1, lambda = best_lam)
 pred <- predict(lasso_best, s = best_lam, newx = samplesTe)
