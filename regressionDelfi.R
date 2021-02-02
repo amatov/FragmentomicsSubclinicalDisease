@@ -42,7 +42,20 @@ plot(cvm$glmnet.fit)
 final <- cbind(selectionTe, pred)
 final
 ################################################################
-
+colD2N = array(0, dim=c(129,574,499))
+j=1
+for (i in 1:129  ) {
+  print(i)
+  #i=2
+  if (i<80){
+  auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
+  } else {
+    k <- i-79
+  auxFR <- read.table(pileupsD2[listREC[k]], header = TRUE) # sample per sample, file per file. 
+  }
+  colD2N[j,,] <- unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))
+  j=j+1
+}
 # Splitting the data into test and train
 samplesTr = array(0, dim=c((37+40),length(ind195)))
 #samplesTr <- rbind(ctl1D23[1:37,], colD23[1:40,])
@@ -70,6 +83,7 @@ plot(cvm$glmnet.fit)
 
 final <- cbind(selectionTe, pred)
 final
+plot(final)
 ########################################################################################
 
 # Splitting the NORMALIZED data into test and train
