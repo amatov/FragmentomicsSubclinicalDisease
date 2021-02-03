@@ -44,7 +44,7 @@ def est_rel_entro_HJW(sampP, sampQ):
 
     # order <= 21 to avoid floating point errors
     order = min(4 + math.ceil(1.2 * math.log(n)), 21)
-    poly_entro = np.load('poly_coeff_entro.npy', allow_pickle=True)
+    poly_entro = np.load('/home/matov/matovanalysis/DELFI_analysis/python/poly_coeff_entro.npy', allow_pickle=True)
     coeff = -np.array(poly_entro[int(order)][1:])
 
 #  empirical distros + fingerprints
@@ -152,7 +152,7 @@ def est_entro_JVHW(samp):
 
     # The order of polynomial is no more than 22 because otherwise floating-point error occurs
     order = min(4 + int(np.ceil(1.2 * np.log(n))), 22)
-    poly_entro = np.load('poly_coeff_entro.npy', allow_pickle=True)
+    poly_entro = np.load('/home/matov/matovanalysis/DELFI_analysis/python/poly_coeff_entro.npy', allow_pickle=True)
     coeff = np.array(poly_entro[int(order - 1)])
 
     f = fingerprint(samp)
