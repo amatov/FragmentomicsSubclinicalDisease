@@ -164,6 +164,7 @@ m2$DELFI.ID[col_list2] # 79
 #[73] "DL001763CRP0"   "DL001650CRP0"   "DL001965CRP0"   "DL002190CRP0_1" "DL002190CRP0"   "DL001793CRP0"   "DL001480CRP0"  
 
 pileupsD2 <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp", recursive = T, full.names = T, pattern = "tsv")
+pileupsD2_1M <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_1Mbp", recursive = T, full.names = T, pattern = "tsv")
 
 d2_test <- read.table(pileupsD2[204], header = TRUE)
 d2_t2 <- read.table(pileupsD2[304], header = TRUE)
@@ -304,20 +305,23 @@ for (i in 1:210  ) {
 length(unique(auxCOL)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, even if its the same sample)
 #################colon all stages#######################
 colD2 = array(0, dim=c(79,574,499))
+colD2_1M = array(0, dim=c(79,2873,499)) # 5x574 genomic bins, i.e. 1Mb rather than 5Mb
 j=1
 for (i in 1:79  ) {
-  #print(i)
-  #i=2
-  auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
-  colD2[j,,] <- unlist(auxFR[,2:500])
+  print(i)
+  #i=3
+  #auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
+  auxFR <- read.table(pileupsD2_1M[listCOL[i]], header = TRUE) # sample per sample, file per file. 
+  colD2_1M[j,,] <- unlist(auxFR[,2:500])
+  #colD2[j,,] <- unlist(auxFR[,2:500])
   
   # save 79 individual profiles as xls files
-  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_individual', i,'.csv')
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_individual', i,'.csv')
   #print(length(unlist(auxFR[,2:500])))
-  auxSAVE <-matrix(unlist(auxFR[,2:500]),nrow=574,ncol=499)
+  #auxSAVE <-matrix(unlist(auxFR[,2:500]),nrow=574,ncol=499)
 
   
-  write.csv(unlist(auxSAVE),sa_name)
+  #write.csv(unlist(auxSAVE),sa_name)
   j=j+1
 }
 #######################################colon stage 1##########################
@@ -326,7 +330,7 @@ col1D2 = array(0, dim=c(8,574,499))
 j=1
 for (i in 1:8 ) {
   print(i)
-  #i=2
+  #i=3
   auxFR <- read.table(pileupsD2[listCOL1[i]], header = TRUE) # sample per sample, file per file. 
   col1D2[j,,] <- unlist(auxFR[,2:500])
   
@@ -391,20 +395,21 @@ listCTL1 <- unique(auxCTL1)
 length(unique(auxCTL1)) # 74
 
 ctl1D2 = array(0, dim=c(74,574,499))
+ctl1D2_1M = array(0, dim=c(74,2873,499)) # 5x574 genomic bins, i.e. 1Mb rather than 5Mb
 j=1
 for (i in 1:74  ) {
   print(i)
   #i=2
-  auxFR <- read.table(pileupsD2[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
+  auxFR <- read.table(pileupsD2_1M[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
   
-  ctl1D2[j,,] <- unlist(auxFR[,2:500])
+  ctl1D2_1M[j,,] <- unlist(auxFR[,2:500])
   
   # save 74 individual profiles as xls files
-  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_individual', i,'.csv')
-  auxSAVE <-matrix(unlist(auxFR[,2:500]),nrow=574,ncol=499)
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_individual', i,'.csv')
+  #auxSAVE <-matrix(unlist(auxFR[,2:500]),nrow=574,ncol=499)
   
   
-  write.csv(unlist(auxSAVE),sa_name)
+  #write.csv(unlist(auxSAVE),sa_name)
   j=j+1
 }
 
@@ -415,21 +420,47 @@ col3D22 = array(0, dim=c(18*574,499))
 col4D22 = array(0, dim=c(23*574,499))
 
 colD22 = array(0, dim=c(79*574,499))
+
+ctl1D22_1M = array(0, dim=c(74*2873,499))
+colD22_1M = array(0, dim=c(79*2873,499))
 for (i in 1:499) {
   #i=1
-  auxCTL <- ctl1D2[,,i]
-  ctl1D22[,i] <- auxCTL 
-  auxCOL <- colD2[,,i]
-  colD22[,i] <- auxCOL
+  auxCTL <- ctl1D2_1M[,,i]
+  ctl1D22_1M[,i] <- auxCTL 
+  auxCOL <- colD2_1M[,,i]
+  colD22_1M[,i] <- auxCOL
   #auxCOL1 <- col1D2[,,i]
   #col1D22[,i] <- auxCOL1 
   #auxCOL2<- col2D2[,,i]
   #col2D22[,i] <- auxCOL2 
   #auxCOL3 <- col3D2[,,i]
   #col3D22[,i] <- auxCOL3 
-  auxCOL4 <- col4D2[,,i]
-  col4D22[,i] <- auxCOL4 
+  #auxCOL4 <- col4D2[,,i]
+  #col4D22[,i] <- auxCOL4 
 }
+write.csv(colD22_1M,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79_1M.csv')
+write.csv(ctl1D22_1M,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74_1M.csv')
+
+k_d2_col79_1M <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_CTL1_1M.csv')
+kd2_col79_1M <- k_d2_col79_1M[2:575,2]
+plot(kd2_col79_1M)
+
+k_d2_crc129 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CRC129_ctl1.csv')
+kd2_crc129 <- k_d2_crc129[2:575,2]
+plot(kd2_crc129)
+
+ctlD22 <- rbind(ctl1D22,ctl2D22)
+ctlD22 <- rbind(ctlD22,ctl3D22)
+write.csv(ctlD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl_all276.csv')
+k_d2_crc129_ctl276 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CRC129_ctl276.csv')
+kd2_crc129_ctl276 <- k_d2_crc129_ctl276[2:575,2]
+plot(kd2_crc129_ctl276)
+k_d2_col79_ctl276 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl276.csv')
+kd2_col79_ctl276 <- k_d2_col79_ctl276[2:575,2]
+plot(kd2_col79_ctl276)
+
+
+
 
 write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
 
@@ -462,7 +493,11 @@ k195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdiverg
 k195d2_col <- k195_d2_col[2:575,2]
 plot(k195d2_col)
 
-indx<-which(k195d2_col>1.12)#  33  48  90 145 156 191 213 356 429 483 529 572
+ind195<-which(k195d2_col>-5)#  all 
+ind195<-which(k195d2_col>1.12)#  33  48  90 145 156 191 213 356 429 483 529 
+ind195<-which(k195d2_col>1.72)#   356  
+ind195<-which(k195d2_col>1.58)#   356  529
+indx<-ind195
 cv21 <-matrix(,nrow=79,ncol=length(indx))
 cv21<-c195[,indx]
 hv21 <-matrix(,nrow=74,ncol=length(indx))
@@ -472,6 +507,22 @@ hcTop20 <- rbind(cv21 , hv21)
 df<-scale(hcTop20)
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
+
+
+c195<-colD2[,,195]
+h195<-ctl1D2[,,195]
+
+cv2N <- matrix(colD22[,195],nrow=79,ncol=574)
+hv2N <- matrix(ctl1D22[,195],nrow=74,ncol=574)
+hcTop20 <- rbind(cv2N , hv2N)#(c195,h195)#(cv2N , hv2N)
+df<-scale(hcTop20)
+col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
+hm <- heatmap(df, scale = "none", col =  col) 
+
+
+
+
+
 
 c365<-colD2[,,365]
 h365<-ctl1D2[,,365]
@@ -980,16 +1031,16 @@ listCTL3 <- unique(auxCTL3)
 
 length(unique(auxCTL3)) # 131
 
-ctl3D2 = array(0, dim=c(71,574,499)) # super computer runs out of memory for 131 samples. 
+ctl3D2 = array(0, dim=c(131,574,499)) # super computer runs out of memory for 131 samples. 
 j=1
-for (i in 1:71  ) {
+for (i in 1:131  ) {
   print(i)
   #i=2
   auxFR <- read.table(pileupsD2[listCTL3[i]], header = TRUE) # sample per sample, file per file. 
   ctl3D2[j,,] <- unlist(auxFR[,2:500])
   j=j+1
 }
-ctl3D22 = array(0, dim=c(71*574,499)) # super computer runs out of memory for 131 samples. 
+ctl3D22 = array(0, dim=c(131*574,499)) # super computer runs out of memory for 131 samples. 
 
 for (i in 1:499) {
   #i=1
@@ -1190,7 +1241,7 @@ pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/spec
 nbUMII <- length(pileupsUI)
 umii1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
 for(i in 1:nbUMII) {
-  i= 2
+  #i= 2
   print(i)
   auxFR <- read.table( pileupsUI[i], header = TRUE) # sample per sample, file per file. 
   testU <- as.integer(unlist(auxFR[,2:500]))
@@ -1218,7 +1269,7 @@ for (i in 1:499){
 
 
 
-
+umid <- rbind(umii, umic)
 
 dim(umii) # 17850x499 for 30PreOps, 33320x499 for 56 PreOps
 hist(testU2[364,], breaks = 150, ylim = c(0, 10))
@@ -1297,6 +1348,11 @@ plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,200), ylim = c(0,8)) # Ad
 write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45.csv')
 write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56.csv')
 write.csv(umic,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68.csv')
+write.csv(umid,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_totalPre124.csv')
+
+k_umi_dPre124 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseq_totalPre124_Pon45.csv')
+k_umidPre124  <- k_umi_dPre124[2:500,2]
+plot(k_umidPre124)
 
 k_umi_cPre68 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45.csv')
 k_umicPre68  <- k_umi_cPre68[2:500,2]
