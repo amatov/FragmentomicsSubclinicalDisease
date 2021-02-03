@@ -56,19 +56,48 @@ for (i in 1:129  ) {
   colD2N[j,,] <- unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))
   j=j+1
 }
-# Splitting the data into test and train
+col4D2N = array(0, dim=c(23,574,499))
+j=1
+for (i in 1:23 ) {
+  print(i)
+  #i=2
+  auxFR <- read.table(pileupsD2[listCOL4[i]], header = TRUE) # sample per sample, file per file. 
+  col4D2N[j,,] <- unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))
+  j=j+1
+}
+# all stages 79 colon cancers vs 74 control1 no comorbidity
 samplesTr = array(0, dim=c((37+40),length(ind195)))
 #samplesTr <- rbind(ctl1D23[1:37,], colD23[1:40,])
 samplesTr <- rbind(ctl1D2N[,ind195,195][1:37,], colD2N[,ind195,195][1:40,])
 selectionTr = rep(0, 77)
 selectionTr[38:77]=1
-
 samplesTe = array(0, dim=c((37+39),length(ind195)))
 #sampplesTe<- rbind(ctl1D23[38:74,], colD23[41:79,])
 samplesTe <- rbind(ctl1D2N[,ind195,195][38:74,], colD2N[,ind195,195][41:79,])
 selectionTe= rep(0, 76)
 selectionTe[38:76]=1 
 
+# only stage IV 23 colon cancers vs 74 control1 no comorbidity
+samplesTr = array(0, dim=c((37+12),length(ind195)))
+samplesTr <- rbind(ctl1D2N[,ind195,195][1:37,], col4D2N[,ind195,195][1:12,])
+selectionTr = rep(0, 49)
+selectionTr[38:49]=1
+samplesTe = array(0, dim=c((37+11),length(ind195)))
+samplesTe <- rbind(ctl1D2N[,ind195,195][38:74,], col4D2N[,ind195,195][13:23,])
+selectionTe= rep(0, 48)
+selectionTe[38:48]=1 
+
+# umiseq 56 PreOp IMPROVE vs 45 PON
+samplesTr = array(0, dim=c((23+28),595))
+samplesTr <- rbind(umiN[,,356][1:23,], umiiN[,,356][1:28,])
+selectionTr = rep(0, 51)
+selectionTr[24:51]=1
+samplesTe = array(0, dim=c((22+28),595))
+samplesTe <- rbind(umiN[,,356][24:45,], umiiN[,,356][29:56,])
+selectionTe= rep(0, 50)
+selectionTe[23:50]=1 
+
+# run #####
 cvm = cv.glmnet(samplesTr, selectionTr, family = "binomial", alpha=1, nfolds=10) 
 
 # identifying best lamda
