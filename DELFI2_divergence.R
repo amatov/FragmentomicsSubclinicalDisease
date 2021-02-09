@@ -168,7 +168,7 @@ pileupsD2_1M <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_le
 
 d2_test <- read.table(pileupsD2[204], header = TRUE)
 d2_t2 <- read.table(pileupsD2[304], header = TRUE)
-
+samplesREC <- sapply(m2$DELFI.ID[rec_list2] , function(x) grep(x, x = pileupsD2 )) 
 samplesCOL <- sapply(m2$DELFI.ID[col_list2] , function(x) grep(x, x = pileupsD2 ))
 listCOL1 <- sapply(m2$DELFI.ID[col12] , function(x) grep(x, x = pileupsD2 ))
 listCOL2 <- sapply(m2$DELFI.ID[col22] , function(x) grep(x, x = pileupsD2 ))
@@ -310,9 +310,9 @@ j=1
 for (i in 1:79  ) {
   print(i)
   #i=3
-  #auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
-  auxFR <- read.table(pileupsD2_1M[listCOL[i]], header = TRUE) # sample per sample, file per file. 
-  colD2_1M[j,,] <- unlist(auxFR[,2:500])
+  auxFR <- read.table(pileupsD2[listCOL[i]], header = TRUE) # sample per sample, file per file. 
+  #auxFR <- read.table(pileupsD2_1M[listCOL[i]], header = TRUE) # sample per sample, file per file. 
+  colD2[j,,] <- unlist(auxFR[,2:500])
   #colD2[j,,] <- unlist(auxFR[,2:500])
   
   # save 79 individual profiles as xls files
@@ -395,14 +395,14 @@ listCTL1 <- unique(auxCTL1)
 length(unique(auxCTL1)) # 74
 
 ctl1D2 = array(0, dim=c(74,574,499))
-ctl1D2_1M = array(0, dim=c(74,2873,499)) # 5x574 genomic bins, i.e. 1Mb rather than 5Mb
+#ctl1D2_1M = array(0, dim=c(74,2873,499)) # 5x574 genomic bins, i.e. 1Mb rather than 5Mb
 j=1
 for (i in 1:74  ) {
   print(i)
   #i=2
-  auxFR <- read.table(pileupsD2_1M[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
+  auxFR <- read.table(pileupsD2[listCTL1[i]], header = TRUE) # sample per sample, file per file. 
   
-  ctl1D2_1M[j,,] <- unlist(auxFR[,2:500])
+  ctl1D2[j,,] <- unlist(auxFR[,2:500])
   
   # save 74 individual profiles as xls files
   #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_individual', i,'.csv')
@@ -425,10 +425,10 @@ ctl1D22_1M = array(0, dim=c(74*2873,499))
 colD22_1M = array(0, dim=c(79*2873,499))
 for (i in 1:499) {
   #i=1
-  auxCTL <- ctl1D2_1M[,,i]
-  ctl1D22_1M[,i] <- auxCTL 
-  auxCOL <- colD2_1M[,,i]
-  colD22_1M[,i] <- auxCOL
+  #auxCTL <- ctl1D2_1M[,,i]
+  #ctl1D22_1M[,i] <- auxCTL 
+  auxCOL <- colD2[,,i]
+  colD22[,i] <- auxCOL
   #auxCOL1 <- col1D2[,,i]
   #col1D22[,i] <- auxCOL1 
   #auxCOL2<- col2D2[,,i]
@@ -1146,95 +1146,173 @@ iC4 <- sL[sL[,6]=="Colorectal Cancer" & sL[,7]=="IV",3] # list of CRC patient nu
 iO <- sL[sL[,6]=="Ovarian Cancer",3] # list of ovarian cancer patient numbers/names,
 iP <- sL[sL[,6]=="Pancreatic Cancer",3] # list  
 iH <- sL[sL[,6]=="Healthy",3] # list of healthy/control samples, 215
+iU  <- sL[sL[,6]=="Duodenal Cancer",3] # list  
 
 length(bFr[bFr[,1]==iC[1],1])# 555 bins, i.e number of rows with CRC FRs for sample 1
-
 # number of fragments per patient
 sum(crc1[,3:702])#54026559
 
+write.csv(cccD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ccc195.csv')
+
+k_d2_ccc195_ctl276 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CCC195_ctl276.csv')
+kd2_ccc195_ctl276   <- k_d2_ccc195_ctl276  [2:500,2]
+plot(kd2_ccc195_ctl276 )
+
+names(colD22) <- names(recD22)
+cc1D22 <- rbind (colD22, recD22)
+names(recAD22) <- names(cc1D22)
+cc2D22 <- rbind (cc1D22, recAD22)
+names(rec0D22) <- names(cc2D22)
+cc3D22 <- rbind (cc2D22, rec0D22)
+names(colAD22) <- names(cc3D22)
+cc4D22 <- rbind (cc3D22, colAD22)
+names(col0D22) <- names(cc4D22)
+cccD22 <- rbind (cc4D22, col0D22)
+
+
+write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_HG38_ctl215.csv')
+write.csv(ccc,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_HG38_ccc208.csv')
+
+k_d1_ccc208_ctl215 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1HG38_CCC208_ctl215.csv')
+kd1_ccc208_ctl215   <- k_d1_ccc208_ctl215 [2:500,2]
+plot(kd1_ccc208_ctl215 )
+
+names(dcc) <- names(lcc)
+cc1 <- rbind (dcc, lcc)
+names(bcc) <- names(cc1)
+cc2 <- rbind (cc1, bcc)
+names(gcc) <- names(cc2)
+cc3 <- rbind (cc2, gcc)
+names(crc) <- names(cc3)
+cc4 <- rbind (cc3, crc)
+names(ovc) <- names(cc4)
+cc5 <- rbind (cc4, ovc)
+names(pcc) <- names(cc5)
+cc6 <- rbind (cc5, pcc)
+names(ucc) <- names(cc5)
+ccc <- rbind (cc6, ucc)
+
+listD1UCC1 <- unlist(sapply(iU, function(x) grep(x, x = pileupsD1 )))
+ucc <- read.table(pileupsD1[listD1UCC1], header = TRUE)[,2:500]
+
+listD1LCC12 <- unlist(sapply(iL, function(x) grep(x, x = pileupsD1 )))
 nbLCC <- length(iL)
-lcc <-matrix(,nrow=555,ncol=702)
+lcc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbLCC) {
   #i= 1
-  lcc1 <- bFr[bFr[,1]==iL[i],]
-  # distribution for a bin crc1[1,3:702]
+  #lcc1 <- bFr[bFr[,1]==iL[i],]
+  print(i)
+  auxFR <- read.table(pileupsD1[listD1LCC12[i]], header = TRUE) # sample per sample, file per file. 
+  lcc1 <- auxFR[,2:500]
+  print(sum(lcc1)) # 555 x 702   
   if (i==1){
     lcc <- lcc1 
   } else {
-    lcc <- rbind(lcc , lcc1)# agggregate merged results over all CRC samples
+    names(lcc1) <- names(lcc)
+    lcc <- rbind(lcc , lcc1) 
   }
 }
 
+listD1DCC25 <- unlist(sapply(iD, function(x) grep(x, x = pileupsD1 )))
 nbDCC <- length(iD)
-dcc <-matrix(,nrow=555,ncol=702)
+dcc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbDCC) {
   #i= 1
-  dcc1 <- bFr[bFr[,1]==iD[i],]
-  # distribution for a bin crc1[1,3:702]
+  #dcc1 <- bFr[bFr[,1]==iD[i],]
+  print(i)
+  auxFR <- read.table(pileupsD1[listD1DCC25[i]], header = TRUE) # sample per sample, file per file. 
+  dcc1 <- auxFR[,2:500]
+  print(sum(dcc1)) # 555 x 702 
   if (i==1){
     dcc <- dcc1 
   } else {
-    dcc <- rbind(dcc , dcc1)# agggregate merged results over all CRC samples
+    names(dcc1) <- names(dcc)
+    dcc <- rbind(dcc , dcc1) 
   }
 }
 
+listD1BCC54 <- unlist(sapply(iB, function(x) grep(x, x = pileupsD1 )))
 nbBCC <- length(iB)
-bcc <-matrix(,nrow=555,ncol=702)
+bcc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbBCC) {
   #i= 1
-  bcc1 <- bFr[bFr[,1]==iB[i],]
-  # distribution for a bin crc1[1,3:702]
+  #bcc1 <- bFr[bFr[,1]==iB[i],]
+  print(i)
+  auxFR <- read.table(pileupsD1[listD1BCC54[i]], header = TRUE) # sample per sample, file per file. 
+  bcc1 <- auxFR[,2:500]
+  print(sum(bcc1)) # 555 x 702     
   if (i==1){
     bcc <- bcc1 
   } else {
-    bcc <- rbind(bcc , bcc1)# agggregate merged results over all CRC samples
+    names(bcc1) <- names(bcc)
+    bcc <- rbind(bcc , bcc1) 
   }
 }
 
+listD1GCC27 <- unlist(sapply(iG, function(x) grep(x, x = pileupsD1 )))
 nbGCC <- length(iG)
-gcc <-matrix(,nrow=555,ncol=702)
+gcc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbGCC) {
   #i= 1
-  gcc1 <- bFr[bFr[,1]==iG[i],]
-  # distribution for a bin crc1[1,3:702]
+  #gcc1 <- bFr[bFr[,1]==iG[i],]
+  print(i)
+  auxFR <- read.table(pileupsD1[listD1GCC27[i]], header = TRUE) # sample per sample, file per file. 
+  gcc1 <- auxFR[,2:500]
+  print(sum(gcc1)) # 555 x 702    
   if (i==1){
     gcc <- gcc1 
   } else {
-    gcc <- rbind(gcc , gcc1)# agggregate merged results over all CRC samples
+    names(gcc1) <- names(gcc)
+    gcc <- rbind(gcc , gcc1) 
   }
 }
 
+listD1PCC34 <- unlist(sapply(iP, function(x) grep(x, x = pileupsD1 )))
+pcc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
 nbPCC <- length(iP)
-pcc <-matrix(,nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbPCC) {
   #i= 1
-  pcc1 <- bFr[bFr[,1]==iP[i],]
-  # distribution for a bin crc1[1,3:702]
+  #pcc1 <- bFr[bFr[,1]==iP[i],]
+  print(i)
+  auxFR <- read.table(pileupsD1[listD1PCC34[i]], header = TRUE) # sample per sample, file per file. 
+  pcc1 <- auxFR[,2:500]
+  print(sum(pcc1)) # 555 x 702  
   if (i==1){
     pcc <- pcc1 
   } else {
-    pcc <- rbind(pcc , pcc1)# agggregate merged results over all CRC samples
+    names(pcc1) <- names(pcc)
+    pcc <- rbind(pcc , pcc1)#  
   }
 }
 
+listD1OVC28 <- unlist(sapply(iO, function(x) grep(x, x = pileupsD1 )))
+ovc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
 nbOVC <- length(iO)
-ovc <-matrix(,nrow=555,ncol=702)
 # for all patients
 for(i in 1:nbOVC) {
   #i= 1
-  ovc1 <- bFr[bFr[,1]==iO[i],]
-  # distribution for a bin crc1[1,3:702]
+  print(i)
+  #ovc1 <- bFr[bFr[,1]==iO[i],]
+  auxFR <- read.table(pileupsD1[listD1OVC28[i]], header = TRUE) # sample per sample, file per file. 
+  ovc1 <- auxFR[,2:500]
+  print(sum(ovc1)) # 555 x 702
   if (i==1){
     ovc <- ovc1 
   } else {
-    ovc <- rbind(ovc , ovc1)# agggregate merged results over all CRC samples
+    names(ovc1) <- names(ovc)
+    ovc <- rbind(ovc , ovc1) 
   }
 }
+
+
+
+
+
 # UMIIMPROVE
 pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
 
@@ -1647,7 +1725,10 @@ listD1CRC27 <- sapply(iC, function(x) grep(x, x = pileupsD1 ))
 pileupsD1[listD1CRC27] 
 listD1CRC4_8 <- sapply(iC4, function(x) grep(x, x = pileupsD1 ))
 pileupsD1[listD1CRC4_8] 
-listD1CTL215 <- sapply(iH, function(x) grep(x, x = pileupsD1 ))
+listD1CTL215 <- unlist(sapply(iH, function(x) grep(x, x = pileupsD1 )))
+
+
+
 
 nbCRC <- length(iC)
 crc <-matrix(,nrow=574,ncol=500)#nrow=555,ncol=702)
@@ -1842,7 +1923,7 @@ k_ctl1_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergen
 k_ctl1_i[3,] <- k_ctl1_i3[2:701,2]
 plot(k_ctl1_i[3,])
 
-nbCTL <- length(iH)/5#*0.4#/ 5 # devide by 5 until laptop comes
+nbCTL <- length(iH)#/5#*0.4#/ 5 # devide by 5 until laptop comes
 #ctl <-matrix(,nrow=555,ncol=702)
 ctlB <-matrix(,nrow=700,ncol=555)
 h <-matrix(,nrow=nbCTL ,ncol=700)
