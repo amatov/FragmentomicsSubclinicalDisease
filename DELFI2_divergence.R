@@ -226,10 +226,10 @@ for (i in 1:499) {
   col0D22[,i] <- auxCOL0 
   auxCOLA<- colAD2[,,i]
   colAD22[,i] <- auxCOLA 
-  auxREC0 <- rec0D2[,,i]
-  rec0D22[,i] <- auxREC0 
-  auxRECA <- recAD2[,,i]
-  recAD22[,i] <- auxRECA 
+  #auxREC0 <- rec0D2[,,i]
+  #rec0D22[,i] <- auxREC0 
+  #auxRECA <- recAD2[,,i]
+  #recAD22[,i] <- auxRECA 
 }
 
 write.csv(col0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH20.csv')
@@ -1315,15 +1315,18 @@ for(i in 1:nbOVC) {
 
 # UMIIMPROVE
 pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
-
 nbUMII <- length(pileupsUI)
+umiiD2 <- array(0,c(nbUMII,595,499))
 umii1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
+j=1
 for(i in 1:nbUMII) {
   #i= 2
   print(i)
   auxFR <- read.table( pileupsUI[i], header = TRUE) # sample per sample, file per file. 
   testU <- as.integer(unlist(auxFR[,2:500]))
   umii1 <- t(matrix(testU, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) )# convert back to matrix form
+  umiiD2[j,,] <- umii1
+  j=j+1
   print(dim(umii1)) # 555 x 702
   if (i==1){
     umii <- umii1
@@ -1334,6 +1337,8 @@ for(i in 1:nbUMII) {
 }
 plot(rowSums(umii1))
 plot(colSums(umii1))
+
+umiiM <- matrix(umii, ncol = 595, byrow = 499) #
 
 # compare WASSERSTEIN for umiseq CRUK, IMPROVE and Delfi1 CRC and Delfi2 COL
 wa_umii<-vector()
