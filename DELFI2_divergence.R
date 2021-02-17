@@ -56,6 +56,11 @@ col22 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="II") #  30
 col32 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="III") #  18
 col42 <- which(m2$diagnostic_group=="Colon cancer" & m2$crc_stage=="IV") #  23
 
+rec12 <- which(m2$diagnostic_group=="Rectal cancer" & m2$crc_stage=="I") # 10
+rec22 <- which(m2$diagnostic_group=="Rectal cancer" & m2$crc_stage=="II") # 11
+rec32 <- which(m2$diagnostic_group=="Rectal cancer" & m2$crc_stage=="III") # 18
+rec42 <- which(m2$diagnostic_group=="Rectal cancer" & m2$crc_stage=="IV") # 11
+
 # 345 already analyzed, 7 colon replicates, 60 ctl3 later, 66 adenomas, tot. 478 for analysis (471 unique)
 # plus 210 (of 681 in the list), all unique?, are "validation", i.e. m2$diagnostic_group is NA.
 col02 <- which(m2$diagnostic_group=="Adenoma colon" & m2$adenoma_risk=="HIGH") # 20 col Adenoma HIGH
@@ -305,7 +310,7 @@ for (i in 1:210  ) {
 length(unique(auxCOL)) # 79 (samples with indexes 188, 87, 279, 552, 368, 429, 516 were replicated, even if its the same sample)
 #################colon all stages#######################
 colD2 = array(0, dim=c(79,574,499))
-colD2_1M = array(0, dim=c(79,2873,499)) # 5x574 genomic bins, i.e. 1Mb rather than 5Mb
+#colD2_1M = array(0, dim=c(79,2873,499)) # 5x574 genomic bins, i.e. 1Mb rather than 5Mb
 j=1
 for (i in 1:79  ) {
   print(i)
