@@ -1,3 +1,7 @@
+library("glmnet")
+source("~/genomedk/matovanalysis/umiseq_analysis/R/read_bed.R") #1/0 list
+
+
 ctl1D23 = array(0, dim=c(74,499))
 for (i in 1:74  ) {
   print(i)
@@ -78,12 +82,17 @@ selectionTe= rep(0, 76)
 selectionTe[38:76]=1 
 
 # only stage IV 23 colon cancers vs 74 control1 no comorbidity
-samplesTr = array(0, dim=c((37+12),length(ind195)))
-samplesTr <- rbind(ctl1D2N[,ind195,195][1:37,], col4D2N[,ind195,195][1:12,])
+k=1
+samplesTr = array(0, dim=c((37+12),(length(ind195)+k)))
+samplesTr[,1:length(ind195)] <- rbind(ctl1D2N[,ind195,195][1:37,], col4D2N[,ind195,195][1:12,])
+samplesTr[,(length(ind195)+k)] <- c(m2$age[listCTL1][1:37],m2$age[listCOL4][1:12])
+
+# add new flags; number of fragments, age, gender, concentration, 10 flags
 selectionTr = rep(0, 49)
 selectionTr[38:49]=1
-samplesTe = array(0, dim=c((37+11),length(ind195)))
-samplesTe <- rbind(ctl1D2N[,ind195,195][38:74,], col4D2N[,ind195,195][13:23,])
+samplesTe= array(0, dim=c((37+11),(length(ind195)+k)))
+samplesTe[,1:length(ind195)] <- rbind(ctl1D2N[,ind195,195][38:74,], col4D2N[,ind195,195][13:23,])
+samplesTe[,(length(ind195)+k)] <- c(m2$age[listCTL1][38:74],m2$age[listCOL4][13:23])
 selectionTe= rep(0, 48)
 selectionTe[38:48]=1 
 
@@ -96,6 +105,76 @@ samplesTe = array(0, dim=c((22+28),595))
 samplesTe <- rbind(umiN[,,356][24:45,], umiiN[,,356][29:56,])
 selectionTe= rep(0, 50)
 selectionTe[23:50]=1 
+
+CRUK <- read.table('~/genomedk/matovanalysis/umiseq_analysis/R/specs_data_cruk-plasma-info.lst', header = T)
+CRUKlist <- which(CRUK$sample_type=="CRC pre-OP" & CRUK$cancer==1)  
+length(CRUKlist) #183 not 130
+#######################################################################################################################################
+#pileupsC <- list.files("~/genomedk/PolyA/faststorage/BACKUP/CRUK/plasma/N289", recursive = T, full.names = T, pattern = "bait.pileup")
+#CRUK <- read_xlsx('~/genomedk/matovanalysis/umiseq_analysis/2020-01-04_CRUK_sample_status.xlsx')
+#CRUKlist <- CRUK$`Biobank label`[CRUK$sequenced=="yes"]#80
+
+#listCRUK <- unlist(sapply(CRUKlist, function(x) grep(x, x = pileupsC[45:152] )))
+#pileupsC[45:152] [listCRUK]  
+
+#countsC0 <-  piles_to_counts(files = pileupsC[45:152] [listCRUK]  , regions = pon_obj2$regions)
+countsC00 <- readRDS("~/genomedk/matovanalysis/umiseq_analysis/R/cruk-counts.RDS") # 
+countsC0= array(0, dim=c(95,dim(countsC00)[2],dim(countsC00)[3]))
+countsC0[1:69,,]<-countsC00[2:70,,]
+countsC0[70:95,,]<-countsC00[105:130,,]
+
+countsC= array(0, dim=c(dim(countsC0)[1],sum(list),dim(countsC0)[3]))
+for (i in 1:dim(countsC0)[1]) {
+  #i=1
+  p2 <- data.frame(countsC0[i,,])#CRUK
+  p1 <- p2 [list == 1, ] 
+  countsC[i,,] <- data.matrix(p1)
+}
+countsC1 <- countsC[,,1:4] + countsC[,,6:9]
+mafsC1 = array(0, dim=c(dim(countsC1)[1],sum(list),dim(countsC1)[3]))
+mafsC2= array(0, dim=c(dim(countsC1)[1],sum(list)*dim(countsC1)[3]))
+auxMC <- rowSums(countsC1, dims = 2) 
+for (i in 1:dim(countsC1)[1]) {
+  mafsC1[i,,] <- countsC1[i,,]  /auxMC[i,]/v1/sum(list)
+  mafsC2[i,] <- mafsC1[i,,]/sum(mafsC1[i,,])#
+}
+# 45 Subjects of the Control Panel of Normal PON ####################################################################
+pon_obj2 <- readRDS("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/reference/201217_hg38-novaseq-xgen-sporacrc-pon.RDS") # 46
+pon_counts <- pon_obj2[["pon"]]
+no0 = array(0, dim=c(dim(pon_counts)[1]-1,dim(pon_counts)[2],dim(pon_counts)[3]))
+no0[1:27,,] <- pon_counts[1:27,,]
+no0[28:45,,]<-pon_counts[29:46,,]
+
+no1 = array(0, dim=c(dim(no0)[1],sum(list),dim(no0)[3]))
+for (i in 1:dim(no0)[1]) {
+  #i=1
+  p2 <- data.frame(no0[i,,])#PON
+  p1 <- p2 [list == 1, ] 
+  no1[i,,] <- data.matrix(p1)
+}
+no <- no1[,,1:4]+no1[,,6:9]
+mafsP1 = array(0, dim=c(dim(no)[1],sum(list),dim(no)[3]))
+mafsP2 = array(0, dim=c(dim(no)[1],sum(list)*dim(no)[3]))
+auxMP <- rowSums(no, dims = 2) 
+no2= array(0, dim=c(dim(no)[1],sum(list)*dim(no)[3]))
+for (i in 1:dim(no)[1]) {
+  mafsP1[i,,] <- no[i,,]  /auxMP[i,]/v1/sum(list)
+  mafsP2[i,] <- mafsP1[i,,]/sum(mafsP1[i,,])
+}
+v<-apply(mafsP1,2:3,var) # variance of the counts of each position based on PON
+#v<-apply(mafsP1,2:3,var) # variance of the VAFs of each position based on PON
+v0 <- min(v[v>0])/10000000 # for counts w zero variance, we replace w a very small value
+v1<- v
+v1[v==0]=v0
+# umiseq 62k COUNTS 95 PreOp CRUK vs 45 PON
+samplesTr = array(0, dim=c((23+48),61860))
+samplesTr <- rbind(mafsP2[1:23,], mafsC2[1:48,])
+selectionTr = rep(0, 71)
+selectionTr[24:71]=1
+samplesTe = array(0, dim=c((22+47),61860))
+samplesTe <- rbind(mafsP2[24:45,], mafsC2[49:95,])
+selectionTe= rep(0, 69)
+selectionTe[23:69]=1 
 
 # run #####
 cvm = cv.glmnet(samplesTr, selectionTr, family = "binomial", alpha=1, nfolds=10) 
@@ -114,6 +193,7 @@ final <- cbind(selectionTe, pred)
 final
 plot(final)
 ########################################################################################
+plot(final[1:22,2],ylim=c(0.0066,0.0073))
 
 # Splitting the NORMALIZED data into test and train
 samplesTr = array(0, dim=c((37+40),574*2))
