@@ -1,7 +1,11 @@
 
 grays = rgb(red = 0:255/255, blue = 0:255/255, green = 0:255/255)
-#heatmap(ctl1D2[2,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
-heatmap(umiiD2[2,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
+#heatmap(ctl1D2[74,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
+#heatmap(col4D2[23,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
+#heatmap(col1D2[8,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
+#heatmap(umiiD2[1,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
+#heatmap(umicD2[1,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
+heatmap(umiD2[1,,],Rowv=NA,Colv=NA,col=grays, scale = "none")
 
 # all stages 79 colon cancers vs 74 control1 no comorbidity
 samplesTr = array(0, dim=c((69+64),574,499))
