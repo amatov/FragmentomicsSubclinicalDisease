@@ -339,8 +339,8 @@ for (i in 1:8 ) {
   auxFR <- read.table(pileupsD2[listCOL1[i]], header = TRUE) # sample per sample, file per file. 
   col1D2[j,,] <- unlist(auxFR[,2:500])
   
-  sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col1_individual', i,'.csv')
-  aux<- read.csv(sa_name)
+  #sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col1_individual', i,'.csv')
+  #aux<- read.csv(sa_name)
   #k_col1_i[i,] <- aux[2:500,2]
   j=j+1
 }
@@ -1367,13 +1367,17 @@ hist(umii[,198], breaks = 150, ylim = c(0, 200))# dense up to 500 on x axis
 pileupsUC <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/CRUK5Mb", recursive = T, full.names = T, pattern = "tsv")
 umic<-vector()
 nbUMIC <- length(pileupsUC)
+umicD2 <- array(0,c(nbUMIC,595,499))
 umic1 <-matrix(,nrow=595,ncol=499)#nrow=555,ncol=702)
+j=1
 for(i in 1:nbUMIC) {
   #i= 1
   print(i)
   auxFR <- read.table( pileupsUC[i], header = TRUE) # sample per sample, file per file. 
   testU <- as.integer(unlist(auxFR[,2:500]))
   umic1 <- t(matrix(testU, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) )# convert back to matrix form
+  umicD2[j,,] <- umic1
+  j=j+1
   print(dim(umic1)) # 555 x 702
   if (i==1){
     umic <- umic1
@@ -1385,18 +1389,21 @@ for(i in 1:nbUMIC) {
 dim(umic) # 40460 x 499 for  68 CRUK PreOps
 #UMISEQ
 auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
-testS <- as.integer(unlist(auxFR[,2:500]))
-testS2 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
+#testS <- as.integer(unlist(auxFR[,2:500]))
+#testS2 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
 pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/45PON5Mb", recursive = T, full.names = T, pattern = "tsv")
-
 nbUMI <- length(pileupsU)
+umiD2 <- array(0,c(nbUMI,595,499))
 umi1 <-matrix(,nrow=574,ncol=499)#nrow=555,ncol=702)
+j=1
 for(i in 1:nbUMI) {
   #i= 2
   print(i)
   auxFR <- read.table( pileupsU[i], header = TRUE) # sample per sample, file per file. 
   testS <- as.integer(unlist(auxFR[,2:500]))
   umi1 <- t(matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) )# convert back to matrix form
+  umiD2[j,,] <- umi1
+  j=j+1
   print(dim(umi1)) # 555 x 702
   if (i==1){
     umi <- umi1
