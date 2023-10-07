@@ -11,7 +11,7 @@ Preliminary Kullback-Leibler divergence ([PMC5812299](https://www.ncbi.nlm.nih.g
 1. Cancer vs healthy:
 
 - Healthy individuals and cancer patients exhibit differences for
-particular fragment lengths (classification of new clinical samples).
+particular fragment lengths (classification of new clinical samples and early detection of disease).
 - We measure two to three peaks (see [KLD_CRC_FRL.pdf](https://gitlab.com/amatov/dnafrl/-/blob/master/KLD_CRC_FRL.pdf)) on the divergence histogram (identify the disease stage).
 
 2. Cancer vs cancer:
