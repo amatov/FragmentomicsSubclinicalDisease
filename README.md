@@ -11,11 +11,11 @@ Preliminary Kullback-Leibler divergence ([PMC5812299](https://www.ncbi.nlm.nih.g
 1. Cancer vs healthy:
 
 - Healthy individuals and cancer patients exhibit differences for
-particular fragment lengths.
-- We measure two to three peaks (see [KLD_CRC_FRL.pdf](https://gitlab.com/amatov/dnafrl/-/blob/master/KLD_CRC_FRL.pdf)) on the divergence histogram.
+particular fragment lengths (classification of new clinical samples).
+- We measure two to three peaks (see [KLD_CRC_FRL.pdf](https://gitlab.com/amatov/dnafrl/-/blob/master/KLD_CRC_FRL.pdf)) on the divergence histogram (identify the disease stage).
 
 2. Cancer vs cancer:
 
 - CRC patients and other cancers exhibit differences for particular
-fragment lengths.
-- At least 8% of the fragments belong to diverging populations.
+fragment lengths (identify the tissue of origin).
+- At least 8% of the fragments belong to diverging populations (determine the degree of overlap between the regulation of different tumors).
