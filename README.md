@@ -19,3 +19,5 @@ particular fragment lengths (classification of new clinical samples and early de
 - CRC patients and other cancers exhibit differences for particular
 fragment lengths (identify the tissue of origin).
 - At least 8% of the fragments belong to diverging populations (determine the degree of overlap between the regulation of different tumors).
+
+https://www.researchgate.net/publication/374059465_Classification_of_Genome-Wide_cfDNA_Fragmentation_Patterns_with_Deep_Learning_2020_-_2021
