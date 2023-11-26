@@ -1,6 +1,6 @@
 # Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data 
 
-### Presentations and clinical applications on this project are available here: https://researchgate.net/publication/374059465_Classification_of_Genome-Wide_cfDNA_Fragmentation_Patterns_with_Deep_Learning_2020_-_2021
+### Presentations and clinical applications on this project are available here: http://dx.doi.org/10.13140/RG.2.2.34819.89121/1
 
 
 We consider the relative entropy between cohorts’ cfDNA fragment lengths and test two hypotheses.
