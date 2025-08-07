@@ -23,5 +23,5 @@ particular fragment lengths (classification of new clinical samples and early de
 fragment lengths (identify the tissue of origin).
 - At least 8% of the fragments belong to diverging populations (determine the degree of overlap between the regulation of different tumors).
 
-### The Delfi 2 / Endo II cohort consisted of samples from clinical trials NCT03637686, NCT03748680, NCT04084249
+### For the detailed information, see: https://www.researchgate.net/publication/382382448_Analysis_of_Genome-Wide_Cell-Free_DNA_Fragment_Length_Distributions_in_Colorectal_Cancer
 
