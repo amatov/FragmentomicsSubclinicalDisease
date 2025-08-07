@@ -1,7 +1,5 @@
 # Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data 
 
-### Presentations and clinical applications on this project (Classification of Genome-Wide cfDNA Fragmentation Patterns with Deep Learning) are available here: http://dx.doi.org/10.13140/RG.2.2.34819.89121/1 (5 PDF files) 
-
 
 We consider the relative entropy between cohorts’ cfDNA fragment lengths and test two hypotheses.
 
@@ -9,13 +7,13 @@ We consider the relative entropy between cohorts’ cfDNA fragment lengths and t
 
 2. We can identify distinct differences for colorectal (CRC) as well as other cancer types (ovarian, pancreatic, gastric, breast, lung cancer and cholangiocarcinoma).
 
-Preliminary Kullback-Leibler divergence ([PMC5812299](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5812299/)) analysis of the Delfi ([PMC6774252](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6774252/)) data shows:
+Preliminary Kullback-Leibler divergence analysis of the Delfi data shows:
 
 1. Cancer vs healthy:
 
 - Healthy individuals and cancer patients exhibit differences for
 particular fragment lengths (classification of new clinical samples and early detection of disease).
-- We measure two to three peaks (see [KLD_CRC_FRL.pdf](https://gitlab.com/amatov/dnafrl/-/blob/master/KLD_CRC_FRL.pdf)) on the divergence histogram (identify the disease stage).
+- We measure two to three peaks on the divergence histogram (identify the disease stage).
 
 2. Cancer vs cancer:
 
