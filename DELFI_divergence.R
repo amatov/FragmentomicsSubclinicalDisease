@@ -8,7 +8,9 @@ library("ggplot2")
 library(gplots)
 library(spatstat)
 library("transport")
+# EDIT: hardcoded absolute path to the original author's machine
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
+# EDIT: hardcoded absolute path to the original author's machine
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
@@ -25,6 +27,7 @@ hist(s1[s1>100])
 hist(s2[s2>100])
 
 #sL <- read.csv("U:\\Documents/R/delfi_scripts-master/sample_reference.csv")
+# EDIT: hardcoded absolute path to the original author's machine
 sL <- read.csv("~/genomedk/matovanalysis/DELFI_analysis/R/sample_reference.csv")
 
 iL <- sL[sL[,6]=="Lung Cancer",3] # list  
@@ -359,83 +362,150 @@ plot(rowSums(cnm), col="red",ylim=range(c(0,55000000)))
 # 504.4316 507.1018 508.6900 509.2213 509.0071 508.4851 507.8492 507.7506 507.1370 506.2944
 
 #KLD(t(cnm), t(hnm)) # from LaplacesDemon
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(v364[sample(1:14430,14430)]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_c364_14430.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm[364,]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_h364_23310.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(lnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_lcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(dnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_dcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(bnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_bcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(gnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_gcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(pnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_pcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(onm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_ovc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnmD),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcD.csv')# double
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnmH),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcH.csv')# half- doesnt work well
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crcMax,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcMax.csv')# max coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crcMin,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcMin.csv')# min coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlMax,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctlMax.csv')# max coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlMin,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctlMin.csv')# min coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl2.csv')
 ctlBB<-unname(ctlB)
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlBB,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctlB.csv')
 crcBB<-unname(crcB)
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crcBB,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcB.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hM364,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM364,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc364.csv')
 write.csv(hM205,'tyG:\\matovanalysis/DELFI_analysis/python/delfi1_ctl205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM205,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hM198,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl198.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM198,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc198.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm1),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc1.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm2),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm3),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm4),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc4.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(v364[sample(1:14430,100)]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_v364_100.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_ch2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCh2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cmaxmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmaxmin.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 kcmax_hmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmaxCRCmax.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_hmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmax.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_hmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmin.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_cbin2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_bins364.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_cbin <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRCbins.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmax.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmin.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c12 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c13 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c14 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c23 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2CRC3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c24 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2CRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c34 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC3CRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cD <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCd.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cH <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCh.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c1 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c3 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c4 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c364 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c205 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c198 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC198.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_l <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceLCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cl <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_LCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_d <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceDCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cd <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_DCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_b <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceBCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cb <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_BCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cg <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_GCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_g <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceGCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_p <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergencePCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.csv') # CRC  
+# EDIT: hardcoded absolute path to the original author's machine
 k_cR <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_Reverse.csv') # CRC  REVERSE
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_o <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceOVC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_co <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_OVC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cp <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_PCC.csv')
 
 kcbin2<-k_cbin2[2:701,2]

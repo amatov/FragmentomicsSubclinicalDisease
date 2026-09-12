@@ -12,6 +12,7 @@ from est_rel_entro_HJW import *
 #sampP = pd.read_csv('umiseq_pon30_frl130.csv')
 #sampP = pd.read_csv('~/matovanalysis/DELFI_analysis/python/umiseq_pon45.csv')
 #sampP = pd.read_csv('~/matovanalysis/DELFI_analysis/python/delfi1_HG38_ctl215.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 sampP = pd.read_csv('~/matovanalysis/DELFI_analysis/python/delfi2_ctl_all276.csv')
 #sampP = pd.read_csv('delfi1_crc364.csv')
 #sampP = pd.read_csv('delfi2_ctl1_74_binned10frl.csv')
@@ -49,6 +50,7 @@ sampP = pd.read_csv('~/matovanalysis/DELFI_analysis/python/delfi2_ctl_all276.csv
 #sampQ = pd.read_csv('~/matovanalysis/DELFI_analysis/python/umiseq_totalPre124.csv')
 #sampQ = pd.read_csv('~/matovanalysis/DELFI_analysis/python/delfi1_HG38_ccc208.csv')
 #sampQ = pd.read_csv('~/matovanalysis/DELFI_analysis/python/delfi2_crc_all129.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 sampQ = pd.read_csv('~/matovanalysis/DELFI_analysis/python/delfi2_ccc195.csv')
 #sampQ = pd.read_csv('delfi2_col1_alll8.csv')
 #sampQ = pd.read_csv('delfi2_col2_all30.csv')
@@ -110,6 +112,7 @@ estP = pd.DataFrame(est)
 #estP.to_csv('KLdivergenceD2col79_D1ctl43.csv')
 #estP.to_csv('KLdivergenceD2col79_D1ctl86HG38.csv')
 #estP.to_csv('~/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CRC129_ctl276.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 estP.to_csv('~/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CCC195_ctl276.csv')
 #estP.to_csv('~/matovanalysis/DELFI_analysis/python/KLdivergenceD1HG38_CCC208_ctl215.csv')
 #estP.to_csv('~/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseq_totalPre124_Pon45.csv')

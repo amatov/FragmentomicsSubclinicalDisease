@@ -8,6 +8,7 @@ for (i in 1:74  ) {
   ctl1D2N[j,,] <- unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))
   
   # save 74 individual profiles as xls files
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1N_individual', i,'.csv')
   auxSAVE <-ctl1D2N[j,,] #matrix( unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))),nrow=574,ncol=499)
   
@@ -25,6 +26,7 @@ for (i in 1:79  ) {
   colD2N[j,,] <- unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))
   
   # save 79 individual profiles as xls files
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_colN_individual', i,'.csv')
   auxSAVE <-colD2N[j,,] #matrix( unlist(auxFR[,2:500])/ sum(unlist(auxFR[,2:500]))),nrow=574,ncol=499)
   
@@ -59,15 +61,19 @@ for (i in 1:499) {
   colD22N[,i] <- auxCOL
 }
 # save cohorts to disk
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(colD22N*100000000000000,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_colN_all79.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl1D22N*100000000000000,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1N_74.csv')
 
 # read and plot KLD vector for FRL1-499bp
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_colN <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_CTL1_norm.csv')
 kd2_colN<- k_d2_colN[2:575,2]
 plot(kd2_colN)
 
 # UMIIMPROVE
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
 nbUMII <- length(pileupsUI)
 umiiN = array(0, dim=c(nbUMII,595,499))
@@ -82,6 +88,7 @@ for(i in 1:nbUMII) {
 }
 dim(umiiN) # 17850x499 for 30PreOps, 33320x499 for 56 PreOps
 # UMICRUK
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsUC <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/CRUK5Mb", recursive = T, full.names = T, pattern = "tsv")
 nbUMIC <- length(pileupsUC)
 umicN = array(0, dim=c(nbUMIC,595,499))
@@ -96,6 +103,7 @@ for(i in 1:nbUMIC) {
 }
 dim(umicN) # 40460 x 499 for  68 CRUK PreOps
 #UMISEQ
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/45PON5Mb", recursive = T, full.names = T, pattern = "tsv")
 nbUMI <- length(pileupsU)
 umiN = array(0, dim=c(nbUMI,595,499))

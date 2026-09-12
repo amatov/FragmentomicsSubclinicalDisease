@@ -2,6 +2,7 @@
 library(Rsamtools)
 
 #pileupsD <- list.files("~/genomedk/DELFI_data/RawData", recursive = T, full.names = T) # only BAM
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsD <- list.files("~/genomedk/DELFI_data/RawData", recursive = T, full.names = T, pattern = "bam$")
 
 # extract the list of 27 CRC and 43 CTL from 

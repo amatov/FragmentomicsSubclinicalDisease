@@ -14,18 +14,23 @@ library(caret)
 library(seewave)
 library("glmnet")
 library("ggpubr")
+# EDIT: hardcoded absolute path to the original author's machine
 setwd ('G:\\DELFI_data/Derived/fragment_length_in_bins')
+# EDIT: hardcoded absolute path to the original author's machine
 setwd ('~/genomedk/DELFI_data/Derived/fragment_length_in_bins')
 require("reticulate")
 py_install("pandas")
 py_install("https://github.com/Hogfeldt/ctDNAtool")
+# EDIT: hardcoded absolute path to the original author's machine
 source_python("~/genomedk/matovanalysis/DELFI_analysis/python/pickle_reader.py")
 #pickle_data <- read_pickle_file("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp/DL000978HLQ0_100AM.pickle")
 ##excel_sheets(path = "~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx")
 
 #del2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 1) 
 #end2 <- read_excel("~/genomedk/DELFI2/RawData/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo.xlsx", sheet = 2)# 1069 samples: 169 colon, 100 rectum, 800 control.
+# EDIT: hardcoded absolute path to the original author's machine
 del2 <- read_excel("~/genomedk/DELFI2/Workspaces/matov/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo2.xlsx", sheet = 1) 
+# EDIT: hardcoded absolute path to the original author's machine
 end2 <- read_excel("~/genomedk/DELFI2/Workspaces/matov/201217_Delfi2_fastq_and_sample_manifest_updated_batchinfo2.xlsx", sheet = 2)# 1069 samples: 169 colon, 100 rectum, 800 control.
 
 col_list <- which(end2$diagnostic_group=="Colon cancer") # 169 samples
@@ -80,6 +85,7 @@ listVAL <- unique(auxVAL)
 # 210 individual KLD to the 43 CTL Delfi1. pick top 189 bp . maybe go to 12 bins.
 val189D2 <- valD2[,,189] #210 (samples) 574 (bins)
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(val189D2[,1:555]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_val210_555bins_fr189.csv')
 # 555 x 210 
 
@@ -89,8 +95,10 @@ h189x210 = array(0, dim=c(23310,210))
 for (i in 1:210  ) {
 h189x210[,i]<-hnm189 #duplicate the same vector 210 times to prepare the divergence.
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(h189x210,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_healthy43_555bins_fr189.csv')
 # 23310(42*555) x 210 
+# EDIT: hardcoded absolute path to the original author's machine
 k189_val_d1ctl43 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2val210_D1ctl43_fr189.csv')
 k189_vald1ctl43  <- k189_val_d1ctl43[2:211,2]
 plot(k189_vald1ctl43 )
@@ -168,7 +176,9 @@ m2$DELFI.ID[col_list2] # 79
 #[64] "DL001270CRP0"   "DL001316CRP0"   "DL001562CRP0"   "DL001178CRP0"   "DL001572CRP0"   "DL001843CRP0"   "DL001843CRP0_1" "DL001964CRP0"   "DL001964CRP0_1"
 #[73] "DL001763CRP0"   "DL001650CRP0"   "DL001965CRP0"   "DL002190CRP0_1" "DL002190CRP0"   "DL001793CRP0"   "DL001480CRP0"  
 
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsD2 <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_5Mbp", recursive = T, full.names = T, pattern = "tsv")
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsD2_1M <- list.files("~/genomedk/DELFI2/Workspaces/per_and_elias/delfi2_length_1Mbp", recursive = T, full.names = T, pattern = "tsv")
 
 d2_test <- read.table(pileupsD2[204], header = TRUE)
@@ -237,20 +247,28 @@ for (i in 1:499) {
   #recAD22[,i] <- auxRECA 
 }
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(col0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeH20.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(colAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_adeL28.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(rec0D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_adeH11.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(recAD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_adeL7.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 kd2_col0 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_adeH20_ctl1.csv')
 k_d2_col0 <- kd2_col0[2:500,2]
 plot(k_d2_col0)
+# EDIT: hardcoded absolute path to the original author's machine
 kd2_colA <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_adeL28_ctl1.csv')
 k_d2_colA <- kd2_colA[2:500,2]
 plot(k_d2_colA)
+# EDIT: hardcoded absolute path to the original author's machine
 kd2_rec0 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2rec_adeH11_ctl1.csv')
 k_d2_rec0 <- kd2_rec0[2:500,2]
 plot(k_d2_rec0)
+# EDIT: hardcoded absolute path to the original author's machine
 kd2_recA <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2rec_adeL7_ctl1.csv')
 k_d2_recA <- kd2_recA[2:500,2]
 plot(k_d2_recA)
@@ -443,23 +461,30 @@ for (i in 1:499) {
   #auxCOL4 <- col4D2[,,i]
   #col4D22[,i] <- auxCOL4 
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(colD22_1M,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79_1M.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl1D22_1M,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74_1M.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col79_1M <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_CTL1_1M.csv')
 kd2_col79_1M <- k_d2_col79_1M[2:575,2]
 plot(kd2_col79_1M)
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_crc129 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CRC129_ctl1.csv')
 kd2_crc129 <- k_d2_crc129[2:575,2]
 plot(kd2_crc129)
 
 ctlD22 <- rbind(ctl1D22,ctl2D22)
 ctlD22 <- rbind(ctlD22,ctl3D22)
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl_all276.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_crc129_ctl276 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CRC129_ctl276.csv')
 kd2_crc129_ctl276 <- k_d2_crc129_ctl276[2:575,2]
 plot(kd2_crc129_ctl276)
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col79_ctl276 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl276.csv')
 kd2_col79_ctl276 <- k_d2_col79_ctl276[2:575,2]
 plot(kd2_col79_ctl276)
@@ -467,6 +492,7 @@ plot(kd2_col79_ctl276)
 
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(colD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_all79.csv')
 
 dim(colD2)# 79 574 499
@@ -477,10 +503,14 @@ hh195<-ctl11D2[,,195]
 dim(c195) # 79 574
 dim(h195)#  74 574
 dim(hh195)#  73 574
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(c195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr195.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(h195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr195.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hh195,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl73_fr195.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 kk195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr195_ctl73.csv')
 kk195d2_col <- kk195_d2_col[2:575,2]
 plot(kk195d2_col)
@@ -494,6 +524,7 @@ df<-scale(hcTop20)
 df[is.nan(df)] <- 0
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
+# EDIT: hardcoded absolute path to the original author's machine
 k195_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr195_ctl1.csv')
 k195d2_col <- k195_d2_col[2:575,2]
 plot(k195d2_col)
@@ -531,9 +562,12 @@ hm <- heatmap(df, scale = "none", col =  col)
 
 c365<-colD2[,,365]
 h365<-ctl1D2[,,365]
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(c365,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_fr365.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(h365,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr365.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k365_d2_col <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COLfr365_ctl1.csv')
 k365d2_col <- k365_d2_col[2:575,2]
 plot(k365d2_col)
@@ -560,25 +594,32 @@ hm <- heatmap(df, scale = "none", col =  col)
 
 hnm499<-hnm[1:499,]
 cnm499<-cnm[1:499,]
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc27_frl499.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm499),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl499.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k1_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43.csv')
 k1d2_col79 <- k1_d2_col79[2:500,2]
 plot(k1d2_col79)
 
+# EDIT: hardcoded absolute path to the original author's machine
 k1_d2_col79hg38 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43HG38.csv')
 k1d2_col79hg38 <- k1_d2_col79hg38[2:500,2]
 plot(k1d2_col79hg38)
 
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col79hg38 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl86HG38.csv')
 k2d2_col79hg38 <- k2_d2_col79hg38[2:500,2]
 plot(k2d2_col79hg38)
 
 hM189 <- matrix(hnm499[189,], ncol = 555, byrow = 42) #  
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hM189,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43_frl499_189.csv')
 
 cM189 <- matrix(colD22[,189], ncol = 574, byrow = 79) #  
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM189[,1:555],'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col79_bin555_189.csv')
 
 col_bins = array(0, dim=c(79*499,574))
@@ -593,8 +634,11 @@ for (i in 1:574){
 }
 #ctl1_bins <- matrix(ctl1D22, ncol = 574, byrow = 74) # 
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl1_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1Bins.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(col_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_colBins.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_colBins <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_Bins.csv')
 kd2_colBins<-k_d2_colBins[2:701,2]
 plot(kd2_colBins)
@@ -616,11 +660,14 @@ for (i in 0:49){
     ctl1D2B10[,i] <- ctl1D22[,(k-1):(k+8)]# repeat one FRl from the previous segment
   }
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(colD2B10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col_79_binned10frl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl1D2B10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74_binned10frl.csv')
 
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 k1_d2_col79_189 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col79_D1ctl43_fr189.csv')
 k1d2_col79_189 <- k1_d2_col79_189[2:556,2]
 plot(k1d2_col79_189)
@@ -687,22 +734,27 @@ cor(max_kd2_colStage, d2_maxSens_spec95, method=c("pearson", "kendall", "spearma
 cor(max_kd2_colStage, d2_maxSens_spec90, method=c("pearson", "kendall", "spearman"))
 max_kd2_colStage <- c(max(kd2_col1),max(kd2_col2),max(kd2_col3),max(kd2_col4))
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual1.csv')
 kd2_col_i[1,] <- k_d2_col_i1[2:500,2]
 plot(kd2_col_i[1,])
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col_i2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual2.csv')
 kd2_col_i[2,] <- k_d2_col_i2[2:500,2]
 plot(kd2_col_i[2,])
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual3.csv')
 kd2_col_i[3,]<- k_d2_col_i3[2:500,2]
 plot(kd2_col_i[3,])
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col_i4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual4.csv')
 kd2_col_i[4,] <- k_d2_col_i4[2:500,2]
 plot(kd2_col_i[4,])
 
 kd2_col_i<-matrix(,nrow=79,ncol=499)
 for(i in 1:79) {
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col_individual', i,'.csv')
   aux <- read.csv(sa_name)
   kd2_col_i[i,] <- aux[2:500,2]
@@ -818,9 +870,11 @@ legend(240,2.48,legend=c("D1 8 CRC Stage IV 43 CTL", "D2 23 CC Stage IV 74 CTL N
 
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_ctl1_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual1.csv')
 kd2_ctl1_i[1,] <- k_d2_ctl1_i1[2:500,2]
 plot(kd2_ctl1_i[1,])
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_ctl1_i2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual2.csv')
 kd2_ctl1_i[2,] <- k_d2_ctl1_i2[2:500,2]
 plot(kd2_ctl1_i[2,])
@@ -831,6 +885,7 @@ mC1=NULL
 maC1=NULL
 for(i in 1:74) {# break down the plot of 74 into 4 plots of 18
   #i=1
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2ctl1_individual', i,'.csv')
   aux <- read.csv(sa_name)
   kd2_ctl1_i[i,] <- aux[2:500,2]
@@ -876,13 +931,18 @@ shapiro.test(totFRs_D1_CTL11)
 # Stage I 205 bp, Stage II 137 bp, Stage III 364 bp, Stage IV 364 bp   
 c1_205<-col1D2[,,205]
 h1_205<-ctl1D2[,,205]
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(c1_205,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_fr205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(h1_205,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr205.csv')
 
 c2_137<-col2D2[,,137]
 h1_137<-ctl1D2[,,137]
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(c2_137,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_fr137.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(h1_137,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr137.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k137_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col2_fr137_ctl1.csv')
 k137d2_col2 <- k137_d2_col2[2:575,2]
 plot(k137d2_col2)
@@ -899,8 +959,11 @@ hm <- heatmap(df, scale = "none", col =  col)
 
 c3_364<-col3D2[,,364]
 h1_364<-ctl1D2[,,364]
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(c3_364,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_fr364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(h1_364,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_fr364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k364_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col3_fr364_ctl1.csv')
 k364d2_col3 <- k364_d2_col3[2:575,2]
 plot(k364d2_col3)
@@ -916,7 +979,9 @@ col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
 
 c4_364<-col3D2[,,364]
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(c4_364,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col4_fr364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k364_d2_col4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2col4_fr364_ctl1.csv')
 k364d2_col4 <- k364_d2_col4[2:575,2]
 plot(k364d2_col4)
@@ -931,11 +996,16 @@ df[is.nan(df)] <- 0
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
 ########################################################################################
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(col1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col1_all8.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(col2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col2_all30.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(col3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col3_all18.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(col4D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col4_all23.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl1D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74.csv')
 ctl11D22= array(0, dim=c(73*574,499))
 ctl11D2= array(0, dim=c(73,574,499))
@@ -946,7 +1016,9 @@ for (i in 1:499) {
   auxCTL11 <- ctl11D2[,,i]
   ctl11D22[,i] <- auxCTL11 
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl11D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_73.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl73.csv')
 k2d2_col79 <- k2_d2_col79[2:500,2]
 plot(k2d2_col79)
@@ -954,44 +1026,54 @@ cor(kd2_col79, k2d2_col79, method=c("pearson", "kendall", "spearman"))
 cor(kc[1:499], k2d2_col79, method=c("pearson", "kendall", "spearman"))
 #cor(kc[1:499], kd2_col79, method=c("pearson", "kendall", "spearman"))
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79.csv')
 kd2_col79 <- k_d2_col79[2:500,2]
 plot(kd2_col79)
 ##############COLON STAGE 1 vs CTL1
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL1_8_ctl1.csv')
 kd2_col1 <- k_d2_col1[2:500,2]
 plot(kd2_col1)
 ##############COLON STAGE 2 vs CTL1
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL2_30_ctl1.csv')
 kd2_col2 <- k_d2_col2[2:500,2]
 plot(kd2_col2)
 ##############COLON STAGE 3 vs CTL1
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL3_18_ctl1.csv')
 kd2_col3 <- k_d2_col3[2:500,2]
 plot(kd2_col3)
 ##############COLON STAGE 4 vs CTL1
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL4_23_ctl1.csv')
 kd2_col4 <- k_d2_col4[2:500,2]
 plot(kd2_col4)
 ##############COLON STAGE 1 vs CTL2
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL1_8_ctl2.csv')
 k2d2_col1 <- k2_d2_col1[2:500,2]
 plot(k2d2_col1)
 ##############COLON STAGE 2 vs CTL2
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL2_30_ctl2.csv')
 k2d2_col2 <- k2_d2_col2[2:500,2]
 plot(k2d2_col2)
 ##############COLON STAGE 3 vs CTL2
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL3_18_ctl2.csv')
 k2d2_col3 <- k2_d2_col3[2:500,2]
 plot(k2d2_col3)
 ##############COLON STAGE 4 vs CTL2
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL4_23_ctl2.csv')
 k2d2_col4 <- k2_d2_col4[2:500,2]
 plot(k2d2_col4)
 
 
 ##########################COLON REVERSED KLD############################
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_col79 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_revered.csv')
 k2d2_col79 <- k2_d2_col79[2:500,2]
 plot(k2d2_col79)
@@ -1021,8 +1103,10 @@ for (i in 1:499) {
   auxCTL2 <- ctl2D2[,,i]
   ctl2D22[,i] <- auxCTL2 
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl2D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl2_71.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col79_ctl2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl2_71.csv')
 kd2_col79_ctl2 <- k_d2_col79_ctl2[2:500,2]
 plot(kd2_col79_ctl2)
@@ -1052,8 +1136,10 @@ for (i in 1:499) {
   auxCTL3 <- ctl3D2[,,i]
   ctl3D22[,i] <- auxCTL3 
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl3D22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl3_71.csv') # the first 71 of 131
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col79_ctl3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_ctl3_71.csv')
 kd2_col79_ctl3 <- k_d2_col79_ctl3[2:500,2]
 plot(kd2_col79_ctl3)
@@ -1084,22 +1170,28 @@ for (i in 1:499) {
   auxREC <- recD2[,,i]
   recD22[,i] <- auxREC 
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(recD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_rec_all50.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl1.csv')
 kd2_rec50 <- k_d2_rec50[2:500,2]
 plot(kd2_rec50)
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(rbind(recD22,colD22),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_crc_all129.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl1.csv')
 kd2_rec50 <- k_d2_rec50[2:500,2]
 plot(kd2_rec50)
 
 
 #################################################################################################
+# EDIT: hardcoded absolute path to the original author's machine
 k2_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl2.csv')
 k2d2_rec50 <- k2_d2_rec50[2:500,2]
 plot(k2d2_rec50)
 #################################################################################################
+# EDIT: hardcoded absolute path to the original author's machine
 k3_d2_rec50 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_REC50_ctl3.csv')
 k3d2_rec50 <- k3_d2_rec50[2:500,2]
 plot(k3d2_rec50)
@@ -1124,6 +1216,7 @@ plot(abs(fft(kd2_rec50, inverse = FALSE)))
 
 #bFr <- read.delim("filtered_window_data_5MB_1_700_m5000.txt")
 #bf <- read.table("filtered_window_data_5MB_1_700_m5000.txt")
+# EDIT: hardcoded absolute path to the original author's machine
 bFr <- read.table("~/genomedk/DELFI_data/Derived/fragment_length_in_bins/filtered_window_data_5MB_1_700_m5000.txt", header = TRUE)
 typeof(bFr) # list
 #lookUp <- read.table("5MB_map_file.txt")
@@ -1137,6 +1230,7 @@ hist(s2[s2>100])
 
 #sL <- read.csv("U:\\Documents/R/delfi_scripts-master/sample_reference.csv")
 #sL <- read.csv("~/genomedk/matovanalysis/DELFI_analysis/R/sample_reference.csv")
+# EDIT: hardcoded absolute path to the original author's machine
 sL <- read.csv("~/genomedk/DELFI_data/sample_reference.csv")
 
 iL <- sL[sL[,6]=="Lung Cancer",3] # list  
@@ -1157,8 +1251,10 @@ length(bFr[bFr[,1]==iC[1],1])# 555 bins, i.e number of rows with CRC FRs for sam
 # number of fragments per patient
 sum(crc1[,3:702])#54026559
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cccD22,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ccc195.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_ccc195_ctl276 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_CCC195_ctl276.csv')
 kd2_ccc195_ctl276   <- k_d2_ccc195_ctl276  [2:500,2]
 plot(kd2_ccc195_ctl276 )
@@ -1175,9 +1271,12 @@ names(col0D22) <- names(cc4D22)
 cccD22 <- rbind (cc4D22, col0D22)
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_HG38_ctl215.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ccc,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_HG38_ccc208.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d1_ccc208_ctl215 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1HG38_CCC208_ctl215.csv')
 kd1_ccc208_ctl215   <- k_d1_ccc208_ctl215 [2:500,2]
 plot(kd1_ccc208_ctl215 )
@@ -1319,6 +1418,7 @@ for(i in 1:nbOVC) {
 
 
 # UMIIMPROVE
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsUI <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb", recursive = T, full.names = T, pattern = "tsv")
 nbUMII <- length(pileupsUI)
 umiiD2 <- array(0,c(nbUMII,595,499))
@@ -1364,6 +1464,7 @@ hist(testU2[364,], breaks = 150, ylim = c(0, 10))
 hist(umii[,364], breaks = 150, ylim = c(0, 200))# dense up to 200 on x axis
 hist(umii[,198], breaks = 150, ylim = c(0, 200))# dense up to 500 on x axis
 # UMICRUK
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsUC <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/CRUK5Mb", recursive = T, full.names = T, pattern = "tsv")
 umic<-vector()
 nbUMIC <- length(pileupsUC)
@@ -1388,9 +1489,11 @@ for(i in 1:nbUMIC) {
 }
 dim(umic) # 40460 x 499 for  68 CRUK PreOps
 #UMISEQ
+# EDIT: hardcoded absolute path to the original author's machine
 auxFR <- read.table( "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/length_matrix1.tsv", header = TRUE) # sample per sample, file per file. 
 #testS <- as.integer(unlist(auxFR[,2:500]))
 #testS2 <- matrix(testS, ncol = dim(auxFR)[1], byrow = (dim(auxFR)[2]-2)) # convert back to matrix form
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsU <- list.files("~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/45PON5Mb", recursive = T, full.names = T, pattern = "tsv")
 nbUMI <- length(pileupsU)
 umiD2 <- array(0,c(nbUMI,595,499))
@@ -1440,15 +1543,21 @@ hgB <- hist(hv356[,505] ,breaks = 20, plot = FALSE) # Save 2nd histogram data
 plot(hgA, col = rgb(1,0,0,1/10),xlim = c(0,200), ylim = c(0,8)) # Plot 1st histogram using a transparent color
 plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,200), ylim = c(0,8)) # Add 2nd histogram using different color
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umi,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umii,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umic,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umid,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_totalPre124.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_dPre124 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseq_totalPre124_Pon45.csv')
 k_umidPre124  <- k_umi_dPre124[2:500,2]
 plot(k_umidPre124)
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_cPre68 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45.csv')
 k_umicPre68  <- k_umi_cPre68[2:500,2]
 plot(k_umicPre68)
@@ -1482,9 +1591,12 @@ hv199 <- matrix(umi199, ncol = 595, byrow = 45) #
 umic199 <- umic[,199]
 cv199 <- matrix(umic199, ncol = 595, byrow = 68) #
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl199.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cv199,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68_frl199.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_cPre68_frl199 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45_frl199.csv')
 k_umicPre68_frl199  <- k_umi_cPre68_frl199[2:500,2]
 plot(k_umicPre68_frl199)
@@ -1496,10 +1608,12 @@ df<-scale(hcTop20)
 col <- colorRampPalette(brewer.pal(11, "RdYlBu"))(256)
 hm <- heatmap(df, scale = "none", col =  col) 
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_iPre30 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre30Pon30.csv')
 k_umiiPre30  <- k_umi_iPre30[2:500,2]
 plot(k_umiiPre30)
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_iPre56 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45.csv')
 k_umiiPre56  <- k_umi_iPre56[2:500,2]
 plot(k_umiiPre56)
@@ -1548,9 +1662,12 @@ hv130 <- matrix(umi130, ncol = 595, byrow = 30) #
 umii130 <- umii[,130]
 cv130 <- matrix(umii130, ncol = 595, byrow = 30) #
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hv130,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon30_frl130.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cv130,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre30_frl130.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_iPre30_f130 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre30Pon30_frl130.csv')
 k_umiiPre30_f130  <- k_umi_iPre30_f130[2:596,2]
 plot(k_umiiPre30_f130)
@@ -1561,9 +1678,12 @@ hv356 <- matrix(umi356, ncol = 595, byrow = 45) #
 umii356 <- umii[,356]
 cv356 <- matrix(umii356, ncol = 595, byrow = 56) #
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hv356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl356.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cv356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_frl356.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_iPre56_f356 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45_frl356.csv')
 k_umiiPre56_f356  <- k_umi_iPre56_f356[2:596,2]
 plot(k_umiiPre56_f356)
@@ -1673,10 +1793,15 @@ plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,500), ylim = c(0,14000)) 
 
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(colB10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_col49_binned10frl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl1B10,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi2_ctl1_74_binned10frl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_binned10frl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umicB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_CRpre68_binned10frl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umiiB10,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_binned10frl.csv')
 
 umii356 <- umii[,356]
@@ -1685,7 +1810,9 @@ umii356 <-umii356[umii356>9]
 umi356 <- umi[,356]
 umi356 <-umi356[umi356>9]
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umi356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pon45_frl356no0.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(umii356,'~/genomedk/matovanalysis/DELFI_analysis/python/umiseq_pre56_frl356no0.csv')
 
 hgA <- hist(umii356, breaks = 250 , plot = FALSE) # Save first histogram data
@@ -1695,15 +1822,18 @@ plot(hgB, col = rgb(0,1,0,1/10), add = TRUE,xlim = c(0,180), ylim = c(0,1000)) #
 
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_d2_col79_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD2_COL79_CTL1_binned10frl.csv')
 kd2_col79_b10  <- k_d2_col79_b10[2:51,2]
 plot(kd2_col79_b10)
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_cPre68_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqCRPre68Pon45_binned10frl.csv')
 k_umicPre68_b10  <- k_umi_cPre68_b10[2:51,2]
 plot(k_umicPre68_b10)
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_umi_iPre56_b10 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceUMIseqPre56Pon45_binned10frl.csv')
 k_umiiPre56_b10  <- k_umi_iPre56_b10[2:51,2]
 plot(k_umiiPre56_b10)
@@ -1716,19 +1846,26 @@ plot(k_umiiPre56_b10)
 listCRUK <- unlist(sapply(CRUKlist, function(x) grep(x, x = pileupsC [9:90])))
 bams <-pileupsC[listCRUK ]
 #bams <- list.files(pileupsC)
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsC_Bam <- list.files("~/genomedk/PolyA/faststorage/BACKUP/CRUK/plasma/N289", recursive = T, full.names = T, pattern = "_consensus.sort.bam$")
 listCRUK_umi <- unlist(sapply(names(listCRUK), function(x) grep(x, x = pileupsC_Bam)))
 bams <-pileupsC_Bam[listCRUK_umi ]
+# EDIT: hardcoded absolute path to the original author's machine
 sapply(bams, function(x)file.copy(from=x, to = "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/CRUK5Mb/"))
 
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsI_Bam <- list.files("~/genomedk/PolyA/faststorage/BACKUP/IMPROVE/sporacrc/pon/data/pon", recursive = T, full.names = T, pattern = "_consensus.sort.bam$")
+# EDIT: hardcoded absolute path to the original author's machine
 sapply(pileupsI_Bam[1:46], function(x)file.copy(from=x, to = "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/45PON5Mb/"))
 
+# EDIT: hardcoded absolute path to the original author's machine
 It <- read.table("~/genomedk/matovanalysis/umiseq_analysis/IMPROVEptList",header = TRUE)
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsIM_Bam <- list.files("~/genomedk/PolyA/faststorage/BACKUP/IMPROVE/sporacrc/N227", recursive = T, full.names = T, pattern = "_consensus.sort.bam$")
 It$index <- sapply(as.character(It$library_id), function(x) grep(x, pileupsIM_Bam)) 
 preop_index <- unlist(It[ It$op_time_cat == -1, "index"]) # 56
 pileupsIM_Bam[preop_index]
+# EDIT: hardcoded absolute path to the original author's machine
 sapply(pileupsIM_Bam[preop_index], function(x)file.copy(from=x, to = "~/genomedk/PolyA/faststorage/BACKUP/N140_Targeting/specs/umiseq_paper/divergence/data/57PRE5Mb/"))
 
 
@@ -1736,6 +1873,7 @@ sapply(pileupsIM_Bam[preop_index], function(x)file.copy(from=x, to = "~/genomedk
        
        
 
+# EDIT: hardcoded absolute path to the original author's machine
 pileupsD1 <- list.files("~/genomedk/DELFI1/Workspaces/maretty/frag_lens/5mb", recursive = T, full.names = T, pattern = "tsv")
 
 listD1CRC27 <- sapply(iC, function(x) grep(x, x = pileupsD1 ))
@@ -1790,6 +1928,7 @@ for(i in 1:nbCRC) {
 }
 
 k_crc1_i<-matrix(,nrow=7,ncol=700)
+# EDIT: hardcoded absolute path to the original author's machine
 k_crc1_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc1_individual3.csv')
 k_crc1_i[3,] <- k_crc1_i3[2:701,2]
 plot(k_crc1_i[3,])
@@ -1821,6 +1960,7 @@ for(i in 1:nbC1) {
   }
 }
 k_crc2_i<-matrix(,nrow=7,ncol=700)
+# EDIT: hardcoded absolute path to the original author's machine
 k_crc2_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc2_individual1.csv')
 k_crc2_i[1,] <- k_crc2_i1[2:701,2]
 plot(k_crc2_i[1,])
@@ -1833,8 +1973,10 @@ for(i in 1:nbC2) {
   #i= 1
   #cs21 <- bFr[bFr[,1]==iC2[i],]
   cs21 <- bFr[as.character(bFr[,1])==as.character(iC2[i]),]
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc2_individual', i,'.csv')
   #write.csv(cs21[,3:702],sa_name)
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc2_individual', i,'.csv')
   aux<- read.csv(sa_name)
   k_crc2_i[i,] <- aux[2:701,2]
@@ -1855,6 +1997,7 @@ for(i in 1:nbC2) {
 
 
 k_crc3_i<-matrix(,nrow=5,ncol=700)
+# EDIT: hardcoded absolute path to the original author's machine
 k_crc3_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc3_individual1.csv')
 k_crc3_i[1,] <- k_crc3_i1[2:701,2]
 plot(k_crc3_i[1,])
@@ -1867,8 +2010,10 @@ for(i in 1:nbC3) {
   #i= 1
   #cs31 <- bFr[bFr[,1]==iC3[i],]
   cs31 <- bFr[as.character(bFr[,1])==as.character(iC3[i]),]
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc3_individual', i,'.csv')
   #write.csv(cs31[,3:702],sa_name)
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc3_individual', i,'.csv')
   aux<- read.csv(sa_name)
   k_crc3_i[i,] <- aux[2:701,2]
@@ -1887,6 +2032,7 @@ for(i in 1:nbC3) {
   }
 }
 k_crc4_i<-matrix(,nrow=8,ncol=700)
+# EDIT: hardcoded absolute path to the original author's machine
 k_crc4_i1 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1crc4_individual1.csv')
 k_crc4_i[1,] <- k_crc4_i1[2:701,2]
 plot(k_crc4_i[1,])
@@ -1902,6 +2048,7 @@ for(i in 1:nbC4) {
   #cs41 <- bFr[as.character(bFr[,1])==as.character(iC4[i]),]
   auxFR <- read.table(pileupsD1[listD1CRC4_8[i]], header = TRUE) # sample per sample, file per file. 
   cs41 <- auxFR[,2:500]
+  # EDIT: hardcoded absolute path to the original author's machine
   sa_name <- paste0('~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc4_individual', i,'.csv')
   #write.csv(cs41[,3:702],sa_name)
   if (i != 3){
@@ -1936,6 +2083,7 @@ c20<- c[,cL]
 dimnames(c20)[[2]]<-cF
 
 k_ctl1_i<-matrix(,nrow=43,ncol=700)
+# EDIT: hardcoded absolute path to the original author's machine
 k_ctl1_i3 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceD1ctl1_individual3.csv')
 k_ctl1_i[3,] <- k_ctl1_i3[2:701,2]
 plot(k_ctl1_i[3,])
@@ -2009,10 +2157,15 @@ for(i in 1:nbCTL) {#nbCTL
     }
   }
 }
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl86HG38.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl129HG38.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crc,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crc27HG38.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctl,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl43HG38.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cHG38 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_HG38.csv')
 kcHG38<-k_cHG38[2:500,2]
 plot(kcHG38)
@@ -2105,93 +2258,164 @@ plot(rowSums(cnm), col="red",ylim=range(c(0,55000000)))
 # 504.4316 507.1018 508.6900 509.2213 509.0071 508.4851 507.8492 507.7506 507.1370 506.2944
 
 #KLD(t(cnm), t(hnm)) # from LaplacesDemon
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(v364[sample(1:14430,14430)]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_c364_14430.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm[364,]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_h364_23310.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(lnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_lcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(dnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_dcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(bnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_bcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(gnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_gcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(pnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_pcc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(onm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_ovc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnmD),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcD.csv')# double
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnmH),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcH.csv')# half- doesnt work well
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crcMax,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcMax.csv')# max coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crcMin,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcMin.csv')# min coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlMax,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctlMax.csv')# max coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlMin,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctlMin.csv')# min coverage crc pt
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(hnm),'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl2.csv')
 ctlBB<-unname(ctlB)
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(ctlBB,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctlB.csv')
 crcBB<-unname(crcB)
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crcBB,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crcB.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hM364,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM364,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hM205,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM205,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(hM198,'G:\\matovanalysis/DELFI_analysis/python/delfi1_ctl198.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(cM198,'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc198.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm1),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc1.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm2),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm3),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(cnm4),'G:\\matovanalysis/DELFI_analysis/python/delfi1_crc4.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(t(v364[sample(1:14430,100)]),'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_v364_100.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(he1_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_ctl1Bins.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(crc_bins,'~/genomedk/matovanalysis/DELFI_analysis/python/delfi1_crcBins.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cBins <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_Bins.csv')
 kcBins<-k_cBins[2:701,2]
 plot(kcBins)
 
 
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_ch2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCh2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cmaxmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmaxmin.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 kcmax_hmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmaxCRCmax.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_hmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmax.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_hmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCTLmin.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_cbin2 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_bins364.csv')
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_cbin <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRCbins.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cmax <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmax.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cmin <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCmin.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c12 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c13 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c14 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1CRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c23 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2CRC3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c24 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2CRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c34 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC3CRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cD <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCd.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cH <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRCh.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c1 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC1.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c2 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC2.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c3 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC3.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c364 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC364.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c205 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC205.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c198 <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC198.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_l <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceLCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cl <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_LCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_d <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceDCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cd <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_DCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_b <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceBCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cb <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_BCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cg <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_GCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_g <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceGCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_p <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergencePCC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_c <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC.csv') # CRC
 kc<-k_c[2:701,2]
 plot(kc)
+# EDIT: hardcoded absolute path to the original author's machine
 k_cR <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/KLdivergenceCRC_Reverse.csv') # CRC  REVERSE
 
+# EDIT: hardcoded absolute path to the original author's machine
 k_o <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceOVC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_co <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_OVC.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 k_cp <- read.csv('G:\\matovanalysis/DELFI_analysis/python/KLdivergenceCRC_PCC.csv')
 
 kcbin2<-k_cbin2[2:701,2]

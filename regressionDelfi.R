@@ -1,4 +1,5 @@
 library("glmnet")
+# EDIT: hardcoded absolute path to the original author's machine
 source("~/genomedk/matovanalysis/umiseq_analysis/R/read_bed.R") #1/0 list
 
 
@@ -106,6 +107,7 @@ samplesTe <- rbind(umiN[,,356][24:45,], umiiN[,,356][29:56,])
 selectionTe= rep(0, 50)
 selectionTe[23:50]=1 
 
+# EDIT: hardcoded absolute path to the original author's machine
 CRUK <- read.table('~/genomedk/matovanalysis/umiseq_analysis/R/specs_data_cruk-plasma-info.lst', header = T)
 CRUKlist <- which(CRUK$sample_type=="CRC pre-OP" & CRUK$cancer==1)  
 length(CRUKlist) #183 not 130
@@ -124,6 +126,7 @@ v1[v==0]=v0
 #pileupsC[45:152] [listCRUK]  
 
 #countsC0 <-  piles_to_counts(files = pileupsC[45:152] [listCRUK]  , regions = pon_obj2$regions)
+# EDIT: hardcoded absolute path to the original author's machine
 countsC00 <- readRDS("~/genomedk/matovanalysis/umiseq_analysis/R/cruk-counts.RDS") # 
 countsC0= array(0, dim=c(95,dim(countsC00)[2],dim(countsC00)[3]))
 countsC0[1:69,,]<-countsC00[2:70,,]

@@ -10,14 +10,18 @@ samplesTr[1:69,,] <- colD2[1:69,,]
 samplesTr[70:133,,] <- ctl1D2[1:64,,]
 selectionTr = rep(1, 133)
 selectionTr[70:133]=0
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(samplesTr,'~/genomedk/matovanalysis/DELFI_analysis/python/samplesTr.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(selectionTr,'~/genomedk/matovanalysis/DELFI_analysis/python/selectionTr.csv')
 samplesTe = array(0, dim=c((10+10),574,499))
 samplesTe[1:10,,] <- colD2[70:79,,]
 samplesTe[11:20,,] <- ctl1D2[65:74,,]
 selectionTe = rep(1, 20)
 selectionTe[11:20]=0
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(samplesTe,'~/genomedk/matovanalysis/DELFI_analysis/python/samplesTe.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(selectionTe,'~/genomedk/matovanalysis/DELFI_analysis/python/selectionTe.csv')
 #########################################################
 # all stages 79 colon cancers, 20 colon adeH, 28 colon adeL, 74 control1 no comorbidity
@@ -30,9 +34,13 @@ selectionTr4 = rep(4, 161)
 selectionTr4[70:79]=3
 selectionTr4[80:97]=2
 selectionTr4[98:161]=1
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(samplesTr4,'~/genomedk/matovanalysis/DELFI_analysis/python/samplesTr4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(selectionTr4,'~/genomedk/matovanalysis/DELFI_analysis/python/selectionTr4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 npySave("~/genomedk/matovanalysis/DELFI_analysis/python/samplesTr4.npy", samplesTr4)
+# EDIT: hardcoded absolute path to the original author's machine
 sTr4 <- read.csv('~/genomedk/matovanalysis/DELFI_analysis/python/samplesTr4.csv')
 
 samplesTe4 = array(0, dim=c((10+10+10+10),574,499))
@@ -44,5 +52,7 @@ selectionTe4 = rep(4, 40)
 selectionTe4[11:20]=3
 selectionTe4[21:30]=2
 selectionTe4[31:40]=1
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(samplesTe4,'~/genomedk/matovanalysis/DELFI_analysis/python/samplesTe4.csv')
+# EDIT: hardcoded absolute path to the original author's machine
 write.csv(selectionTe4,'~/genomedk/matovanalysis/DELFI_analysis/python/selectionTe4.csv')
