@@ -1,4 +1,4 @@
-## FragmentomicsSubclinicalDisease
+## Fragmentomics Subclinical Disease
 
 Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data.
 
