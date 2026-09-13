@@ -1,5 +1,7 @@
 ## FragmentomicsSubclinicalDisease
 
+Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data.
+
 ## Quick start
 
 This repository contains R and Python scripts analyzing cell-free DNA
@@ -25,9 +27,6 @@ required R and Python packages.
 - **License:** see [LICENSE](LICENSE) -- research/educational use.
 
 ## About
-
-Utilization of cfDNA fragment size patterns ​for disease detection & classification ​based on low-coverage WGS data 
-
 
 We consider the relative entropy between cohorts’ cfDNA fragment lengths and test two hypotheses.
 
