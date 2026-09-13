@@ -12,11 +12,11 @@ required R and Python packages.
 ## Repository contents
 
 - `DELFI_divergence.R`, `DELFI2_divergence.R` -- the core
-  Kullback-Leibler-divergence fragment-length analysis.
+  Kullback-Leibler (KL) divergence fragment-length analysis.
 - `normalizeFRL.R`, `readFragmentBam.R`, `regressionDelfi.R`,
   `testBoxplot.R` -- supporting analysis scripts.
-- `kld_crc_test.py`, `est_rel_entro_HJW.py` -- a Python port of the KLD
-  analysis, using the third-party HJW estimator (see LICENSE).
+- `kld_crc_test.py`, `est_rel_entro_HJW.py` -- a Python port of the KL
+  divergence analysis, using the third-party HJW estimator (see LICENSE).
 - `kerasMNISTconvnet.R`, `testMNISTconvnet.R`, `mnist_convet.py` --
   MNIST ConvNet examples.
 - `genome_bins.bed`, `sample_reference.csv` -- included reference
@@ -34,7 +34,7 @@ We consider the relative entropy between cohorts’ cfDNA fragment lengths and t
 
 2. We can identify distinct differences for colorectal (CRC) as well as other cancer types (ovarian, pancreatic, gastric, breast, lung cancer and cholangiocarcinoma).
 
-Preliminary Kullback-Leibler divergence analysis of the Delfi data shows:
+Preliminary KL divergence analysis of the Delfi data shows:
 
 1. Cancer vs healthy:
 
